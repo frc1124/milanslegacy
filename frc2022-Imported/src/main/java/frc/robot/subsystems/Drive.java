@@ -5,23 +5,27 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import frc.robot.Constants;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class Drive extends SubsystemBase {
-  private DifferentialDrive drive;
-  private TalonSRX leftFront;
-  private TalonSRX leftBack;
-  private TalonSRX rightFront;
-  private TalonSRX rightBack;
+  private static DifferentialDrive drive;
+  private static WPI_TalonSRX leftFront;
+  private static WPI_TalonSRX leftBack;
+  private static WPI_TalonSRX rightFront;
+  private static WPI_TalonSRX rightBack;
+
+  private static MotorControllerGroup lefts, rights;
+
   /** Creates a new ExampleSubsystem. */
   public Drive() {
-    leftFront = new TalonSRX(Constants.LEFTFRONT);
-    rightFront = new TalonSRX(Constants.RIGHTFRONT);
-    leftBack = new TalonSRX(Constants.LEFTFRONT);
-    rightBack = new TalonSRX(Constants.RIGHTFRONT);
+    leftFront = new WPI_TalonSRX(Constants.LEFTFRONT);
+    rightFront = new WPI_TalonSRX(Constants.RIGHTFRONT);
+    leftBack = new WPI_TalonSRX(Constants.LEFTFRONT);
+    rightBack = new WPI_TalonSRX(Constants.RIGHTFRONT);
 
 
     leftFront.setInverted(true);
@@ -30,7 +34,7 @@ public class Drive extends SubsystemBase {
     leftBack.follow(leftFront);
     rightBack.follow(rightFront);
 
-    drive = new DifferentialDrive(leftFront, rightFront);
+    drive = new DifferentialDrive(leftFront, rightBack);
   }
 
   @Override
