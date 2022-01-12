@@ -24,4 +24,6 @@ public final class Constants {
     public static final int RIGHTCHANNEL_A = 0;
     public static final int RIGHTCHANNEL_B = 0;
 
+    public static final int ARCADE_STICK = 0;
+
 }

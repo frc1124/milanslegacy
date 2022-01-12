@@ -5,8 +5,10 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.Drive;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -21,9 +23,10 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 public class RobotContainer {
 
   // The robot's subsystems and commands are defined here...
-  private final Drive m_exampleSubsystem = new Drive();
+  private final Drive drive = new Drive();
 
-  private final ArcadeDrive m_autoCommand = new ArcadeDrive(m_exampleSubsystem);
+  public static final Joystick j = new Joystick(Constants.ARCADE_STICK);
+  private final ArcadeDrive arcadeDrive = new ArcadeDrive(drive, j);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -37,7 +40,12 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  public Command getTeleopDrive() {
+      return arcadeDrive;
+  }
+  private void configureButtonBindings() {
+
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -46,6 +54,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return arcadeDrive;
   }
 }

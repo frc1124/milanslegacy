@@ -13,8 +13,8 @@ import com.kauailabs.navx.frc.AHRS;
 public class ArcadeDrive extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Drive drive;
-  private AHRS navx;
-  private Joystick j;
+  private final AHRS navx;
+  private final Joystick j;
 
   /**
    * Creates a new ExampleCommand.
@@ -45,7 +45,9 @@ public class ArcadeDrive extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    drive.stop();
+  }
 
   // Returns true when the command should end.
   @Override
