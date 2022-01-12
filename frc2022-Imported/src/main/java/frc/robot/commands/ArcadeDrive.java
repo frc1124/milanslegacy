@@ -4,23 +4,40 @@
 
 package frc.robot.commands;
 
+import frc.robot.Constants;
 import frc.robot.subsystems.Drive;
+import frc.robot.Robot;
+
+import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
 public class ArcadeDrive extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final Drive m_subsystem;
+  
+  private PIDController fwdPID = new PIDController(Constants.FWD_P, Constants.FWD_I, Constants.FWD_D);
+  private PIDController rotPID = new PIDController(Constants.ROT_P, Constants.ROT_I, Constants.ROT_D);
 
+  private AHRS navx;
+
+  private final Drive drive;
+  private final Joystick j;
+
+  private final double THROTTLE = -.6;
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
   public ArcadeDrive(Drive subsystem) {
-    m_subsystem = subsystem;
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+    this.drive = drive;
+    
+    this.j = j;
+    navx = drive.getNavxInstance();
+
+    addRequirements(drive);
   }
 
   // Called when the command is initially scheduled.
