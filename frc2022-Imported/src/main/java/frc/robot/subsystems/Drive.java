@@ -92,7 +92,7 @@ public class Drive extends SubsystemBase {
   }
 
   public boolean turn(double angle) {
-    angle -= navx.getYaw();
+    angle -= (double) navx.getYaw();
     if (angle < -180)
       angle += 360;
     if (angle != 0) {
