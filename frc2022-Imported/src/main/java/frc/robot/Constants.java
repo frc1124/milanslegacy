@@ -25,5 +25,12 @@ public final class Constants {
     public static final int RIGHTCHANNEL_B = 0;
 
     public static final int ARCADE_STICK = 0;
+    public static final int PID_TIMEOUT = 0;
+    public static final int PID_TOLLERANCE = 0;
+
+    public static final double DRIVE_F = 0;
+    public static final double DRIVE_P = 0;
+    public static final double DRIVE_I = 0;
+    public static final double DRIVE_D = 0;
 
 }
