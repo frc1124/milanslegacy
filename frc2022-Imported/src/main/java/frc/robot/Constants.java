@@ -14,15 +14,15 @@ package frc.robot;
  */
 public final class Constants {
 
-    public static final int LEFTFRONT = 0;
-    public static final int LEFTBACK = 0;
-    public static final int RIGHTFRONT = 0;
-    public static final int RIGHTBACK = 0;
+    public static final int LEFTFRONT = 1;
+    public static final int LEFTBACK = 2;
+    public static final int RIGHTFRONT = 3;
+    public static final int RIGHTBACK = 4;
 
-    public static final int LEFTCHANNEL_A = 0;
-    public static final int LEFTCHANNEL_B = 0;
+    public static final int LEFTCHANNEL_A = 2;
+    public static final int LEFTCHANNEL_B = 3;
     public static final int RIGHTCHANNEL_A = 0;
-    public static final int RIGHTCHANNEL_B = 0;
+    public static final int RIGHTCHANNEL_B = 1;
 
     public static final int ARCADE_STICK = 0;
     public static final int PID_TIMEOUT = 0;
