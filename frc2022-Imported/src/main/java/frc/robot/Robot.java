@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -18,9 +19,9 @@ import frc.robot.subsystems.Drive;
  */
 public class Robot extends TimedRobot {
   private Command autoCMD;
-  public static Drive drive;
-
+  private Drive drive;
   private RobotContainer robotContainer;
+  private Joystick j;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -31,6 +32,8 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     robotContainer = new RobotContainer();
+    this.drive = robotContainer.drive;
+    this.j = robotContainer.getJoystickInstance();
   }
 
   /**
@@ -85,7 +88,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    CommandScheduler.getInstance().schedule( (Command) new ArcadeDrive(drive, RobotContainer.j));
+    CommandScheduler.getInstance().schedule( (Command) new ArcadeDrive(drive, j));
   }
 
   @Override
