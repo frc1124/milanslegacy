@@ -28,6 +28,9 @@ public class Drive extends SubsystemBase{
     leftBack = new WPI_TalonSRX(Constants.LEFTFRONT);
     rightBack = new WPI_TalonSRX(Constants.RIGHTFRONT);
 
+    leftEncoder = new Encoder(Constants.LEFTCHANNEL_A, Constants.LEFTCHANNEL_B);
+    rightEncoder = new Encoder(Constants.RIGHTCHANNEL_A, Constants.RIGHTCHANNEL_B);
+
     leftFront.setInverted(true);
     leftBack.setInverted(true);
 
@@ -46,8 +49,6 @@ public class Drive extends SubsystemBase{
     leftEncoder.setDistancePerPulse(2 * 3 * Math.PI / 2048);
     rightEncoder.setDistancePerPulse(2 * 3 * Math.PI / 2048);
     
-    leftEncoder = new Encoder(Constants.LEFTCHANNEL_A, Constants.LEFTCHANNEL_B);
-    rightEncoder = new Encoder(Constants.RIGHTCHANNEL_A, Constants.RIGHTCHANNEL_B);
     drive = new DifferentialDrive(leftFront, rightBack);
 
   }
