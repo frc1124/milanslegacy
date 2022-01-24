@@ -19,6 +19,9 @@ public final class Constants {
     public static final int RIGHTFRONT = 3;
     public static final int RIGHTBACK = 4;
 
+    public static final int FIRSTROLLER = 5;
+    public static final int SECONDROLLER = 6;
+
     public static final int LEFTCHANNEL_A = 2;
     public static final int LEFTCHANNEL_B = 3;
     public static final int RIGHTCHANNEL_A = 0;
