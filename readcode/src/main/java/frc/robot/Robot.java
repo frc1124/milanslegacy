@@ -18,7 +18,6 @@ import frc.robot.subsystems.Drive;
  * project.
  */
 public class Robot extends TimedRobot {
-  private Command m_autonomousCommand;
 
   private RobotContainer robotContainer;
   private Drive drive;
@@ -103,5 +102,6 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
     // drive.arcadeDrive(j.getY(), -1*j.getX());
+    
   }
 }

@@ -108,16 +108,12 @@ public class Drive extends SubsystemBase{
 
   public void forward(double in) {
     leftFront.set(ControlMode.Position, toTicks(in));
-    leftBack.set(ControlMode.Position, toTicks(in));
     rightFront.set(ControlMode.Position, toTicks(in));
-    rightBack.set(ControlMode.Position, toTicks(in));
   }
 
   public void forwardAt(double inPerS) {
     leftFront.set(ControlMode.Velocity, toTicksPer100ms(inPerS));
-    leftBack.set(ControlMode.Velocity, toTicksPer100ms(inPerS));
     rightFront.set(ControlMode.Velocity, toTicksPer100ms(inPerS));
-    rightBack.set(ControlMode.Velocity, toTicksPer100ms(inPerS));
   }
 
   public void backward() {
@@ -138,13 +134,13 @@ public class Drive extends SubsystemBase{
   public double toTicksPer100ms(double inPerS) {
     double circ = 2 * Math.PI * 3;
     double revPerS = inPerS / circ;
-    double ticksPerS =  revPerS/4096;
+    double ticksPerS =  revPerS * 4096;
     return ticksPerS/10;
   }
   public double toTicks(double in) {
     double circ = 2 * Math.PI * 3;
-    double rev= in / circ;
-    return rev/4096;
+    double rev = in / circ;
+    return rev * 4096;
   }
 
   public void arcadeDrive(double fwd, double rot) {
