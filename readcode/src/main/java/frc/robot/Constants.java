@@ -36,4 +36,8 @@ public final class Constants {
     public static final double DRIVE_I = 0;
     public static final double DRIVE_D = 0;
 
+    public static final int SCREW = 0;
+    public static final int FIRSTFLYWHEEL = 0;
+    public static final int SECONDFLYWHEEL = 0;
+
 }

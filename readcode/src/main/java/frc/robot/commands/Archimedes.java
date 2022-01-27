@@ -5,23 +5,23 @@
 package frc.robot.commands;
 
 //import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Raise;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
-public class Absorb extends CommandBase {
+public class Archimedes extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final Intake intake;
+  private final Raise raise;
 
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public Absorb(Intake intake) {
-    this.intake = intake;
+  public Archimedes(Raise raise) {
+    this.raise = raise;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(intake);
+    addRequirements(raise);
   }
 
   // Called when the command is initially scheduled.
@@ -31,13 +31,13 @@ public class Absorb extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.firstOn();
+    raise.up();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intake.firstOff();
+    raise.stop();
   }
 
   // Returns true when the command should end.
