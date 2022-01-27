@@ -3,8 +3,12 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import frc.robot.Constants;
 
+import java.util.ResourceBundle.Control;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -17,8 +21,12 @@ public class Drive extends SubsystemBase{
   private static WPI_TalonSRX rightFront;
   private static WPI_TalonSRX rightBack;
 
-  public static Encoder leftEncoder;
-  public static Encoder rightEncoder;
+  // private static MotorControllerGroup lefts;
+  // private static MotorControllerGroup rights;
+
+  // public static Encoder leftEncoder;
+  // public static Encoder rightEncoder;
+
 
   public AHRS navx; 
 
@@ -28,14 +36,28 @@ public class Drive extends SubsystemBase{
     leftBack = new WPI_TalonSRX(Constants.LEFTFRONT);
     rightBack = new WPI_TalonSRX(Constants.RIGHTFRONT);
 
-    leftEncoder = new Encoder(Constants.LEFTCHANNEL_A, Constants.LEFTCHANNEL_B);
-    rightEncoder = new Encoder(Constants.RIGHTCHANNEL_A, Constants.RIGHTCHANNEL_B);
-
-    leftFront.setInverted(true);
-    leftBack.setInverted(true);
-
+    // lefts = new MotorControllerGroup(leftFront, leftBack);
+    // rights = new MotorControllerGroup(rightFront, rightBack);
     leftBack.follow(leftFront);
     rightBack.follow(rightFront);
+
+    // leftEncoder = new Encoder(Constants.LEFTCHANNEL_A, Constants.LEFTCHANNEL_B);
+    // rightEncoder = new Encoder(Constants.RIGHTCHANNEL_A, Constants.RIGHTCHANNEL_B);
+
+    leftFront.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    rightFront.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+
+    leftFront.setInverted(true);
+
+    leftFront.config_kP(0, Constants.DRIVE_P);
+    leftFront.config_kI(0, Constants.DRIVE_I);
+    leftFront.config_kD(0, Constants.DRIVE_D);
+    leftFront.config_kF(0, Constants.DRIVE_F);
+
+    rightFront.config_kP(0, Constants.DRIVE_P);
+    rightFront.config_kI(0, Constants.DRIVE_I);
+    rightFront.config_kD(0, Constants.DRIVE_D);
+    rightFront.config_kF(0, Constants.DRIVE_F);
 
     navx = new AHRS();
 
@@ -45,31 +67,34 @@ public class Drive extends SubsystemBase{
     leftBack.setNeutralMode(NeutralMode.Brake);
     rightBack.setNeutralMode(NeutralMode.Brake);
 
-    // 8192 ticks per rev; 6 in diameter
-    leftEncoder.setDistancePerPulse(2 * 3 * Math.PI / 2048);
-    rightEncoder.setDistancePerPulse(2 * 3 * Math.PI / 2048);
+    // 8192 ticks per rev; 3 in radius
+    // ThroughBore: 1024 ticks/rev
+    // CTRE: 4096 ticks/rev
+    // Gear ratio 10.71:1
+    // leftEncoder.setDistancePerPulse(2 * 3 * Math.PI / 1024);
+    // rightEncoder.setDistancePerPulse(2 * 3 * Math.PI / 1024);
     
-    drive = new DifferentialDrive(leftFront, rightBack);
+    drive = new DifferentialDrive(leftFront, rightFront);
 
   }
     public void resetEncoders() {
-    leftEncoder.reset();
-    rightEncoder.reset();
+    // leftEncoder.reset();
+    // rightEncoder.reset();
   }
 
   public AHRS getNavxInstance() {
     return navx;
   }
 
-  public double getAvgDistance() {
-    // inches per second
-    return (leftEncoder.getDistance() + rightEncoder.getDistance()) / 2;
-  }
+  // public double getAvgDistance() {
+  //   // inches per second
+  //   return (leftEncoder.getDistance() + rightEncoder.getDistance()) / 2;
+  // }
 
-  public double getAvgVelocity() {
-    // inches per second
-    return (leftEncoder.getRate() + rightEncoder.getRate()) / 2;
-  }
+  // public double getAvgVelocity() {
+  //   // inches per second
+  //   return (leftEncoder.getRate() + rightEncoder.getRate()) / 2;
+  // }
 
   public void stop() {
     leftFront.set(0);
@@ -79,6 +104,20 @@ public class Drive extends SubsystemBase{
   public void forward() {
     leftFront.set(1);
     rightFront.set(1);
+  }
+
+  public void forward(double in) {
+    leftFront.set(ControlMode.Position, toTicks(in));
+    leftBack.set(ControlMode.Position, toTicks(in));
+    rightFront.set(ControlMode.Position, toTicks(in));
+    rightBack.set(ControlMode.Position, toTicks(in));
+  }
+
+  public void forwardAt(double inPerS) {
+    leftFront.set(ControlMode.Velocity, toTicksPer100ms(inPerS));
+    leftBack.set(ControlMode.Velocity, toTicksPer100ms(inPerS));
+    rightFront.set(ControlMode.Velocity, toTicksPer100ms(inPerS));
+    rightBack.set(ControlMode.Velocity, toTicksPer100ms(inPerS));
   }
 
   public void backward() {
@@ -95,6 +134,17 @@ public class Drive extends SubsystemBase{
       return true;
     } else
       return false;
+  }
+  public double toTicksPer100ms(double inPerS) {
+    double circ = 2 * Math.PI * 3;
+    double revPerS = inPerS / circ;
+    double ticksPerS =  revPerS/4096;
+    return ticksPerS/10;
+  }
+  public double toTicks(double in) {
+    double circ = 2 * Math.PI * 3;
+    double rev= in / circ;
+    return rev/4096;
   }
 
   public void arcadeDrive(double fwd, double rot) {
