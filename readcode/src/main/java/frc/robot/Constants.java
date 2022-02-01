@@ -27,7 +27,8 @@ public final class Constants {
     public static final int RIGHTCHANNEL_A = 0;
     public static final int RIGHTCHANNEL_B = 1;
 
-    public static final int ARCADE_STICK = 0;
+    public static final int JY = 0;
+    public static final int JX = 0;
     public static final int PID_TIMEOUT = 0;
     public static final int PID_TOLLERANCE = 0;
 

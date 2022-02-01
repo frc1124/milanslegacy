@@ -14,7 +14,7 @@ public class ArcadeDrive extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Drive drive;
   private final AHRS navx;
-  private final Joystick j;
+  private final Joystick jy;
 
   /**
    *
@@ -22,7 +22,7 @@ public class ArcadeDrive extends CommandBase {
    */
   public ArcadeDrive(Drive drive, Joystick joystick) {
     this.drive = drive;
-    this.j = joystick;
+    this.jy = joystick;
     navx = drive.getNavxInstance(); 
     addRequirements(drive);
 
@@ -39,7 +39,7 @@ public class ArcadeDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    drive.arcadeDrive(j.getY(), -1*j.getX());
+    drive.arcadeDrive(jy.getY(), -1*jy.getX());
   }
 
   // Called once the command ends or is interrupted.

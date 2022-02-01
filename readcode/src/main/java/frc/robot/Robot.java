@@ -21,7 +21,8 @@ public class Robot extends TimedRobot {
 
   private RobotContainer robotContainer;
   private Drive drive;
-  private Joystick j;
+  private Joystick jy;
+  private Joystick jx;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -33,7 +34,8 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     robotContainer = new RobotContainer();
     this.drive = robotContainer.drive;
-    this.j = robotContainer.joystick;
+    this.jy = robotContainer.joystick1;
+    this.jx = robotContainer.joystick2;
   }
 
   /**
@@ -101,6 +103,6 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
-    drive.arcadeDrive(j.getY(), -1*j.getX());
+    drive.arcadeDrive(jy.getY(), -1*jx.getX());
   }
 }

@@ -32,12 +32,14 @@ public class Absorb extends CommandBase {
   @Override
   public void execute() {
     intake.firstOn();
+    intake.secondOn();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     intake.firstOff();
+    intake.secondOff();
   }
 
   // Returns true when the command should end.
