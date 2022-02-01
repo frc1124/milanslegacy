@@ -11,13 +11,13 @@ import frc.robot.Constants;
 public class Intake extends SubsystemBase {
 
   private static WPI_TalonSRX firstRoller;
-  private static WPI_TalonSRX secondRoller;
+  // private static WPI_TalonSRX secondRoller;
 
   /** Creates a new ExampleSubsystem. */
   public Intake() {
 
     firstRoller = new WPI_TalonSRX(Constants.FIRSTROLLER);
-    secondRoller = new WPI_TalonSRX(Constants.SECONDROLLER);
+    // secondRoller = new WPI_TalonSRX(Constants.SECONDROLLER);
 
   }
   public void firstOn() {
@@ -28,13 +28,14 @@ public class Intake extends SubsystemBase {
     firstRoller.set(0);
   }
 
-  public void secondOn(){
-    secondRoller.set(1);
-  }
+  //Only one motor; comment back in if needed later
+  // public void secondOn(){
+  //   secondRoller.set(1);
+  // }
 
-  public void secondOff() {
-    secondRoller.set(0);
-  }
+  // public void secondOff() {
+  //   secondRoller.set(0);
+  // }
 
   @Override
   public void periodic() {
