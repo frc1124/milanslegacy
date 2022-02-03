@@ -15,11 +15,11 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
 public class Drive extends SubsystemBase{
-  private static DifferentialDrive drive;
-  private static WPI_TalonSRX leftFront;
-  private static WPI_TalonSRX leftBack;
-  private static WPI_TalonSRX rightFront;
-  private static WPI_TalonSRX rightBack;
+  public static DifferentialDrive drive;
+  public static WPI_TalonSRX leftFront;
+  public static WPI_TalonSRX leftBack;
+  public static WPI_TalonSRX rightFront;
+  public static WPI_TalonSRX rightBack;
 
   // private static MotorControllerGroup lefts;
   // private static MotorControllerGroup rights;
@@ -33,13 +33,11 @@ public class Drive extends SubsystemBase{
   public Drive() {
     leftFront = new WPI_TalonSRX(Constants.LEFTFRONT);
     rightFront = new WPI_TalonSRX(Constants.RIGHTFRONT);
-    leftBack = new WPI_TalonSRX(Constants.LEFTFRONT);
-    rightBack = new WPI_TalonSRX(Constants.RIGHTFRONT);
+    leftBack = new WPI_TalonSRX(Constants.LEFTBACK);
+    rightBack = new WPI_TalonSRX(Constants.RIGHTBACK);
 
     // lefts = new MotorControllerGroup(leftFront, leftBack);
     // rights = new MotorControllerGroup(rightFront, rightBack);
-    leftBack.follow(leftFront);
-    rightBack.follow(rightFront);
 
     // leftEncoder = new Encoder(Constants.LEFTCHANNEL_A, Constants.LEFTCHANNEL_B);
     // rightEncoder = new Encoder(Constants.RIGHTCHANNEL_A, Constants.RIGHTCHANNEL_B);
@@ -49,23 +47,23 @@ public class Drive extends SubsystemBase{
 
     leftFront.setInverted(true);
 
-    leftFront.config_kP(0, Constants.DRIVE_P);
-    leftFront.config_kI(0, Constants.DRIVE_I);
-    leftFront.config_kD(0, Constants.DRIVE_D);
-    leftFront.config_kF(0, Constants.DRIVE_F);
+    leftFront.config_kP(0, Constants.DRIVE_L_P);
+    leftFront.config_kI(0, Constants.DRIVE_L_I);
+    leftFront.config_kD(0, Constants.DRIVE_L_D);
+    leftFront.config_kF(0, Constants.DRIVE_L_F);
 
-    rightFront.config_kP(0, Constants.DRIVE_P);
-    rightFront.config_kI(0, Constants.DRIVE_I);
-    rightFront.config_kD(0, Constants.DRIVE_D);
-    rightFront.config_kF(0, Constants.DRIVE_F);
+    rightFront.config_kP(0, Constants.DRIVE_R_P);
+    rightFront.config_kI(0, Constants.DRIVE_R_I);
+    rightFront.config_kD(0, Constants.DRIVE_R_D);
+    rightFront.config_kF(0, Constants.DRIVE_R_F);
 
     navx = new AHRS();
 
     // set modes to break
     leftFront.setNeutralMode(NeutralMode.Brake);
     rightFront.setNeutralMode(NeutralMode.Brake);
-    leftBack.setNeutralMode(NeutralMode.Brake);
-    rightBack.setNeutralMode(NeutralMode.Brake);
+    // leftBack.setNeutralMode(NeutralMode.Brake);
+    // rightBack.setNeutralMode(NeutralMode.Brake);
 
     // 8192 ticks per rev; 3 in radius
     // ThroughBore: 1024 ticks/rev
@@ -75,6 +73,9 @@ public class Drive extends SubsystemBase{
     // rightEncoder.setDistancePerPulse(2 * 3 * Math.PI / 1024);
     
     drive = new DifferentialDrive(leftFront, rightFront);
+
+    // leftBack.follow(leftFront);
+    // rightBack.follow(rightFront);
 
   }
     public void resetEncoders() {
@@ -107,8 +108,10 @@ public class Drive extends SubsystemBase{
   }
 
   public void forward(double in) {
-    leftFront.set(ControlMode.Position, toTicks(in));
-    rightFront.set(ControlMode.Position, toTicks(in));
+    // leftFront.set(ControlMode.Position, toTicks(in));
+    // rightFront.set(ControlMode.Position, toTicks(in));
+    leftFront.set(ControlMode.Position, in);
+    rightFront.set(ControlMode.Position, in);
   }
 
   public void forwardAt(double inPerS) {

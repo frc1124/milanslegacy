@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -94,13 +96,19 @@ public class Robot extends TimedRobot {
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
-    CommandScheduler.getInstance().cancelAll();
-    CommandScheduler.getInstance().schedule(new Move(drive,24));
+    // CommandScheduler.getInstance().cancelAll();
+    // CommandScheduler.getInstance().schedule(new Move(drive,24));
   }
 
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
+    // drive.forward(12);
+    // Drive.leftFront.set(ControlMode.Position, .01);
+    // Drive.rightFront.set(ControlMode.Position, 1000);
+    Drive.rightFront.set(1);
+    Drive.leftFront.set(1);
+
     // drive.arcadeDrive(j.getY(), -1*j.getX());
     
   }
