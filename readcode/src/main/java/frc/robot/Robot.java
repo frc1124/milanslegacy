@@ -24,6 +24,7 @@ public class Robot extends TimedRobot {
   private RobotContainer robotContainer;
   private Drive drive;
   private Joystick j;
+  public StringBuilder sb = new StringBuilder();
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -36,6 +37,7 @@ public class Robot extends TimedRobot {
     robotContainer = new RobotContainer();
     this.drive = robotContainer.drive;
     this.j = robotContainer.joystick;
+
   }
 
   /**
@@ -91,23 +93,36 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     CommandScheduler.getInstance().schedule(robotContainer.arcade());
+    
   }
 
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
-    // CommandScheduler.getInstance().cancelAll();
-    // CommandScheduler.getInstance().schedule(new Move(drive,24));
+    CommandScheduler.getInstance().cancelAll();
+    CommandScheduler.getInstance().schedule(new Move(drive,24));
   }
 
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
-    // drive.forward(12);
+    /* Prepare line to print */
+		sb.append("\tleft voltage:");
+		/* Cast to int to remove decimal places */
+		sb.append((Drive.leftFront.getMotorOutputVoltage()));
+		sb.append("V");	// Percent
+
+		sb.append("\tleft pos:");
+		sb.append(Drive.leftFront.getSelectedSensorPosition(0));
+		sb.append("u"); 	// Native units
+
+    System.out.println("LOG MSG");
+    System.out.println(sb);
+    sb.setLength(0);
     // Drive.leftFront.set(ControlMode.Position, .01);
     // Drive.rightFront.set(ControlMode.Position, 1000);
-    Drive.rightFront.set(1);
-    Drive.leftFront.set(1);
+    // Drive.rightFront.set(1);
+    // Drive.leftFront.set(1);
 
     // drive.arcadeDrive(j.getY(), -1*j.getX());
     
