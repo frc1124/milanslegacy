@@ -108,10 +108,10 @@ public class Drive extends SubsystemBase{
   }
 
   public void forward(double in) {
-    // leftFront.set(ControlMode.Position, toTicks(in));
-    // rightFront.set(ControlMode.Position, toTicks(in));
-    leftFront.set(ControlMode.Position, in);
-    rightFront.set(ControlMode.Position, in);
+    leftFront.set(ControlMode.Position, toTicks(in));
+    rightFront.set(ControlMode.Position, toTicks(in));
+    // leftFront.set(ControlMode.Position, in);
+    // rightFront.set(ControlMode.Position, in);
   }
 
   public void forwardAt(double inPerS) {
