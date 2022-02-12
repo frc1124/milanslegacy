@@ -45,17 +45,17 @@ public class Drive extends SubsystemBase{
     leftFront.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
     rightFront.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
 
-    leftFront.setInverted(true);
+    // leftFront.setInverted(true);
 
     leftFront.config_kP(0, Constants.DRIVE_L_P);
     leftFront.config_kI(0, Constants.DRIVE_L_I);
     leftFront.config_kD(0, Constants.DRIVE_L_D);
-    leftFront.config_kF(0, Constants.DRIVE_L_F);
+    // leftFront.config_kF(0, Constants.DRIVE_L_F);
 
     rightFront.config_kP(0, Constants.DRIVE_R_P);
     rightFront.config_kI(0, Constants.DRIVE_R_I);
     rightFront.config_kD(0, Constants.DRIVE_R_D);
-    rightFront.config_kF(0, Constants.DRIVE_R_F);
+    // rightFront.config_kF(0, Constants.DRIVE_R_F);
 
     navx = new AHRS();
 
@@ -79,8 +79,8 @@ public class Drive extends SubsystemBase{
 
   }
     public void resetEncoders() {
-    // leftEncoder.reset();
-    // rightEncoder.reset();
+    leftFront.getSensorCollection().setQuadraturePosition(0, 10);
+    rightFront.getSensorCollection().setQuadraturePosition(0, 10);
   }
 
   public AHRS getNavxInstance() {
@@ -107,11 +107,15 @@ public class Drive extends SubsystemBase{
     rightFront.set(1);
   }
 
-  public void forward(double in) {
-    leftFront.set(ControlMode.Position, toTicks(in));
-    rightFront.set(ControlMode.Position, toTicks(in));
+  public String forward(double in) {
+    String a = "";
+    a += "l" + (double) (leftFront.getSelectedSensorPosition() + toTicks(in));
+    a += "r" + (double) (rightFront.getSelectedSensorPosition() + toTicks(in));
+    leftFront.set(ControlMode.Position,  leftFront.getSelectedSensorPosition() + toTicks(in));
+    rightFront.set(ControlMode.Position, rightFront.getSelectedSensorPosition() + toTicks(in));
     // leftFront.set(ControlMode.Position, in);
     // rightFront.set(ControlMode.Position, in);
+    return a;
   }
 
   public void forwardAt(double inPerS) {

@@ -9,13 +9,12 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class Robot extends TimedRobot {
   private final WPI_TalonSRX m1 = new WPI_TalonSRX(1);
   private final WPI_TalonSRX m2 = new WPI_TalonSRX(2);
-  private final WPI_TalonSRX m3 = new WPI_TalonSRX(3);
-  private final WPI_TalonSRX m4 = new WPI_TalonSRX(4);
 
   @Override
   public void robotInit() {
@@ -23,10 +22,25 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    SmartDashboard.putString("called", "abc");
-    m1.set(1);
-    m2.set(1);
-    m3.set(1);
-    m4.set(1);
+    StringBuilder sb = new StringBuilder();
+    m1.getSensorCollection().setQuadraturePosition(0, 0);
+    m2.getSensorCollection().setQuadraturePosition(0, 0);
+    m1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    m2.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+
+
+    sb.append("\t1 pos:");
+    sb.append(m1.getSelectedSensorPosition(0));
+    sb.append("u"); // Native units
+
+    sb.append("\t2 pos:");
+    sb.append(m2.getSelectedSensorPosition(0));
+    sb.append("u"); // Native units
+
+    System.out.println(sb);
+    // m1.set(1);
+    // m2.set(1);
+    // m3.set(1);
+    // m4.set(1);
   }
 }
