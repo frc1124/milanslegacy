@@ -15,31 +15,33 @@ package frc.robot;
 public final class Constants {
 
     public static final int LEFTFRONT = 1;
-    public static final int LEFTBACK = 2;
-    public static final int RIGHTFRONT = 3;
-    public static final int RIGHTBACK = 4;
+    public static final int LEFTBACK = 4;
+    public static final int RIGHTFRONT = 2;
+    public static final int RIGHTBACK = 3;
 
-    public static final int LEFTCHANNEL_A = 2;
-    public static final int LEFTCHANNEL_B = 3;
-    public static final int RIGHTCHANNEL_A = 0;
-    public static final int RIGHTCHANNEL_B = 1;
+    public static final int LEFTCHANNEL_A = 0;
+    public static final int LEFTCHANNEL_B = 1;
+    public static final int RIGHTCHANNEL_A = 2;
+    public static final int RIGHTCHANNEL_B = 3;
 
     public static final int ARCADE_STICK = 0;
     public static final int PID_TIMEOUT = 0;
     public static final int PID_TOLLERANCE = 0;
 
-    public static final double DRIVE_L_P = 1;
-    public static final double DRIVE_L_I = 0;
-    public static final double DRIVE_L_D = 0;
-    public static final double DRIVE_R_P = 1;
-    public static final double DRIVE_R_I = 0;
-    public static final double DRIVE_R_D = 0;
+    // P val 52:100 proportion
+    public static final double DRIVE_L_P = 0.052;
+    public static final double DRIVE_L_I = 0.001;
+    public static final double DRIVE_L_D = 0.005;
+    public static final double DRIVE_R_P = 0.100;
+    public static final double DRIVE_R_I = 0.000;
+    public static final double DRIVE_R_D = 0.001;
 
     public static final double DRIVE_KS = 0;
     public static final double DRIVE_KV = 0;
 
-    public static final double MAXSPEED = 10.0 * 12; // in per second
-    public static final double MAXANGULARSPEED = 2 * Math.PI; // one rotation per second
+    // public static final double MAXSPEED = 132; // in per second
+    public static final double MAXSPEED = 84; // in per second
+    public static final double MAXANGULARSPEED = 100 * Math.PI; // one rotation per second
 
     public static final double TRACKWIDTH = 11; // in
     public static final double WHEELRADIUS = 3; // in

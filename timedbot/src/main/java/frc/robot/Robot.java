@@ -102,6 +102,8 @@ public class Robot extends TimedRobot {
     final var rot = rotLimiter.calculate(jRot.getX()) * Constants.MAXANGULARSPEED;
 
     drive.drive(xSpeed, rot);
+    System.out.println("Right:"  + drive.getRightDistance());
+    System.out.println("Left:" +  drive.getLeftDistance());
     
   }
 
@@ -115,21 +117,27 @@ public class Robot extends TimedRobot {
 
   double initialTime=0;
   /** This function is called once when test mode is enabled. */
+  double targetAngle;
   @Override
   public void testInit() {
     teleopInit();
-    initialTime = Timer.getMatchTime();
+    drive.reset();
+    targetAngle = drive.getAngle();
   }
 
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
-    double distance = 24; // inches
-    double currentTime = Timer.getMatchTime();
-    if((currentTime - initialTime) <= distance/(Constants.MAXSPEED)) {
-      drive.drive(Constants.MAXSPEED,0);
-    }else {
-      drive.stop();
-    }
+    // double distance =  24; // inches
+    
+    System.out.println("Right:"  + drive.getRightDistance());
+    System.out.println("Left:" +  drive.getLeftDistance());
+    System.out.println("Angle:"  + (drive.getAngle() - targetAngle)/180);
+    // if(drive.getDistance() <= distance) {
+    //   drive.drive(Constants.MAXSPEED, (drive.getAngle() - targetAngle)/180);
+    // }else {
+    //   drive.stop();
+    // }
+    while(drive.turn(90));
   }
 }

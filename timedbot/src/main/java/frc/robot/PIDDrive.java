@@ -2,7 +2,6 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -69,6 +68,7 @@ public class PIDDrive{
     leftEncoder.reset();
     rightEncoder.reset();
 
+
     odometry = new DifferentialDriveOdometry(navx.getRotation2d());
   }
 
@@ -114,6 +114,9 @@ public class PIDDrive{
     resetEncoders();
     navx.reset();
   }
+  public double getAngle() {
+    return navx.getAngle();
+  }
   public void softStop() {
     drive(0,0);
   }
@@ -123,5 +126,37 @@ public class PIDDrive{
   }
   public void stop() {
     hardStop();
+  }
+  public int getRightEncoder() {
+    return rightEncoder.get();
+  }
+  public int getLeftEncoder() {
+    return -leftEncoder.get();
+  }
+  public double getRightDistance() {
+    return rightEncoder.getDistance();
+  }
+  public double getLeftDistance() {
+    return -leftEncoder.getDistance();
+  }
+
+  public double getDistance() {
+    return (rightEncoder.getDistance() + leftEncoder.getDistance())/2;
+  }
+
+  public void forward() {
+    rightGroup.set(1);
+    leftGroup.set(1);
+  }
+
+  public boolean turn(double angle) {
+    angle -= (double) navx.getYaw();
+    if (angle < -180)
+      angle += 360;
+    if (angle != 0) {
+      drive(0, angle / 360 * 2 * Math.PI);
+      return true;
+    } else
+      return false;
   }
 }
