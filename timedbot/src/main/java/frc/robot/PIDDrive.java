@@ -78,15 +78,19 @@ public class PIDDrive{
    * @param speeds The desired wheel speeds.
    */
   public void setSpeeds(DifferentialDriveWheelSpeeds speeds) {
-    final double leftFeedforward = feedforward.calculate(speeds.leftMetersPerSecond);
-    final double rightFeedforward = feedforward.calculate(speeds.rightMetersPerSecond);
+
+    final double leftFeedforward = feedforward.calculate(speeds.leftMetersPerSecond * 39.37);
+    final double rightFeedforward = feedforward.calculate(speeds.rightMetersPerSecond * 39.37);
 
     final double leftOutput =
-        leftPIDController.calculate(leftEncoder.getRate(), speeds.leftMetersPerSecond);
+        leftPIDController.calculate(leftEncoder.getRate(), speeds.leftMetersPerSecond * 39.37);
     final double rightOutput =
-        rightPIDController.calculate(rightEncoder.getRate(), speeds.rightMetersPerSecond);
+        rightPIDController.calculate(rightEncoder.getRate(), speeds.rightMetersPerSecond * 39.37);
+
     leftGroup.setVoltage(leftOutput + leftFeedforward);
+    System.out.println(leftOutput + leftFeedforward);
     rightGroup.setVoltage(rightOutput + rightFeedforward);
+    System.out.println(rightOutput + rightFeedforward);
   }
 
   /**
@@ -149,14 +153,21 @@ public class PIDDrive{
     leftGroup.set(1);
   }
 
-  public boolean turn(double angle) {
-    angle -= (double) navx.getYaw();
-    if (angle < -180)
-      angle += 360;
-    if (angle != 0) {
-      drive(0, angle / 360 * 2 * Math.PI);
-      return true;
-    } else
-      return false;
+  public void turn(double angle) {
+    // double currentAngle = (double) navx.getYaw();
+    // if (angle < -180)
+    //   angle += 360;
+    // if(angle < 0 ) {
+    //   while(currentAngle < angle) {
+    //     drive(0, -40*Math.PI);
+    //   }
+    // }
+    // if(angle > 0 ) {
+    //   while(currentAngle >= angle) {
+    //     drive(0, 40*Math.PI);
+    //   }
+    // }
+    // drive(0, rot);
+  
   }
 }

@@ -105,6 +105,8 @@ public class Robot extends TimedRobot {
     System.out.println("Right:"  + drive.getRightDistance());
     System.out.println("Left:" +  drive.getLeftDistance());
     
+    System.out.println("Speed:"  + xSpeed);
+    System.out.println("Rot:" +  rot);
   }
 
   /** This function is called once when the robot is disabled. */
@@ -130,14 +132,15 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {
     // double distance =  24; // inches
     
-    System.out.println("Right:"  + drive.getRightDistance());
-    System.out.println("Left:" +  drive.getLeftDistance());
-    System.out.println("Angle:"  + (drive.getAngle() - targetAngle)/180);
+    // System.out.println("Right:"  + drive.getRightDistance());
+    // System.out.println("Left:" +  drive.getLeftDistance());
+    System.out.println("Angle:"  + drive.getAngle());
     // if(drive.getDistance() <= distance) {
     //   drive.drive(Constants.MAXSPEED, (drive.getAngle() - targetAngle)/180);
     // }else {
     //   drive.stop();
     // }
-    while(drive.turn(90));
+    // drive.turn(180);
+    drive.drive(0,0.1* Math.PI);
   }
 }
