@@ -17,8 +17,8 @@ public class MoveCommandGroup extends CommandGroupBase{
     @Override
     public void addCommands(Command... commands) {
 
-        parallel((Command) new Move(distance, rc.rightController, rc.right));
-        parallel((Command) new Move(distance, rc.leftController, rc.left));
+        parallel((Command) new Move(distance, rc.rightDController, rc.right));
+        parallel((Command) new Move(distance, rc.leftDController, rc.left));
         
     }
     

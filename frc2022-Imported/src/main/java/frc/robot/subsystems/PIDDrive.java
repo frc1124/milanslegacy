@@ -29,15 +29,17 @@ public class PIDDrive extends PIDSubsystem{
   private final AHRS navx = new AHRS();
 
   
-  private PIDController controller;
+  private PIDController controllerD;
+  private PIDController controllerV;
 
   /**
    * Constructs a differential drive object. Sets the encoder distance per pulse and resets the
    * gyro.
    */
-  public PIDDrive(MotorControllerGroup motors, Encoder encoder, PIDController controller, boolean isLeft) {
-    super(controller);
-    this.controller = controller;
+  public PIDDrive(MotorControllerGroup motors, Encoder encoder, PIDController controllerV, PIDController controllerD, boolean isLeft) {
+    super(controllerV);
+    this.controllerV = controllerV;
+    this.controllerD = controllerD;
     this.motors = motors;
     this.encoder = encoder;
     navx.reset();
@@ -66,7 +68,7 @@ public class PIDDrive extends PIDSubsystem{
 
   @Override
   public void useOutput(double output, double setpoint) {
-    final double out = controller.calculate(encoder.getDistance(), setpoint);
+    final double out = controllerD.calculate(encoder.getDistance(), setpoint);
     motors.setVoltage(MathUtil.clamp(out, -8, 8));
   }
 
@@ -75,7 +77,7 @@ public class PIDDrive extends PIDSubsystem{
     return encoder.getDistance();
   }
   public void useOutputV(double output, double setpoint) {
-    final double out = controller.calculate(encoder.getRate(), setpoint);
+    final double out = controllerV.calculate(encoder.getRate(), setpoint);
     motors.setVoltage(MathUtil.clamp(out, -8, 8));
   }
 

@@ -38,16 +38,20 @@ public class RobotContainer {
   public final WPI_TalonSRX rightFollower = new WPI_TalonSRX(Constants.RIGHTBACK);
   public final MotorControllerGroup lefts = new MotorControllerGroup(leftLeader, leftFollower);
   public final MotorControllerGroup rights = new MotorControllerGroup(rightLeader, rightFollower);
-  public final PIDController leftController = new PIDController(
-    Constants.DRIVE_L_P, Constants.DRIVE_L_I, Constants.DRIVE_L_D);
-  public final PIDController rightController = new PIDController(
-    Constants.DRIVE_R_P, Constants.DRIVE_R_I, Constants.DRIVE_R_D);
+  public final PIDController leftDController = new PIDController(
+    Constants.DIST_L_P, Constants.DIST_L_I, Constants.DIST_L_D);
+  public final PIDController rightDController = new PIDController(
+    Constants.DIST_R_P, Constants.DIST_R_I, Constants.DIST_R_D);
+  public final PIDController leftVController = new PIDController(
+    Constants.VEL_L_P, Constants.VEL_L_I, Constants.VEL_L_D);
+  public final PIDController rightVController = new PIDController(
+    Constants.VEL_R_P, Constants.VEL_R_I, Constants.VEL_R_D);
   public final XboxController j = new XboxController(0);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    left = new PIDDrive(lefts, leftEncoder, leftController, true);
-    right = new PIDDrive(rights, rightEncoder, rightController, false);
+    left = new PIDDrive(lefts, leftEncoder, leftVController, leftDController, true);
+    right = new PIDDrive(rights, rightEncoder, rightVController, rightDController, false);
     // Configure the button bindings
     configureButtonBindings();
   }
