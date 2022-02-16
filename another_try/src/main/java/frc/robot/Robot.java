@@ -4,18 +4,9 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.ArcadeDrive;
-import frc.robot.commands.Move;
-import frc.robot.commands.MoveCommandGroup;
-import frc.robot.commands.Tank;
-import frc.robot.commands.TankCommandGroup;
-import frc.robot.subsystems.Drive;
-import frc.robot.subsystems.PIDDrive;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -24,8 +15,9 @@ import frc.robot.subsystems.PIDDrive;
  * project.
  */
 public class Robot extends TimedRobot {
-  private Command autoCMD;
-  private RobotContainer rc;
+  private Command m_autonomousCommand;
+
+  private RobotContainer m_robotContainer;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -35,7 +27,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    rc = new RobotContainer();
+    m_robotContainer = new RobotContainer();
   }
 
   /**
@@ -64,11 +56,11 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    // autoCMD = rc.getAutonomousCommand();
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
-    if (autoCMD != null) {
-      autoCMD.schedule();
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.schedule();
     }
   }
 
@@ -82,52 +74,22 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    if (autoCMD != null) {
-      autoCMD.cancel();
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.cancel();
     }
   }
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {
-    double rightV = Constants.MAXSPEED * rc.j.getRightY();
-    double leftV = Constants.MAXSPEED * rc.j.getLeftY();
-    CommandScheduler.getInstance().schedule(new TankCommandGroup(leftV, rightV, rc));
-    CommandScheduler.getInstance().run();
-    debug();
-  }
+  public void teleopPeriodic() {}
 
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
-    CommandScheduler.getInstance().schedule(new MoveCommandGroup(24.0, rc));
-
   }
 
   /** This function is called periodically during test mode. */
-
-  public void debug() {
-
-    // System.out.println("Right Target V:" + Constants.MAXSPEED * rc.j.getLeftX());
-    System.out.println("Left Target V:" + Constants.MAXSPEED * rc.j.getLeftY());
-
-    // System.out.println("Right Joystick:" + rc.j.getRightY());
-    System.out.println("Left Joystick:" + rc.j.getLeftY());
-
-    // System.out.println("Right Encoder:" + rc.right.getMeasurement());
-    // System.out.println("Left Encoder:" + rc.left.getMeasurement());
-
-    // System.out.println("Right Velocity:" + rc.right.getMeasurementV());
-    System.out.println("Left Velocity:" + rc.left.getMeasurementV());
-
-    System.out.println("Angle:" + rc.right.getNavxInstance().getAngle());
-  }
   @Override
-  public void testPeriodic() {
-    CommandScheduler.getInstance().run();
-    debug();
-  }
-
+  public void testPeriodic() {}
 }
-

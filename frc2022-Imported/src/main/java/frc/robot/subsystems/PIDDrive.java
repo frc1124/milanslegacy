@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -27,25 +28,26 @@ public class PIDDrive extends PIDSubsystem{
   // private final AnalogGyro gyro = new AnalogGyro(0);
   private final AHRS navx = new AHRS();
 
-  private final static PIDController controller = new PIDController(
-    Constants.DRIVE_L_P,
-    Constants.DRIVE_L_I, 
-    Constants.DRIVE_L_D);
-
-  private final SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.DRIVE_KS, Constants.Drive_KV);
+  
+  private PIDController controller;
 
   /**
    * Constructs a differential drive object. Sets the encoder distance per pulse and resets the
    * gyro.
    */
-  public PIDDrive() {
+  public PIDDrive(MotorControllerGroup motors, Encoder encoder, PIDController controller, boolean isLeft) {
     super(controller);
+    this.controller = controller;
+    this.motors = motors;
+    this.encoder = encoder;
     navx.reset();
 
     // We need to invert one side of the drivetrain so that positive voltages
     // result in both sides moving forward. Depending on how your robot's
     // gearbox is constructed, you might have to invert the left side instead.
-    motors.setInverted(true);
+    if(isLeft) {
+      motors.setInverted(true);
+    }
 
     // Set the distance per pulse for the drive encoders. We can simply use the
     // distance traveled for one rotation of the wheel divided by the encoder
@@ -55,46 +57,37 @@ public class PIDDrive extends PIDSubsystem{
     encoder.reset();
   }
 
-  /**
-   * Sets the desired wheel speeds.
-   *
-   * @param speeds The desired wheel speeds.
-   */
-  public void setSpeeds(DifferentialDriveWheelSpeeds speeds) {
-    motors.setVoltage(output + ff);
+
+  public AHRS getNavxInstance() {
+    return navx;
   }
 
-  /**
-   * Drives the robot with the given linear velocity and angular velocity.
-   *
-   * @param xSpeed Linear velocity in m/s.
-   * @param rot Angular velocity in rad/s.
-   */
-  @SuppressWarnings("ParameterName")
-  public void drive(double xSpeed, double rot) {
-    var wheelSpeeds = kinematics.toWheelSpeeds(new ChassisSpeeds(xSpeed, 0.0, rot));
-    setSpeeds(wheelSpeeds);
-  }
 
-  /** Updates the field-relative position. */
-  public void updateOdometry() {
-    odometry.update(
-        new Rotation2d((navx.getYaw()+180)/360 * 2 * Math.PI), leftEncoder.getDistance(), rightEncoder.getDistance());
+
+  @Override
+  public void useOutput(double output, double setpoint) {
+    final double out = controller.calculate(encoder.getDistance(), setpoint);
+    motors.setVoltage(MathUtil.clamp(out, -8, 8));
   }
 
   @Override
-  protected void useOutput(double output, double setpoint) {
-    final double ff = feedforward.calculate(setpoint);
-
+  public double getMeasurement() {
+    return encoder.getDistance();
+  }
+  public void useOutputV(double output, double setpoint) {
     final double out = controller.calculate(encoder.getRate(), setpoint);
-    
-    motors.setVoltage(ff + out);
+    motors.setVoltage(MathUtil.clamp(out, -8, 8));
   }
 
-  @Override
-  protected double getMeasurement() {
-    
 
+  public void stop() {
+    motors.set(0);
+  }
+  public double getMeasurementV() {
+    return encoder.getRate();
   }
     
+  public void set(double x) {
+    motors.set(x);
+  }
 }

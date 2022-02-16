@@ -14,26 +14,34 @@ package frc.robot;
  */
 public final class Constants {
 
-    public static final int LEFTFRONT = 1;
-    public static final int LEFTBACK = 2;
-    public static final int RIGHTFRONT = 3;
-    public static final int RIGHTBACK = 4;
+    public static final int LEFTFRONT =  2;
+    public static final int LEFTBACK =   3;
+    public static final int RIGHTFRONT = 1;
+    public static final int RIGHTBACK =  4;
 
-    public static final int LEFTCHANNEL_A = 2;
-    public static final int LEFTCHANNEL_B = 3;
-    public static final int RIGHTCHANNEL_A = 0;
-    public static final int RIGHTCHANNEL_B = 1;
+    public static final int LEFTCHANNEL_A = 0;
+    public static final int LEFTCHANNEL_B = 1;
+    public static final int RIGHTCHANNEL_A = 2;
+    public static final int RIGHTCHANNEL_B = 3;
 
-    public static final int ARCADE_STICK = 0;
     public static final int PID_TIMEOUT = 0;
     public static final int PID_TOLLERANCE = 0;
 
-    public static final double DRIVE_L_P = 1;
-    public static final double DRIVE_L_I = 0;
-    public static final double DRIVE_L_D = 0;
-    public static final double DRIVE_R_P = 1;
-    public static final double DRIVE_R_I = 0;
-    public static final double DRIVE_R_D = 0;
+    public static final double VEL_L_P = 0.1;
+    public static final double VEL_L_I = 0;
+    public static final double VEL_L_D = 0;
+
+    public static final double VEL_R_P = 0.1;
+    public static final double VEL_R_I = 0;
+    public static final double VEL_R_D = 0;
+
+    public static final double DIST_L_P = 0.1;
+    public static final double DIST_L_I = 0;
+    public static final double DIST_L_D = 0;
+
+    public static final double DIST_R_P = 0.1;
+    public static final double DIST_R_I = 0;
+    public static final double DIST_R_D = 0;
 
     public static final double DRIVE_KS = 0;
     public static final double DRIVE_KV = 0;
