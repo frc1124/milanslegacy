@@ -55,6 +55,7 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     getKey("A").whenPressed(new ShooterTest(shootersub));
+    shootersub.On();
 
   }
 

@@ -26,18 +26,18 @@ public class ShooterSub extends SubsystemBase {
 
     //initialize SparkMax and Encoder
     shooterMoter = new CANSparkMax(Constants.MOTOR_CAN_ID, MotorType.kBrushless);
-    encoder = shooterMoter.getEncoder(SparkMaxRelativeEncoder.Type.kQuadrature, 4096);
+    //encoder = shooterMoter.getEncoder(SparkMaxRelativeEncoder.Type.kQuadrature, 4096);
     
-    shooterMoter.restoreFactoryDefaults();
+    //shooterMoter.restoreFactoryDefaults();
     
-    pidController = new PIDController(Constants.kP,Constants.kI,Constants.kD);
-    pidController.setIntegratorRange(-0.5, 0.5);
+    //pidController = new PIDController(Constants.kP,Constants.kI,Constants.kD);
+    //pidController.setIntegratorRange(-0.5, 0.5);
 
   }
 
 
   public void On() {
-    shooterMoter.set(pidController.calculate(encoder.getPosition(), Constants.setpoint));
+    shooterMoter.set(1);
   }
 
   public void Off(){
