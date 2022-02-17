@@ -15,5 +15,15 @@ package frc.robot;
 public final class Constants {
 
     public static final int J = 0;
+    public static final int ARM_MOTOR = 0;
+    public static final int MOTOR_CAN_ID = 1;
 
+    //PID settings
+    public static final int kP = 0;
+    public static final int kI = 0;
+    public static final int kD = 0;
+    public static final int setpoint = 1; 
+
+    public static final int kMaxOutput = 0;
+    public static final int kMinOutput = 0;
 }

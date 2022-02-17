@@ -4,21 +4,40 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 
+import com.revrobotics.*;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import frc.robot.Constants;
+import edu.wpi.first.math.controller.PIDController;
+
 public class ShooterSub extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
-
-  private static MotorController shooterMoter;
-
+  public static CANSparkMax shooterMoter;
+  
+  //Encode
+  private RelativeEncoder encoder;
+  private PIDController pidController;
   public ShooterSub() {
-    shooterMoter = new PWMSparkMax(0);
+
+    //initialize SparkMax and Encoder
+    shooterMoter = new CANSparkMax(Constants.MOTOR_CAN_ID, MotorType.kBrushless);
+    encoder = shooterMoter.getEncoder(SparkMaxRelativeEncoder.Type.kQuadrature, 4096);
+    
+    shooterMoter.restoreFactoryDefaults();
+    
+    pidController = new PIDController(Constants.kP,Constants.kI,Constants.kD);
+    pidController.setIntegratorRange(-0.5, 0.5);
+
   }
 
+
   public void On() {
-    shooterMoter.set(1);
+    shooterMoter.set(pidController.calculate(encoder.getPosition(), Constants.setpoint));
   }
 
   public void Off(){

@@ -4,35 +4,27 @@
 
 package frc.robot.commands;
 
-import frc.robot.Constants;
 import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.ShooterSub;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
-
-import javax.print.CancelablePrintJob;
-
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 /** An example command that uses an example subsystem. */
-public class ShooterTest extends CommandBase {
+public class Shooter extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final ShooterSub shootersub;
+  private final ExampleSubsystem m_subsystem;
 
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public ShooterTest(ShooterSub shootersub) {
-    this.shootersub = shootersub;
-    
-
+  public ExampleCommand(ExampleSubsystem subsystem) {
+    m_subsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(shootersub);
+    addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -41,10 +33,7 @@ public class ShooterTest extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    shootersub.On();
-    
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
