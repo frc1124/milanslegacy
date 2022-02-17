@@ -19,6 +19,8 @@ public final class Constants {
     public static final int RIGHTFRONT = 1;
     public static final int RIGHTBACK =  4;
 
+    public static final int SHOOTER =  5;
+
     public static final int LEFTCHANNEL_A = 0;
     public static final int LEFTCHANNEL_B = 1;
     public static final int RIGHTCHANNEL_A = 2;
@@ -42,6 +44,10 @@ public final class Constants {
     public static final double DIST_R_P = 0.1;
     public static final double DIST_R_I = 0;
     public static final double DIST_R_D = 0;
+
+    public static final double SHOOT_P = 0.1;
+    public static final double SHOOT_I = 0;
+    public static final double SHOOT_D = 0;
 
     public static final double DRIVE_KS = 0;
     public static final double DRIVE_KV = 0;

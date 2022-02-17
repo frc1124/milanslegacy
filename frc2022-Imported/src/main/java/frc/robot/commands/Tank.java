@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.PIDDrive;
+import frc.robot.subsystems.Shooter;
 
 import java.util.function.DoubleConsumer;
 import java.util.function.DoubleSupplier;

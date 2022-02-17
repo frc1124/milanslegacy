@@ -10,10 +10,12 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.PIDDrive;
+import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -30,8 +32,9 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   public final PIDDrive left;
   public final PIDDrive right;
-  public final Encoder leftEncoder = new Encoder(0,1);
-  public final Encoder rightEncoder = new Encoder(2,3);
+
+  public final Encoder leftEncoder = new Encoder(Constants.LEFTCHANNEL_A, Constants.LEFTCHANNEL_B);
+  public final Encoder rightEncoder = new Encoder(Constants.RIGHTCHANNEL_A, Constants.RIGHTCHANNEL_B);
   public final WPI_TalonSRX leftLeader = new WPI_TalonSRX(Constants.LEFTFRONT);
   public final WPI_TalonSRX leftFollower = new WPI_TalonSRX(Constants.LEFTBACK);
   public final WPI_TalonSRX rightLeader = new WPI_TalonSRX(Constants.RIGHTFRONT);
@@ -46,11 +49,18 @@ public class RobotContainer {
     Constants.VEL_L_P, Constants.VEL_L_I, Constants.VEL_L_D);
   public final PIDController rightVController = new PIDController(
     Constants.VEL_R_P, Constants.VEL_R_I, Constants.VEL_R_D);
+
+  
+  // public final Spark shooterSpark = new Spark(Constants.SHOOTER);
+  // public final PIDController shootController = new PIDController(
+  //   Constants.SHOOT_P, Constants.SHOOT_I, Constants.SHOOT_D);
+
+  
   public final XboxController j = new XboxController(0);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    left = new PIDDrive(lefts, leftEncoder, leftVController, leftDController, true);
+    left =  new PIDDrive(lefts, leftEncoder, leftVController, leftDController, true);
     right = new PIDDrive(rights, rightEncoder, rightVController, rightDController, false);
     // Configure the button bindings
     configureButtonBindings();
@@ -66,7 +76,7 @@ public class RobotContainer {
   // }
 
   private void configureButtonBindings() {
-
+    
   }
 
   /**
