@@ -9,7 +9,18 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.ArcadeDrive;
+<<<<<<< Updated upstream
 import frc.robot.subsystems.Drive;
+=======
+import frc.robot.commands.Move;
+import frc.robot.commands.MoveCommandGroup;
+import frc.robot.commands.Shoot;
+import frc.robot.commands.Tank;
+import frc.robot.commands.TankCommandGroup;
+import frc.robot.subsystems.Drive;
+import frc.robot.subsystems.PIDDrive;
+import frc.robot.subsystems.Shooter;
+>>>>>>> Stashed changes
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -88,7 +99,16 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+<<<<<<< Updated upstream
     CommandScheduler.getInstance().schedule( (Command) new ArcadeDrive(drive, j));
+=======
+    double rightV = Constants.MAXSPEED * rc.j.getRightY();
+    double leftV = Constants.MAXSPEED * rc.j.getLeftY();
+    CommandScheduler.getInstance().schedule(new TankCommandGroup(leftV, rightV, rc));
+    CommandScheduler.getInstance().run();
+    debug();
+    
+>>>>>>> Stashed changes
   }
 
   @Override
