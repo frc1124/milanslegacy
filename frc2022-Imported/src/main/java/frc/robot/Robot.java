@@ -9,13 +9,14 @@ import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Move;
 import frc.robot.commands.MoveCommandGroup;
 import frc.robot.commands.Tank;
 import frc.robot.commands.TankCommandGroup;
 import frc.robot.subsystems.Drive;
-import frc.robot.subsystems.PIDDrive;
+import frc.robot.subsystems.Shooter;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -92,7 +93,9 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     double rightV = Constants.MAXSPEED * rc.j.getRightY();
     double leftV = Constants.MAXSPEED * rc.j.getLeftY();
-    CommandScheduler.getInstance().schedule(new TankCommandGroup(leftV, rightV, rc));
+    // System.out.println("" +rightV + "," +leftV);
+    // CommandScheduler.getInstance().schedule(new TankCommandGroup(leftV, rightV, rc));
+    CommandScheduler.getInstance().schedule(new TankCommandGroup(12, 12, rc));
     CommandScheduler.getInstance().run();
     debug();
   }
@@ -110,18 +113,18 @@ public class Robot extends TimedRobot {
   public void debug() {
 
     // System.out.println("Right Target V:" + Constants.MAXSPEED * rc.j.getLeftX());
-    System.out.println("Left Target V:" + Constants.MAXSPEED * rc.j.getLeftY());
+    // System.out.println("Left Target V:" + Constants.MAXSPEED * rc.j.getLeftY());
 
     // System.out.println("Right Joystick:" + rc.j.getRightY());
-    System.out.println("Left Joystick:" + rc.j.getLeftY());
+    // System.out.println("Left Joystick:" + rc.j.getLeftY());
 
     // System.out.println("Right Encoder:" + rc.right.getMeasurement());
     // System.out.println("Left Encoder:" + rc.left.getMeasurement());
 
     // System.out.println("Right Velocity:" + rc.right.getMeasurementV());
-    System.out.println("Left Velocity:" + rc.left.getMeasurementV());
+    // System.out.println("Left Velocity:" + rc.left.getMeasurementV());
 
-    System.out.println("Angle:" + rc.right.getNavxInstance().getAngle());
+    // System.out.println("Angle:" + rc.right.getNavxInstance().getAngle());
   }
   @Override
   public void testPeriodic() {

@@ -34,7 +34,7 @@ public class Shooter extends PIDSubsystem{
 
   @Override
   public double getMeasurement() {
-    return encoder.getDistance();
+    return encoder.getRate();
   }
 
   public void stop() {

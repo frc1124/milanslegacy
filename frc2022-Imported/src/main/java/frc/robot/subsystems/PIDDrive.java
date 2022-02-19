@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants;
 
@@ -32,6 +33,8 @@ public class PIDDrive extends PIDSubsystem{
   private PIDController controllerD;
   private PIDController controllerV;
 
+  private boolean isLeft;
+
   /**
    * Constructs a differential drive object. Sets the encoder distance per pulse and resets the
    * gyro.
@@ -42,6 +45,7 @@ public class PIDDrive extends PIDSubsystem{
     this.controllerD = controllerD;
     this.motors = motors;
     this.encoder = encoder;
+    this.isLeft = isLeft;
     navx.reset();
 
     // We need to invert one side of the drivetrain so that positive voltages
@@ -69,7 +73,8 @@ public class PIDDrive extends PIDSubsystem{
   @Override
   public void useOutput(double output, double setpoint) {
     final double out = controllerD.calculate(encoder.getDistance(), setpoint);
-    motors.setVoltage(MathUtil.clamp(out, -8, 8));
+    double outFiltered = MathUtil.clamp(out, -8, 8);
+    motors.setVoltage(outFiltered);
   }
 
   @Override
@@ -78,7 +83,8 @@ public class PIDDrive extends PIDSubsystem{
   }
   public void useOutputV(double output, double setpoint) {
     final double out = controllerV.calculate(encoder.getRate(), setpoint);
-    motors.setVoltage(MathUtil.clamp(out, -8, 8));
+    double outFiltered = MathUtil.clamp(out, -8, 8);
+    motors.setVoltage(outFiltered);
   }
 
 

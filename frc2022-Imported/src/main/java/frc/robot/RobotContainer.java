@@ -30,8 +30,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 public class RobotContainer {
 
   // The robot's subsystems and commands are defined here...
-  public final PIDDrive left;
-  public final PIDDrive right;
 
   public final Encoder leftEncoder = new Encoder(Constants.LEFTCHANNEL_A, Constants.LEFTCHANNEL_B);
   public final Encoder rightEncoder = new Encoder(Constants.RIGHTCHANNEL_A, Constants.RIGHTCHANNEL_B);
@@ -49,7 +47,12 @@ public class RobotContainer {
     Constants.VEL_L_P, Constants.VEL_L_I, Constants.VEL_L_D);
   public final PIDController rightVController = new PIDController(
     Constants.VEL_R_P, Constants.VEL_R_I, Constants.VEL_R_D);
+  public final PIDDrive left =  new PIDDrive(lefts, leftEncoder, leftVController, leftDController, true);
+  public final PIDDrive right = new PIDDrive(rights, rightEncoder, rightVController, rightDController, false);
 
+  // public final WPI_TalonSRX liftLeader = new WPI_TalonSRX(Constants.LIFTLEADER);
+  // public final WPI_TalonSRX liftFollower = new WPI_TalonSRX(Constants.LIFTFOLLOWER);
+  // public final MotorControllerGroup lifts = new MotorControllerGroup(liftLeader, liftFollower);
   
   // public final Spark shooterSpark = new Spark(Constants.SHOOTER);
   // public final PIDController shootController = new PIDController(
@@ -60,8 +63,6 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    left =  new PIDDrive(lefts, leftEncoder, leftVController, leftDController, true);
-    right = new PIDDrive(rights, rightEncoder, rightVController, rightDController, false);
     // Configure the button bindings
     configureButtonBindings();
   }

@@ -45,6 +45,7 @@ public class Tank extends PIDCommand {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    System.out.println("enc" + side.getMeasurementV());
     return getController().atSetpoint();
   }
 }
