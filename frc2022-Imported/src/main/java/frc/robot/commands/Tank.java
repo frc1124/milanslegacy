@@ -12,7 +12,9 @@ import java.util.function.DoubleConsumer;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 
@@ -21,7 +23,9 @@ public class Tank extends PIDCommand {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private PIDDrive side;
   private PIDController controller;
-
+  private SlewRateLimiter limiter = new SlewRateLimiter(1.0/3);
+  private double timeout = 0.1;
+  private double initialTime;
   /**
    * Creates a new ExampleCommand.
    *
@@ -31,6 +35,8 @@ public class Tank extends PIDCommand {
     super(controller, side::getMeasurementV, velocity, output -> side.useOutputV(output, velocity));
     this.side = side;
     this.controller = controller;
+    initialTime = Timer.getFPGATimestamp();
+    
     
     // Tolerance; 1 in/s ; 0 in/s^2
     getController().setTolerance(0, 0);
@@ -45,7 +51,9 @@ public class Tank extends PIDCommand {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    System.out.println("enc" + side.getMeasurementV());
+    System.out.println(Timer.getFPGATimestamp() - initialTime);
+    if(Timer.getFPGATimestamp() - initialTime > timeout) return true;
+    // System.out.println("enc" + side.getMeasurementV());
     return getController().atSetpoint();
   }
 }

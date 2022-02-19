@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -49,6 +50,9 @@ public class RobotContainer {
     Constants.VEL_R_P, Constants.VEL_R_I, Constants.VEL_R_D);
   public final PIDDrive left =  new PIDDrive(lefts, leftEncoder, leftVController, leftDController, true);
   public final PIDDrive right = new PIDDrive(rights, rightEncoder, rightVController, rightDController, false);
+
+  // public final SlewRateLimiter rightLimiter  = new SlewRateLimiter(5.0);
+  // public final SlewRateLimiter leftLimiter   = new SlewRateLimiter(5.0);
 
   // public final WPI_TalonSRX liftLeader = new WPI_TalonSRX(Constants.LIFTLEADER);
   // public final WPI_TalonSRX liftFollower = new WPI_TalonSRX(Constants.LIFTFOLLOWER);

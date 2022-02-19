@@ -6,6 +6,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
@@ -22,7 +23,6 @@ import frc.robot.Constants;
 public class PIDDrive extends PIDSubsystem{
 
   private final Encoder encoder;
-
   private final MotorControllerGroup motors;
   
 
@@ -51,14 +51,16 @@ public class PIDDrive extends PIDSubsystem{
     // We need to invert one side of the drivetrain so that positive voltages
     // result in both sides moving forward. Depending on how your robot's
     // gearbox is constructed, you might have to invert the left side instead.
+    int modifier = -1;
     if(isLeft) {
       motors.setInverted(true);
+      modifier = 1;
     }
 
     // Set the distance per pulse for the drive encoders. We can simply use the
     // distance traveled for one rotation of the wheel divided by the encoder
     // resolution.
-    encoder.setDistancePerPulse(2 * Math.PI * Constants.WHEELRADIUS / Constants.ENCODERRESOLUTION);
+    encoder.setDistancePerPulse(modifier * 2 * Math.PI * Constants.WHEELRADIUS / Constants.ENCODERRESOLUTION);
 
     encoder.reset();
   }
@@ -74,7 +76,7 @@ public class PIDDrive extends PIDSubsystem{
   public void useOutput(double output, double setpoint) {
     final double out = controllerD.calculate(encoder.getDistance(), setpoint);
     double outFiltered = MathUtil.clamp(out, -8, 8);
-    motors.setVoltage(outFiltered);
+    motors.setVoltage(out);
   }
 
   @Override
@@ -84,7 +86,7 @@ public class PIDDrive extends PIDSubsystem{
   public void useOutputV(double output, double setpoint) {
     final double out = controllerV.calculate(encoder.getRate(), setpoint);
     double outFiltered = MathUtil.clamp(out, -8, 8);
-    motors.setVoltage(outFiltered);
+    motors.setVoltage(out);
   }
 
 

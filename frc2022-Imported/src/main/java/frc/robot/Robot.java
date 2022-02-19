@@ -91,11 +91,16 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    double rightV = Constants.MAXSPEED * rc.j.getRightY();
-    double leftV = Constants.MAXSPEED * rc.j.getLeftY();
+    // double rightJ = rc.rightLimiter.calculate(rc.j.getRightY());
+    // double leftJ = rc.leftLimiter.calculate(rc.j.getRightY());
+    // Joystick is wierd, we right side is leftt, idk
+    double rightJ = Math.pow(rc.j.getLeftY(),3);
+    double leftJ =  Math.pow(rc.j.getRightY(),3);
+    double rightV = -1 * Constants.MAXSPEED * rightJ;
+    double leftV = -1 * Constants.MAXSPEED * leftJ;
     // System.out.println("" +rightV + "," +leftV);
-    // CommandScheduler.getInstance().schedule(new TankCommandGroup(leftV, rightV, rc));
-    CommandScheduler.getInstance().schedule(new TankCommandGroup(12, 12, rc));
+    CommandScheduler.getInstance().schedule(new TankCommandGroup(leftV, rightV, rc));
+    // CommandScheduler.getInstance().schedule(new TankCommandGroup(60, 60, rc));
     CommandScheduler.getInstance().run();
     debug();
   }

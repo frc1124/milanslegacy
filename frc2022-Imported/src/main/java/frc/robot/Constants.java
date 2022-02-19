@@ -33,29 +33,29 @@ public final class Constants {
     public static final int PID_TOLLERANCE = 0;
 
     public static final double VEL_L_P = 0.2;
-    public static final double VEL_L_I = 0.002;
-    public static final double VEL_L_D = 0;
+    public static final double VEL_L_I = 0.0001;
+    public static final double VEL_L_D = 0.001;
 
-    public static final double VEL_R_P = 0.097;
-    public static final double VEL_R_I = 0.065;
-    public static final double VEL_R_D = 0;
+    public static final double VEL_R_P = 0.22;
+    public static final double VEL_R_I = 0.0000;
+    public static final double VEL_R_D = 0.000;
 
     public static final double DIST_L_P = 0.2;
-    public static final double DIST_L_I = 0;
-    public static final double DIST_L_D = 0;
+    public static final double DIST_L_I = 0.0001;
+    public static final double DIST_L_D = 0.001;
 
-    public static final double DIST_R_P = 0.1;
-    public static final double DIST_R_I = 0;
-    public static final double DIST_R_D = 0;
+    public static final double DIST_R_P = 0.22;
+    public static final double DIST_R_I = 0.0000;
+    public static final double DIST_R_D = 0.000;
 
-    public static final double SHOOT_P = 0.1;
+    public static final double SHOOT_P = 0.2;
     public static final double SHOOT_I = 0;
     public static final double SHOOT_D = 0;
 
     public static final double DRIVE_KS = 0;
     public static final double DRIVE_KV = 0;
 
-    public static final double MAXSPEED = 10.0 * 12; // in per second
+    public static final double MAXSPEED = 60; // in per second
     public static final double MAXANGULARSPEED = 2 * Math.PI; // one rotation per second
 
     public static final double TRACKWIDTH = 11; // in
