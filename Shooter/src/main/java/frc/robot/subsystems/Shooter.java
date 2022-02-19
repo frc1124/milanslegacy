@@ -2,22 +2,23 @@
 package frc.robot.subsystems;
 
 
+import com.revrobotics.RelativeEncoder;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
-import frc.robot.Constants;
-import 
+import frc.robot.Constants; 
 
 public class Shooter extends PIDSubsystem{
 
-  private final Encoder encoder;
+  private final RelativeEncoder encoder;
 
   private final Spark motors;
 
-  public Shooter(Spark motors, Encoder encoder, PIDController controller) {
+  public Shooter(Spark motors, RelativeEncoder encoder, PIDController controller) {
     super(controller);
     this.motors = motors;
     this.encoder = encoder;
@@ -29,7 +30,7 @@ public class Shooter extends PIDSubsystem{
   }
   @Override
   public void useOutput(double output, double setpoint) {
-    final double out = getController().calculate(encoder.getRate(), setpoint);
+    final double out = getController().calculate(encoder.getVelocity(), setpoint);
     motors.setVoltage(MathUtil.clamp(out, -8, 8));
   }
 
