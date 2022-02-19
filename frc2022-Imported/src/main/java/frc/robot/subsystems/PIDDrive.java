@@ -71,7 +71,6 @@ public class PIDDrive extends PIDSubsystem{
   }
 
 
-
   @Override
   public void useOutput(double output, double setpoint) {
     final double out = controllerD.calculate(encoder.getDistance(), setpoint);

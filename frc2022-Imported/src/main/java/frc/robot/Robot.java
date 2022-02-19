@@ -108,8 +108,9 @@ public class Robot extends TimedRobot {
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
-    CommandScheduler.getInstance().cancelAll();
-    CommandScheduler.getInstance().schedule(new MoveCommandGroup(24.0, rc));
+    // CommandScheduler.getInstance().cancelAll();
+    // CommandScheduler.getInstance().schedule(new MoveCommandGroup(24.0, rc));
+    // CommandScheduler.getInstance().schedule( new Move(48, rc.leftDController, rc.left));
 
   }
 
@@ -133,9 +134,11 @@ public class Robot extends TimedRobot {
   }
   @Override
   public void testPeriodic() {
+    CommandScheduler.getInstance().schedule(new MoveCommandGroup(24.00, rc));
+
+    // System.out.println(CommandScheduler.getInstance().isScheduled());
     CommandScheduler.getInstance().run();
-    debug();
+    // debug();
   }
 
 }
-
