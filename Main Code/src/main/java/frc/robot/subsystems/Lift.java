@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Lift extends SubsystemBase {
-    // MotorControllerGroup lifts =
+
     WPI_TalonSRX el_vader;
     WPI_TalonSRX el_trooper;
     double distance_traveled;
@@ -23,10 +23,10 @@ public class Lift extends SubsystemBase {
     double el_top = 10;
     double el_bottom = 0;
 
-  public Lift(MotorControllerGroup lifts) {
+  public Lift() {
     
     en_coder = new Encoder(Constants.EL_A, Constants.EL_B);
-    el_vader = new WPI_TalonSRX(Constants.EL_NUMBERO);
+    el_vader = new WPI_TalonSRX(Constants.EL_LEADER);
     el_trooper = new WPI_TalonSRX(Constants.El_FOLLOWER);
 
     el_vader.setNeutralMode(NeutralMode.Brake);
@@ -47,6 +47,7 @@ public class Lift extends SubsystemBase {
         el_vader.set(.5);
       }
     }
+    el_vader.set(0);
   }
   
   public void motor_down(double setpoint) {
@@ -58,7 +59,9 @@ public class Lift extends SubsystemBase {
       else{
         el_vader.set(-.5);
       }
+
     }
+    el_vader.set(0);
     
   }
   public void stop() {

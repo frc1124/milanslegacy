@@ -67,10 +67,16 @@ public final class Constants {
     public static final double WHEELRADIUS = 3; // in
     public static final int ENCODERRESOLUTION = 4096;
 
-
-    public static final int EL_NUMBERO = 0;
     public static final int EL_A = 1;
     public static final int EL_B = 1;
+
+    public static final int EL_LEADER = 0;
     public static final int El_FOLLOWER = 0;
+
+    public static final int BOTTOM_SWITCH = 0;
+    public static final int TOP_SWITCH = 0;
+
+    public static final int INTAKE_ID = 2;
+ 
 
 }

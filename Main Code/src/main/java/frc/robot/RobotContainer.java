@@ -66,12 +66,15 @@ public class RobotContainer {
   //   Constants.SHOOT_P, Constants.SHOOT_I, Constants.SHOOT_D);
 
   
+
+  
   public final XboxController j = new XboxController(0);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+
   }
 
   /**
