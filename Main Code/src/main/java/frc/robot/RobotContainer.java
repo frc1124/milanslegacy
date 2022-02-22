@@ -8,18 +8,27 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
+//import edu.wpi.first.wpilibj.XboxController.JoystickButton;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 //import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.ReleaseBallz;
+import frc.robot.commands.Shoot;
+import frc.robot.commands.SuckBallz;
+// import frc.robot.subsystems.Intake;
 //import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.PIDDrive;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import java.util.HashMap;
+import com.revrobotics.*;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import edu.wpi.first.wpilibj.Joystick;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -28,6 +37,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  public static XboxController j;
+
 
   // The robot's subsystems and commands are defined here...
   /*
@@ -65,18 +76,38 @@ public class RobotContainer {
   // public final PIDController shootController = new PIDController(
   //   Constants.SHOOT_P, Constants.SHOOT_I, Constants.SHOOT_D);
 
-  
+  CANSparkMax motor = new CANSparkMax(1 , MotorType.kBrushless);
+  RelativeEncoder encoder = motor.getEncoder();
+  PIDController controller = new PIDController(Constants.SHOOT_P,Constants.SHOOT_I,Constants.SHOOT_D);
+  Shooter shooter = new Shooter(motor, encoder, controller);
 
+ // Intake intake = new Intake();
   
-  public final XboxController j = new XboxController(0);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    j = new XboxController(0);
     // Configure the button bindings
     configureButtonBindings();
 
   }
+  
+  public static HashMap<String, JoystickButton> logitechMap = new HashMap<String, JoystickButton>();
 
+
+  public static JoystickButton getKey(String key) { 
+    logitechMap.put("A", new JoystickButton(j, 1));
+    logitechMap.put("B", new JoystickButton(j, 2));
+    logitechMap.put("X", new JoystickButton(j, 3));
+    logitechMap.put("Y", new JoystickButton(j, 4));
+    logitechMap.put("LB", new JoystickButton(j, 5));
+    logitechMap.put("RB", new JoystickButton(j, 6));
+    logitechMap.put("Back", new JoystickButton(j, 7));
+    logitechMap.put("Start", new JoystickButton(j, 8));
+    //JoystickButton exampleButton = new JoystickButton(exampleStick, 1);
+    return logitechMap.get(key);
+}
+  
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
@@ -88,6 +119,11 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     
+    getKey("RB").whileHeld(new Shoot(Constants.SHOOT_POINT, controller, shooter));
+
+   // getKey("B").whenPressed(new SuckBallz(intake));
+   // getKey("X").whenPressed(new ReleaseBallz(intake));
+
   }
 
   /**

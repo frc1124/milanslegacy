@@ -50,13 +50,15 @@ public final class Constants {
     public static final double DIST_R_I = 1;
     public static final double DIST_R_D = .5;
 
+    public static final double SHOOT_POINT = 1354;
     public static final double SHOOT_P = 0.0001;
     public static final double SHOOT_I = 0;
     public static final double SHOOT_D = 0;
 
     public static final double SHOOT_KS = .2;
-    public static final double SHOOT_KV = .00193;
 
+    public static final double SHOOT_KV = .001919;
+    //.00192
     public static final double DRIVE_KS = 0;
     public static final double DRIVE_KV = 0;
 

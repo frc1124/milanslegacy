@@ -5,14 +5,14 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.Intake;
+//import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
 public class ReleaseBallz extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
-  Intake intake;
+ // Intake intake;
   /**
    * Creates a new ExampleCommand.
    *
@@ -20,11 +20,11 @@ public class ReleaseBallz extends CommandBase {
    */
 
 
-  public ReleaseBallz(Intake intake) {
-    this.intake = intake;
+ // public ReleaseBallz(Intake intake) {
+   // this.intake = intake;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(intake);
-  }
+  // addRequirements(intake);
+ // }
 
   // Called when the command is initially scheduled.
   @Override
@@ -33,13 +33,13 @@ public class ReleaseBallz extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.on_inverted();
+   // intake.on_inverted();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intake.stop();
+    //intake.stop();
   }
 
   // Returns true when the command should end.

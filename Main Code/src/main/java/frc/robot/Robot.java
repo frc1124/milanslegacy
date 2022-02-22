@@ -98,14 +98,7 @@ public class Robot extends TimedRobot {
   }
 
   /** This function is called periodically during operator control. */
-  CANSparkMax motor = new CANSparkMax(1,MotorType.kBrushless);
-  RelativeEncoder encoder = motor.getEncoder();
 
-  PIDController controller = new PIDController(Constants.SHOOT_P,Constants.SHOOT_I,Constants.SHOOT_D);
-/*
-  Shooter shoot = new Shooter(motor, encoder, controller);
-  */
-  Shooter shooter = new Shooter(motor, encoder, controller);
   @Override
   public void teleopPeriodic() {
     double rightV = Constants.MAXSPEED * rc.j.getRightY();
@@ -113,7 +106,6 @@ public class Robot extends TimedRobot {
     // System.out.println("" +rightV + "," +leftV);
     // CommandScheduler.getInstance().schedule(new TankCommandGroup(leftV, rightV, rc));
     // CommandScheduler.getInstance().schedule(new TankCommandGroup(12, 12, rc));
-    CommandScheduler.getInstance().schedule( new Shoot(1354, controller, shooter));
     CommandScheduler.getInstance().run();
     debug();
   }

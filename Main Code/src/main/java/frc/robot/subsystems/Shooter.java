@@ -32,6 +32,7 @@ public class Shooter extends PIDSubsystem{
     ;
     encoder.setPosition(0);
     System.out.print(encoder.getVelocity());
+    System.out.print("Running the Subsystem");
   }
   @Override
   public void useOutput(double output, double setpoint) {

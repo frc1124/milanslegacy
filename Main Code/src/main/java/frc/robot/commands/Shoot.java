@@ -16,16 +16,25 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 
 public class Shoot extends PIDCommand {
+  Shooter shooter;
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
   public Shoot(double v, PIDController controller, Shooter shooter){
     
     super(controller, shooter::getMeasurement, v, output -> shooter.useOutput(output, v));
     
+    this.shooter = shooter;
     // Tolerance; 0 in  and 0 in/s
     getController().setTolerance(0, 0);
     addRequirements(shooter);
 
+  }
+
+
+  @Override
+  public void end(boolean interrupted) {
+
+    shooter.stop();
   }
   @Override
   public boolean isFinished() {
