@@ -38,20 +38,16 @@ public class Tank extends PIDCommand {
     initialTime = Timer.getFPGATimestamp();
     
     
-    // Tolerance; 1 in/s ; 0 in/s^2
+    // Tolerance; 0 in/s ; 0 in/s^2
     getController().setTolerance(0, 0);
-    System.out.println("Tank:" + velocity);
     addRequirements(side);
   }
-  // @Override
-  // public void execute() {
-  //   side.set(1);
-  // }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    System.out.println(Timer.getFPGATimestamp() - initialTime);
+    // Adds a timeout feature so it isnt stuck on one PID loop
+    // System.out.println(Timer.getFPGATimestamp() - initialTime);
     if(Timer.getFPGATimestamp() - initialTime > timeout) return true;
     // System.out.println("enc" + side.getMeasurementV());
     return getController().atSetpoint();

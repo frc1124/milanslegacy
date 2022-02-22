@@ -35,6 +35,8 @@ public class PIDDrive extends PIDSubsystem{
 
   private boolean isLeft;
 
+  private SimpleMotorFeedforward ff = new SimpleMotorFeedforward(Constants.DRIVE_KS, Constants.DRIVE_KV);
+
   /**
    * Constructs a differential drive object. Sets the encoder distance per pulse and resets the
    * gyro.
@@ -73,19 +75,35 @@ public class PIDDrive extends PIDSubsystem{
 
   @Override
   public void useOutput(double output, double setpoint) {
+    double outff = ff.calculate(output, setpoint);
     final double out = controllerD.calculate(encoder.getDistance(), setpoint);
     double outFiltered = MathUtil.clamp(out, -8, 8);
-    motors.setVoltage(out);
+    // System.out.println(out);
+    motors.setVoltage(out + outff);
   }
+  public void useOutputD(double output, double setpoint) {
+    double outff = ff.calculate(output, setpoint);
+    final double out = controllerD.calculate(encoder.getDistance(), setpoint);
+    double outFiltered = MathUtil.clamp(out, -8, 8);
+    // System.out.println(out);
+    motors.setVoltage(out + outff);
+  }
+  
 
   @Override
   public double getMeasurement() {
+    return encoder.getDistance();
+  }
+  public double getMeasurementD() {
     return encoder.getDistance();
   }
   public void useOutputV(double output, double setpoint) {
     final double out = controllerV.calculate(encoder.getRate(), setpoint);
     double outFiltered = MathUtil.clamp(out, -8, 8);
     motors.setVoltage(out);
+  }
+  public MotorControllerGroup getMotors() {
+    return motors;
   }
 
 

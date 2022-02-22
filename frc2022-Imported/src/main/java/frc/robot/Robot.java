@@ -65,17 +65,20 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+    CommandScheduler.getInstance().schedule(new MoveCommandGroup(24.0, rc));
     // autoCMD = rc.getAutonomousCommand();
 
     // schedule the autonomous command (example)
-    if (autoCMD != null) {
-      autoCMD.schedule();
-    }
+    // if (autoCMD != null) {
+    //   autoCMD.schedule();
+    // }
   }
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    CommandScheduler.getInstance().run();
+  }
 
   @Override
   public void teleopInit() {
@@ -134,7 +137,6 @@ public class Robot extends TimedRobot {
   }
   @Override
   public void testPeriodic() {
-    CommandScheduler.getInstance().schedule(new MoveCommandGroup(24.00, rc));
 
     // System.out.println(CommandScheduler.getInstance().isScheduled());
     CommandScheduler.getInstance().run();

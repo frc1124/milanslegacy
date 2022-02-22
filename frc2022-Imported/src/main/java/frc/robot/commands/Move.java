@@ -27,7 +27,9 @@ public class Move extends PIDCommand {
    * @param subsystem The subsystem used by this command.
    */
   public Move(double distance, PIDController controller, PIDDrive side, Encoder e){
-    super(controller, side::getMeasurement, distance, output -> side.useOutput(output, distance));
+    super(controller, side::getMeasurementD, distance, output -> side.useOutputD(output, distance));
+    System.out.println("");
+    System.out.println("POS ERR: " + getController().getPositionError());
     this.side = side;
     e.reset();
     
@@ -38,12 +40,13 @@ public class Move extends PIDCommand {
   }
   // @Override
   // public void execute() {
-  //   side.set(.5);
+  //   System.out.println("");
+  //   side.set(1);
   // }
+
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    System.out.print("in progress");
     // return getController().atSetpoint();
     return false;
   }
