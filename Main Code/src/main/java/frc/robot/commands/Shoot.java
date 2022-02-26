@@ -12,6 +12,7 @@ import java.util.function.DoubleConsumer;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 
@@ -33,7 +34,6 @@ public class Shoot extends PIDCommand {
 
   @Override
   public void end(boolean interrupted) {
-
     shooter.stop();
   }
   @Override

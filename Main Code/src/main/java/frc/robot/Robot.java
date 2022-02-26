@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ScheduleCommand;
@@ -107,6 +108,10 @@ public class Robot extends TimedRobot {
     // CommandScheduler.getInstance().schedule(new TankCommandGroup(leftV, rightV, rc));
     // CommandScheduler.getInstance().schedule(new TankCommandGroup(12, 12, rc));
     CommandScheduler.getInstance().run();
+    SmartDashboard.putData(CommandScheduler.getInstance());
+
+    SmartDashboard.putNumber("Shooter RPM", Math.round(Shooter.encoder.getVelocity()));
+
     debug();
   }
 

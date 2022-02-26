@@ -9,23 +9,26 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PS4Controller;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.XboxController;
-//import edu.wpi.first.wpilibj.XboxController.JoystickButton;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
-//import frc.robot.commands.ArcadeDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.ReleaseBallz;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.SuckBallz;
-// import frc.robot.subsystems.Intake;
-//import frc.robot.subsystems.Drive;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.PIDDrive;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+//import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import java.util.HashMap;
+
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.*;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.Joystick;
@@ -41,7 +44,7 @@ public class RobotContainer {
 
 
   // The robot's subsystems and commands are defined here...
-  /*
+  
   public final Encoder leftEncoder = new Encoder(Constants.LEFTCHANNEL_A, Constants.LEFTCHANNEL_B);
   public final Encoder rightEncoder = new Encoder(Constants.RIGHTCHANNEL_A, Constants.RIGHTCHANNEL_B);
 
@@ -52,9 +55,6 @@ public class RobotContainer {
 
   public final MotorControllerGroup lefts = new MotorControllerGroup(leftLeader, leftFollower);
   public final MotorControllerGroup rights = new MotorControllerGroup(rightLeader, rightFollower);
-
-  public final Spark motor = new Spark(2);
-
   
   public final PIDController leftDController = new PIDController(
     Constants.DIST_L_P, Constants.DIST_L_I, Constants.DIST_L_D);
@@ -66,29 +66,32 @@ public class RobotContainer {
     Constants.VEL_R_P, Constants.VEL_R_I, Constants.VEL_R_D);
   public final PIDDrive left =  new PIDDrive(lefts, leftEncoder, leftVController, leftDController, true);
   public final PIDDrive right = new PIDDrive(rights, rightEncoder, rightVController, rightDController, false);
-  */
-
-  // public final WPI_TalonSRX liftLeader = new WPI_TalonSRX(Constants.LIFTLEADER);
-  // public final WPI_TalonSRX liftFollower = new WPI_TalonSRX(Constants.LIFTFOLLOWER);
-  // public final MotorControllerGroup lifts = new MotorControllerGroup(liftLeader, liftFollower);
   
-  // public final Spark shooterSpark = new Spark(Constants.SHOOTER);
-  // public final PIDController shootController = new PIDController(
-  //   Constants.SHOOT_P, Constants.SHOOT_I, Constants.SHOOT_D);
+
+   public final WPI_TalonSRX liftLeader = new WPI_TalonSRX(Constants.LIFTLEADER);
+   public final WPI_TalonSRX liftFollower = new WPI_TalonSRX(Constants.LIFTFOLLOWER);
+   public final MotorControllerGroup lifts = new MotorControllerGroup(liftLeader, liftFollower);
+  
+   public final Spark shooterSpark = new Spark(Constants.SHOOTER);
+   public final PIDController shootController = new PIDController(
+     Constants.SHOOT_P, Constants.SHOOT_I, Constants.SHOOT_D);
 
   CANSparkMax motor = new CANSparkMax(1 , MotorType.kBrushless);
   RelativeEncoder encoder = motor.getEncoder();
   PIDController controller = new PIDController(Constants.SHOOT_P,Constants.SHOOT_I,Constants.SHOOT_D);
   Shooter shooter = new Shooter(motor, encoder, controller);
-
- // Intake intake = new Intake();
+  Intake intake = new Intake();
   
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
+
   public RobotContainer() {
     j = new XboxController(0);
+    SmartDashboard.putData("Run Shooter", new Shoot(Constants.SHOOT_POINT, controller, shooter));
+    SmartDashboard.putData("Run Intake", new SuckBallz());
     // Configure the button bindings
     configureButtonBindings();
+
 
   }
   
@@ -114,8 +117,6 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  // public Command getTeleopDrive() {
-  // }
 
   private void configureButtonBindings() {
     
