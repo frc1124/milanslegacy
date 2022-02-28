@@ -67,7 +67,7 @@ public class Robot extends TimedRobot {
     shootControl = RobotContainer.shootController;
 
     //ERRORS WITH STATIC VARIABLES
-    shot = rc.shot;
+    shot = rc.shooter;
 
 
   }  
@@ -110,9 +110,10 @@ public class Robot extends TimedRobot {
     );
 
     ParallelCommandGroup reverse = new ParallelCommandGroup(
-      //use move for distance 
+      //change to move
       (Command) new Tank(10, leftDController, left),
-      (Command) new Tank(10, rightDController, right));
+      (Command) new Tank(10, rightDController, right)
+    );
 
     CommandScheduler.getInstance().schedule(shoot);
     CommandScheduler.getInstance().schedule(reverse);

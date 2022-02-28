@@ -19,7 +19,7 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.ReleaseBallz;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.SuckBallz;
-//import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.PIDDrive;
 import frc.robot.subsystems.Shooter;
@@ -29,8 +29,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import java.util.HashMap;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-//import com.revrobotics.*;
-//import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.*;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.Joystick;
 
 
@@ -80,17 +80,14 @@ public class RobotContainer {
   public final static PIDController shootController = new PIDController(
     Constants.SHOOT_P, Constants.SHOOT_I, Constants.SHOOT_D);
 
-  //THIS DOESN'T USE THE RIGHT ENCODER VALUES... WHERE IS THE ENCODER SETUP FOR THE SHOOTER
-  public final Shooter shot = new Shooter(shooterSpark, leftEncoder, shootController);
-
   
   public final XboxController j = new XboxController(0);
 
-  // CANSparkMax motor = new CANSparkMax(1 , MotorType.kBrushless);
-  // RelativeEncoder encoder = motor.getEncoder();
-  // PIDController controller = new PIDController(Constants.SHOOT_P,Constants.SHOOT_I,Constants.SHOOT_D);
-  // Shooter shooter = new Shooter(motor, encoder, controller);
-  // Intake intake = new Intake();
+  CANSparkMax motor = new CANSparkMax(1 , MotorType.kBrushless);
+  Encoder encoder = shooterSpark.getEncoder();
+  PIDController controller = new PIDController(Constants.SHOOT_P,Constants.SHOOT_I,Constants.SHOOT_D);
+  Shooter shooter = new Shooter(shooterSpark, encoder, shootController);
+  Intake intake = new Intake();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
