@@ -111,8 +111,8 @@ public class Robot extends TimedRobot {
 
     ParallelCommandGroup reverse = new ParallelCommandGroup(
       //change to move
-      (Command) new Move(10, leftDController, left),
-      (Command) new Move(10, rightDController, right)
+      (Command) new Move(50, leftDController, left),
+      (Command) new Move(50, rightDController, right)
     );
 
     CommandScheduler.getInstance().schedule(shoot);
