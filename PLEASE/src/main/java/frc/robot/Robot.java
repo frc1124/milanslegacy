@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.revrobotics.RelativeEncoder;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotController;
@@ -45,6 +47,8 @@ public class Robot extends TimedRobot {
 
   public Shooter shot;
 
+  public RelativeEncoder encode;
+
 
 
   /**
@@ -60,16 +64,12 @@ public class Robot extends TimedRobot {
     leftDController = RobotContainer.leftDController;
     rightDController = RobotContainer.rightDController;
 
-    //ERRORS WITH STATIC VARIABLES
     left = rc.left;
     right = rc.right;
 
     shootControl = RobotContainer.shootController;
 
-    //ERRORS WITH STATIC VARIABLES
     shot = rc.shooter;
-
-
   }  
 
   /**
@@ -111,8 +111,8 @@ public class Robot extends TimedRobot {
 
     ParallelCommandGroup reverse = new ParallelCommandGroup(
       //change to move
-      (Command) new Tank(10, leftDController, left),
-      (Command) new Tank(10, rightDController, right)
+      (Command) new Move(10, leftDController, left),
+      (Command) new Move(10, rightDController, right)
     );
 
     CommandScheduler.getInstance().schedule(shoot);

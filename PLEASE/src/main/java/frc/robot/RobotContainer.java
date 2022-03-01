@@ -75,7 +75,7 @@ public class RobotContainer {
   // public final WPI_TalonSRX liftFollower = new WPI_TalonSRX(Constants.LIFTFOLLOWER);
   // public final MotorControllerGroup lifts = new MotorControllerGroup(liftLeader, liftFollower);
   
-  public final Spark shooterSpark = new Spark(Constants.SHOOTER);
+  public final CANSparkMax shooterSpark = new CANSparkMax(3, MotorType.kBrushless);
 
   public final static PIDController shootController = new PIDController(
     Constants.SHOOT_P, Constants.SHOOT_I, Constants.SHOOT_D);
@@ -84,7 +84,7 @@ public class RobotContainer {
   public final XboxController j = new XboxController(0);
 
   CANSparkMax motor = new CANSparkMax(1 , MotorType.kBrushless);
-  Encoder encoder = shooterSpark.getEncoder();
+  RelativeEncoder encoder = shooterSpark.getEncoder();
   PIDController controller = new PIDController(Constants.SHOOT_P,Constants.SHOOT_I,Constants.SHOOT_D);
   Shooter shooter = new Shooter(shooterSpark, encoder, shootController);
   Intake intake = new Intake();

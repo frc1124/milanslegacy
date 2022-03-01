@@ -12,7 +12,6 @@ import java.util.function.DoubleConsumer;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 
@@ -26,28 +25,18 @@ public class Move extends PIDCommand {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public Move(double distance, PIDController controller, PIDDrive side, Encoder e){
-    super(controller, side::getMeasurementD, distance, output -> side.useOutputD(output, distance));
-    System.out.println("");
-    System.out.println("POS ERR: " + getController().getPositionError());
+  public Move(double distance, PIDController controller, PIDDrive side){
+    super(controller, side::getMeasurement, distance, output -> side.useOutput(output, distance));
     this.side = side;
-    e.reset();
     
     // Tolerance; 0 in  and 0 in/s
     getController().setTolerance(0, 0);
     addRequirements(side);
 
   }
-  // @Override
-  // public void execute() {
-  //   System.out.println("");
-  //   side.set(1);
-  // }
-
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // return getController().atSetpoint();
-    return false;
+    return getController().atSetpoint();
   }
 }

@@ -2,39 +2,54 @@
 package frc.robot.subsystems;
 
 
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
-import frc.robot.Constants;
+import frc.robot.Constants; 
+import com.revrobotics.*;
 
 public class Shooter extends PIDSubsystem{
 
-  private final Encoder encoder;
+  public static RelativeEncoder encoder;
 
-  private final Spark motors;
+  public CANSparkMax motors;
 
-  public Shooter(Spark motors, Encoder encoder, PIDController controller) {
+  public SimpleMotorFeedforward ff = new SimpleMotorFeedforward(Constants.SHOOT_KS, Constants.SHOOT_KV);
+
+  public Shooter(CANSparkMax motors, RelativeEncoder encoder, PIDController controller) {
     super(controller);
     this.motors = motors;
     this.encoder = encoder;
-
     // set one distance unit to be a revolution
-    encoder.setDistancePerPulse(1 / Constants.ENCODERRESOLUTION);
-
-    encoder.reset();
+    ;
+    encoder.setPosition(0);
+    SmartDashboard.putNumber("Shooter RPM", encoder.getVelocity());
   }
   @Override
   public void useOutput(double output, double setpoint) {
-    final double out = getController().calculate(encoder.getRate(), setpoint);
-    motors.setVoltage(MathUtil.clamp(out, -8, 8));
+
+    double feedfrwrd = ff.calculate(setpoint);
+
+
+    final double out = getController().calculate(encoder.getVelocity(), setpoint);
+    motors.setVoltage(MathUtil.clamp(out + feedfrwrd, -12, 12));
+  }
+
+  public void on(){
+    motors.set(1);
   }
 
   @Override
   public double getMeasurement() {
-    return encoder.getRate();
+    return encoder.getVelocity();
   }
 
   public void stop() {
