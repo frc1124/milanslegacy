@@ -16,8 +16,8 @@ public class MoveCommandGroup extends ParallelCommandGroup{
         this.leftD = leftD;
         this.rightD = rightD;
 
-        parallel((Command) new Move(rightD, rc.rightDController, rc.right, rc.rightEncoder));
-        parallel((Command) new Move(leftD, rc.leftDController, rc.left, rc.leftEncoder));
+        parallel((Command) new Move(rightD, rc.rightDController, rc.right));
+        parallel((Command) new Move(leftD, rc.leftDController, rc.left));
 
     }
     
