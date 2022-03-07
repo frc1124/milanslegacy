@@ -24,6 +24,7 @@ import frc.robot.commands.Shoot;
 import frc.robot.commands.SuckBallz;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Lift;
+import frc.robot.subsystems.LimitSwitch;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.PIDDrive;
 import frc.robot.subsystems.Screw;
@@ -89,6 +90,7 @@ public class RobotContainer {
   Intake intake = new Intake();
   Screw screw = new Screw();
   Lift lift = new Lift();
+  LimitSwitch limitswitch = new LimitSwitch();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
 
@@ -130,8 +132,8 @@ public class RobotContainer {
     getKey("A").whenPressed(new ScrewUp(screw));
     getKey("B").whenPressed(new SuckBallz(intake));
     getKey("X").whenPressed(new ReleaseBallz(intake));
-    getKey("Y").whenPressed(new El_up(lift, Constants.Lift_POINT));
-    getKey("LB").whenPressed(new El_down(lift, Constants.Lift_POINT));
+    getKey("Y").whenPressed(new El_up(lift, Constants.Lift_POINT, limitswitch));
+    getKey("LB").whenPressed(new El_down(lift, Constants.Lift_POINT, limitswitch));
   }
 
   /**

@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Lift;
+import frc.robot.subsystems.LimitSwitch;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
@@ -19,11 +20,15 @@ public class El_down extends CommandBase {
    */
   Lift lift;
   double setpoint;
-  public El_down(Lift lift, double setpoint) {
+  public El_down(Lift lift, double setpoint, LimitSwitch limitSwitch) {
     this.lift = lift;
     this.setpoint = setpoint;
+    
+
+
+
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(lift);
+    addRequirements(lift,limitSwitch);
   
   }
 
@@ -47,6 +52,8 @@ public class El_down extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false; 
+    return LimitSwitch.get_bottom();
+
+    
   }
 }

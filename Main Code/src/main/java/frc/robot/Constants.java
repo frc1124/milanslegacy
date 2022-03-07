@@ -83,6 +83,8 @@ public final class Constants {
 
     public static final double LIFT_ID = 10;
     public static final int SCREW_PORT = 0;
+    
+    public static final String COLOR_PORT = null;
  
 
 }

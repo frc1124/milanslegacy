@@ -12,17 +12,17 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class SuckBallz extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
- 
+  Intake intake;
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
 
-  Intake intake;
+
   public SuckBallz(Intake intake) {
     this.intake = intake;
-    //Use addRequirements() here to declare subsystem dependencies.
+    // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(intake);
   }
 
