@@ -79,8 +79,10 @@ public final class Constants {
     public static final int TOP_SWITCH = 0;
 
     public static final int INTAKE_ID = 2;
-    public static final double LIFT_ID = 10;
     public static final double Lift_POINT = 0;
+
+    public static final double LIFT_ID = 10;
+    public static final int SCREW_PORT = 0;
  
 
 }
