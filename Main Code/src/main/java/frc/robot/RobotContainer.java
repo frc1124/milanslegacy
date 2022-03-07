@@ -15,13 +15,18 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.El_down;
+import frc.robot.commands.El_up;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.ReleaseBallz;
+import frc.robot.commands.ScrewUp;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.SuckBallz;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.PIDDrive;
+import frc.robot.subsystems.Screw;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
 //import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -79,16 +84,17 @@ public class RobotContainer {
   CANSparkMax motor = new CANSparkMax(1 , MotorType.kBrushless);
   RelativeEncoder encoder = motor.getEncoder();
   PIDController controller = new PIDController(Constants.SHOOT_P,Constants.SHOOT_I,Constants.SHOOT_D);
+
   Shooter shooter = new Shooter(motor, encoder, controller);
   Intake intake = new Intake();
-  
+  Screw screw = new Screw();
+  Lift lift = new Lift();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
 
   public RobotContainer() {
     j = new XboxController(0);
     SmartDashboard.putData("Run Shooter", new Shoot(Constants.SHOOT_POINT, controller, shooter));
-    SmartDashboard.putData("Run Intake", new SuckBallz());
     // Configure the button bindings
     configureButtonBindings();
 
@@ -121,10 +127,11 @@ public class RobotContainer {
   private void configureButtonBindings() {
     
     getKey("RB").whileHeld(new Shoot(Constants.SHOOT_POINT, controller, shooter));
-
-   // getKey("B").whenPressed(new SuckBallz(intake));
-   // getKey("X").whenPressed(new ReleaseBallz(intake));
-
+    getKey("A").whenPressed(new ScrewUp(screw));
+    getKey("B").whenPressed(new SuckBallz(intake));
+    getKey("X").whenPressed(new ReleaseBallz(intake));
+    getKey("Y").whenPressed(new El_up(lift, Constants.Lift_POINT));
+    getKey("LB").whenPressed(new El_down(lift, Constants.Lift_POINT));
   }
 
   /**
@@ -132,8 +139,8 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  // public Command getAutonomousCommand() {
-  //   // An ExampleCommand will run in autonomous
-  //   return arcadeDrive;
-  // }
+  public void getAutonomousCommand() {
+    // An ExampleCommand will run in autonomous
+    //return arcadeDrive;
+  }
 }
