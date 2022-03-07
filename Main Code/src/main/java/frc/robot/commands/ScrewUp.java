@@ -4,26 +4,23 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Screw;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
-public class ReleaseBallz extends CommandBase {
+public class ScrewUp extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+  private final Screw archScrew;
 
-  Intake intake;
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-
-
-  public ReleaseBallz(Intake intake) {
-    this.intake = intake;
+  public ScrewUp(Screw archScrew) {
+    this.archScrew = archScrew;
     // Use addRequirements() here to declare subsystem dependencies.
-   // addRequirements(intake);
+    addRequirements(archScrew);
   }
 
   // Called when the command is initially scheduled.
@@ -33,14 +30,12 @@ public class ReleaseBallz extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-   // intake.on_inverted();
+    archScrew.On();
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    //intake.stop();
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

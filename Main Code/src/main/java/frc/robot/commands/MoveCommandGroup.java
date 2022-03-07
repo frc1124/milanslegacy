@@ -1,4 +1,4 @@
-/*
+
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.RobotController;
@@ -25,4 +25,4 @@ public class MoveCommandGroup extends CommandGroupBase{
     
 }
 
-*/
+

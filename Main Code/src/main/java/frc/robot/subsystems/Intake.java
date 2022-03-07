@@ -9,11 +9,11 @@ import com.revrobotics.*;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import frc.robot.Constants;
 
-//public class Intake extends SubsystemBase {
- // CANSparkMax intake_motor;
+public class Intake extends SubsystemBase {
+ CANSparkMax intake_motor;
 
   /** Creates a new ExampleSubsystem. */
-  /*
+  
   public Intake() {
     intake_motor = new CANSparkMax(Constants.INTAKE_ID,MotorType.kBrushless);
   }
@@ -39,4 +39,4 @@ import frc.robot.Constants;
     // This method will be called once per scheduler run during simulation
   }
 }
-*/
+

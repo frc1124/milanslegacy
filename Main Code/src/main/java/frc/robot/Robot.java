@@ -37,7 +37,10 @@ import frc.robot.subsystems.Shooter;
 public class Robot extends TimedRobot {
   private Command autoCMD;
   private RobotContainer rc;
-
+  CANSparkMax motor = new CANSparkMax(1 , MotorType.kBrushless);
+  RelativeEncoder encoder = motor.getEncoder();
+  PIDController controller = new PIDController(Constants.SHOOT_P,Constants.SHOOT_I,Constants.SHOOT_D);
+  Shooter shooter = new Shooter(motor, encoder, controller);
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -71,16 +74,19 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {}
-
+  
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
     // autoCMD = rc.getAutonomousCommand();
-
     // schedule the autonomous command (example)
     if (autoCMD != null) {
       autoCMD.schedule();
     }
+    shooter.on();
+    
+
+    
   }
 
   /** This function is called periodically during autonomous. */
