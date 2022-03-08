@@ -67,8 +67,8 @@ public final class Constants {
     public static final double WHEELRADIUS = 3; // in
     public static final int ENCODERRESOLUTION = 4096;
 
-    public static final int EL_A = 1;
-    public static final int EL_B = 1;
+    public static final int EL_CHANNEL_A = 1;
+    public static final int EL_CHANNEL_B = 1;
 
     public static final int EL_LEADER = 0;
     public static final int El_FOLLOWER = 0;

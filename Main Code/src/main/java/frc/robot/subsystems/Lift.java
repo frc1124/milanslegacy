@@ -25,7 +25,7 @@ public class Lift extends SubsystemBase {
 
   public Lift() {
     
-    en_coder = new Encoder(Constants.EL_A, Constants.EL_B);
+    en_coder = new Encoder(Constants.EL_CHANNEL_A, Constants.EL_CHANNEL_B);
     el_vader = new WPI_TalonSRX(Constants.EL_LEADER);
     el_trooper = new WPI_TalonSRX(Constants.El_FOLLOWER);
 
@@ -36,11 +36,13 @@ public class Lift extends SubsystemBase {
 
   public void motor_up(double setpoint) {
 
-    distance_traveled = en_coder.getDistance();
-    distance_from_top = el_top - distance_traveled;
-    distance_from_bottom = el_bottom - distance_traveled;
+ 
     
     while (distance_traveled != setpoint) {
+      distance_traveled = en_coder.getDistance();
+      distance_from_top = el_top - distance_traveled;
+      distance_from_bottom = el_bottom - distance_traveled;
+
       if (distance_from_top < 4) {
         el_vader.set(.1);
       }
@@ -54,6 +56,9 @@ public class Lift extends SubsystemBase {
   public void motor_down(double setpoint) {
     
     while (distance_traveled != setpoint) {
+      distance_traveled = en_coder.getDistance();
+      distance_from_top = el_top - distance_traveled;
+      distance_from_bottom = el_bottom - distance_traveled;
       if (distance_from_top < 4) {
         el_vader.set(-.1);
       }
