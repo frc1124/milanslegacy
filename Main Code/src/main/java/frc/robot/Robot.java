@@ -37,10 +37,10 @@ import frc.robot.subsystems.Shooter;
 public class Robot extends TimedRobot {
   private Command autoCMD;
   private RobotContainer rc;
-  CANSparkMax motor = new CANSparkMax(1 , MotorType.kBrushless);
-  RelativeEncoder encoder = motor.getEncoder();
+  CANSparkMax shooterMotor = new CANSparkMax(Constants.SHOOTER , MotorType.kBrushless);
+  RelativeEncoder encoder = shooterMotor.getEncoder();
   PIDController controller = new PIDController(Constants.SHOOT_P,Constants.SHOOT_I,Constants.SHOOT_D);
-  Shooter shooter = new Shooter(motor, encoder, controller);
+  Shooter shooter = new Shooter(shooterMotor, encoder, controller);
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -116,7 +116,6 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
     SmartDashboard.putData(CommandScheduler.getInstance());
 
-    SmartDashboard.putNumber("Shooter RPM", Math.round(Shooter.encoder.getVelocity()));
 
     debug();
   }

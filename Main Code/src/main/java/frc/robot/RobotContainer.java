@@ -132,7 +132,7 @@ public class RobotContainer {
     getKey("B").whenPressed(new SuckBallz(intake));
     getKey("X").whenPressed(new ReleaseBallz(intake));
     getKey("Y").whenPressed(new El_up(lift, Constants.Lift_POINT, limitswitch));
-    getKey("LB").whenPressed(new El_down(lift, Constants.Lift_POINT, limitswitch));
+    getKey("LB").whenPressed(new El_down(lift, Constants.Lift_POINT));
   }
 
   /**
