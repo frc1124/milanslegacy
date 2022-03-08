@@ -23,7 +23,10 @@ public final class Constants {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 80fc5a7ede0ac0d128e116536bfd8a3eaf366a4e
 =======
 >>>>>>> 80fc5a7ede0ac0d128e116536bfd8a3eaf366a4e
     public static final int SHOOTER =  13;
@@ -85,6 +88,7 @@ public final class Constants {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     public static final double Lift_POINT = 10;
 
 
@@ -96,6 +100,10 @@ public final class Constants {
 =======
     public static final int Lift_POINT = 0;
 
+=======
+    public static final int Lift_POINT = 0;
+
+>>>>>>> 80fc5a7ede0ac0d128e116536bfd8a3eaf366a4e
 =======
     public static final int Lift_POINT = 0;
 

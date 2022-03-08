@@ -27,9 +27,12 @@ public class Lift extends SubsystemBase {
   public Lift() {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     
     en_coder = new Encoder(Constants.EL_CHANNEL_A, Constants.EL_CHANNEL_B);
 =======
+=======
+>>>>>>> 80fc5a7ede0ac0d128e116536bfd8a3eaf366a4e
 =======
 >>>>>>> 80fc5a7ede0ac0d128e116536bfd8a3eaf366a4e
     en_coder = new Encoder(Constants.EL_A, Constants.EL_B);
@@ -44,8 +47,11 @@ public class Lift extends SubsystemBase {
     el_trooper.follow(el_vader);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     en_coder.setDistancePerPulse(0);
 =======
+=======
+>>>>>>> 80fc5a7ede0ac0d128e116536bfd8a3eaf366a4e
 =======
 >>>>>>> 80fc5a7ede0ac0d128e116536bfd8a3eaf366a4e
     en_coder.reset();
@@ -53,13 +59,17 @@ public class Lift extends SubsystemBase {
   public double getDistance() {
     return en_coder.getDistance();
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> ecae8981a6ff07369e4910d444bd2a4057db81fa
+=======
+>>>>>>> 80fc5a7ede0ac0d128e116536bfd8a3eaf366a4e
 =======
 >>>>>>> 80fc5a7ede0ac0d128e116536bfd8a3eaf366a4e
   }
 
   public void motor_up(double setpoint) {
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
  
@@ -89,6 +99,15 @@ public class Lift extends SubsystemBase {
       if (distance_from_top < 8) {
         motors.set(.1);
 >>>>>>> 80fc5a7ede0ac0d128e116536bfd8a3eaf366a4e
+=======
+    distance_traveled = en_coder.getDistance();
+    distance_from_top = Math.abs(el_top - distance_traveled);
+    distance_from_bottom = Math.abs(el_bottom - distance_traveled);
+    
+    while (distance_traveled != setpoint) {
+      if (distance_from_top < 8) {
+        motors.set(.1);
+>>>>>>> 80fc5a7ede0ac0d128e116536bfd8a3eaf366a4e
       }
       else{
         motors.set(.5);
@@ -101,6 +120,7 @@ public class Lift extends SubsystemBase {
     while (distance_traveled != setpoint) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       distance_traveled = en_coder.getDistance();
       distance_from_top = el_top - distance_traveled;
       distance_from_bottom = el_bottom - distance_traveled;
@@ -110,6 +130,10 @@ public class Lift extends SubsystemBase {
       if (distance_from_bottom < 8) {
         motors.set(-.1);
 >>>>>>> ecae8981a6ff07369e4910d444bd2a4057db81fa
+=======
+      if (distance_from_bottom < 8) {
+        motors.set(-.1);
+>>>>>>> 80fc5a7ede0ac0d128e116536bfd8a3eaf366a4e
 =======
       if (distance_from_bottom < 8) {
         motors.set(-.1);
