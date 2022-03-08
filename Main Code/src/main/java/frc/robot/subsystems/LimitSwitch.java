@@ -11,12 +11,10 @@ import frc.robot.Constants;
 
 public class LimitSwitch extends SubsystemBase {
   static DigitalInput top_Switch;
-  static DigitalInput bottom_Switch;
   /** Creates a new ExampleSubsystem. */
   public LimitSwitch() {
 
     top_Switch = new DigitalInput(Constants.TOP_SWITCH);
-    bottom_Switch = new DigitalInput(Constants.BOTTOM_SWITCH);
 
 
 
@@ -27,9 +25,6 @@ public class LimitSwitch extends SubsystemBase {
     return top_Switch.get();
   }
 
-  public static  boolean get_bottom() {
-    return bottom_Switch.get();
-  }
 
 
   @Override

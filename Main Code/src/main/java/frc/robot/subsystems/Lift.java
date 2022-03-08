@@ -19,53 +19,58 @@ public class Lift extends SubsystemBase {
     double distance_from_top;
     double distance_from_bottom;
     Encoder en_coder;
+    MotorControllerGroup motors;
 
-    double el_top = 10;
+    double el_top = 17;
     double el_bottom = 0;
 
   public Lift() {
-    
     en_coder = new Encoder(Constants.EL_A, Constants.EL_B);
     el_vader = new WPI_TalonSRX(Constants.EL_LEADER);
     el_trooper = new WPI_TalonSRX(Constants.El_FOLLOWER);
+    motors = new MotorControllerGroup(el_vader, el_trooper);
+    
+    en_coder.setDistancePerPulse(2*Math.PI/Constants.ENCODERRESOLUTION);
 
     el_vader.setNeutralMode(NeutralMode.Brake);
     el_trooper.follow(el_vader);
+    en_coder.reset();
+  }
+  public double getDistance() {
+    return en_coder.getDistance();
   }
 
   public void motor_up(double setpoint) {
 
     distance_traveled = en_coder.getDistance();
-    distance_from_top = el_top - distance_traveled;
-    distance_from_bottom = el_bottom - distance_traveled;
+    distance_from_top = Math.abs(el_top - distance_traveled);
+    distance_from_bottom = Math.abs(el_bottom - distance_traveled);
     
     while (distance_traveled != setpoint) {
-      if (distance_from_top < 4) {
-        el_vader.set(.1);
+      if (distance_from_top < 8) {
+        motors.set(.1);
       }
       else{
-        el_vader.set(.5);
+        motors.set(.5);
       }
     }
-    el_vader.set(0);
+    motors.set(0);
   }
   
   public void motor_down(double setpoint) {
-    
     while (distance_traveled != setpoint) {
-      if (distance_from_top < 4) {
-        el_vader.set(-.1);
+      if (distance_from_bottom < 8) {
+        motors.set(-.1);
       }
       else{
-        el_vader.set(-.5);
+        motors.set(-.5);
       }
-
     }
-    el_vader.set(0);
+    motors.set(0);
     
   }
   public void stop() {
-    el_vader.set(0);
+    motors.set(0);
   }
     
 

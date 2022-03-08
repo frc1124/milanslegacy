@@ -116,7 +116,6 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
     SmartDashboard.putData(CommandScheduler.getInstance());
 
-    SmartDashboard.putNumber("Shooter RPM", Math.round(Shooter.encoder.getVelocity()));
 
     debug();
   }

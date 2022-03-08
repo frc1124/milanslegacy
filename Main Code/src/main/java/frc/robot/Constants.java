@@ -16,12 +16,12 @@ import edu.wpi.first.wpilibj.DigitalSource;
  */
 public final class Constants {
 
-    public static final int LEFTFRONT =  2;
+    public static final int LEFTFRONT =  4;
     public static final int LEFTBACK =   3;
-    public static final int RIGHTFRONT = 1;
-    public static final int RIGHTBACK =  4;
+    public static final int RIGHTFRONT = 3;
+    public static final int RIGHTBACK =  0;
 
-    public static final int SHOOTER =  5;
+    public static final int SHOOTER =  13;
 
     public static final int LIFTLEADER =  5;
     public static final int LIFTFOLLOWER =  6;
@@ -72,17 +72,15 @@ public final class Constants {
     public static final int EL_A = 1;
     public static final int EL_B = 1;
 
-    public static final int EL_LEADER = 0;
-    public static final int El_FOLLOWER = 0;
+    public static final int EL_LEADER = 1;
+    public static final int El_FOLLOWER = 2;
 
-    public static final int BOTTOM_SWITCH = 0;
     public static final int TOP_SWITCH = 0;
 
-    public static final int INTAKE_ID = 2;
-    public static final double Lift_POINT = 0;
+    public static final int Lift_POINT = 0;
 
-    public static final double LIFT_ID = 10;
-    public static final int SCREW_PORT = 0;
+    public static final int INTAKE_ID = 12;
+    public static final int SCREW_PORT = 11;
     
     public static final String COLOR_PORT = null;
  

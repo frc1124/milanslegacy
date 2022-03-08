@@ -18,7 +18,7 @@ import com.revrobotics.*;
 
 public class Shooter extends PIDSubsystem{
 
-  public static RelativeEncoder encoder;
+  public RelativeEncoder encoder;
 
   public CANSparkMax motors;
 
