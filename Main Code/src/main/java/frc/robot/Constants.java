@@ -16,11 +16,22 @@ import edu.wpi.first.wpilibj.DigitalSource;
  */
 public final class Constants {
 
-    public static final int LEFTFRONT =  2;
+    public static final int LEFTFRONT =  4;
     public static final int LEFTBACK =   3;
-    public static final int RIGHTFRONT = 1;
-    public static final int RIGHTBACK =  4;
+    public static final int RIGHTFRONT = 3;
+    public static final int RIGHTBACK =  0;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 80fc5a7ede0ac0d128e116536bfd8a3eaf366a4e
+=======
+>>>>>>> 80fc5a7ede0ac0d128e116536bfd8a3eaf366a4e
+    public static final int SHOOTER =  13;
+
+>>>>>>> ecae8981a6ff07369e4910d444bd2a4057db81fa
     public static final int LIFTLEADER =  5;
     public static final int LIFTFOLLOWER =  6;
 
@@ -70,12 +81,14 @@ public final class Constants {
     public static final int EL_CHANNEL_A = 1;
     public static final int EL_CHANNEL_B = 1;
 
-    public static final int EL_LEADER = 0;
-    public static final int El_FOLLOWER = 0;
+    public static final int EL_LEADER = 1;
+    public static final int El_FOLLOWER = 2;
 
-    public static final int BOTTOM_SWITCH = 0;
     public static final int TOP_SWITCH = 0;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
     public static final double Lift_POINT = 10;
 
 
@@ -84,5 +97,22 @@ public final class Constants {
     public static final int SCREW_ID = 11;
     public static final int SHOOTER_ID = 13;
 
+=======
+    public static final int Lift_POINT = 0;
+
+=======
+    public static final int Lift_POINT = 0;
+
+>>>>>>> 80fc5a7ede0ac0d128e116536bfd8a3eaf366a4e
+=======
+    public static final int Lift_POINT = 0;
+
+>>>>>>> 80fc5a7ede0ac0d128e116536bfd8a3eaf366a4e
+    public static final int INTAKE_ID = 12;
+    public static final int SCREW_PORT = 11;
+    
+    public static final String COLOR_PORT = null;
+ 
+>>>>>>> ecae8981a6ff07369e4910d444bd2a4057db81fa
 
 }
