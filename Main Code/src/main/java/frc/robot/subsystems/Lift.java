@@ -31,6 +31,7 @@ public class Lift extends SubsystemBase {
 
     el_vader.setNeutralMode(NeutralMode.Brake);
     el_trooper.follow(el_vader);
+    en_coder.setDistancePerPulse(0);
   }
 
   public void motor_up(double setpoint) {

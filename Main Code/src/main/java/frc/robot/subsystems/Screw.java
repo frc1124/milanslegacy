@@ -7,13 +7,14 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Screw extends SubsystemBase {
   private static MotorController screwMotor;
 
   public Screw() {
-    screwMotor = new PWMSparkMax(Constants.SCREW_PORT);
+    screwMotor = new CANSparkMax(Constants.SCREW_ID, MotorType.kBrushless);
   }
 
   public void On() {
@@ -22,6 +23,7 @@ public class Screw extends SubsystemBase {
 
   public void Off() {
     screwMotor.set(0);
+    // among us
   }
 
   @Override
