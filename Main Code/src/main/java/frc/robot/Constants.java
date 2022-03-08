@@ -21,8 +21,6 @@ public final class Constants {
     public static final int RIGHTFRONT = 1;
     public static final int RIGHTBACK =  4;
 
-    public static final int SHOOTER =  5;
-
     public static final int LIFTLEADER =  5;
     public static final int LIFTFOLLOWER =  6;
 
@@ -78,11 +76,13 @@ public final class Constants {
     public static final int BOTTOM_SWITCH = 0;
     public static final int TOP_SWITCH = 0;
 
-    public static final int INTAKE_ID = 2;
     public static final double Lift_POINT = 10;
 
-    public static final int LIFT_ID = 5;    
-    public static final int SCREW_ID = 6;
- 
+
+    // SparkMax IDS
+    public static final int INTAKE_ID = 12;
+    public static final int SCREW_ID = 11;
+    public static final int SHOOTER_ID = 13;
+
 
 }
