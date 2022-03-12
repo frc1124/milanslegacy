@@ -4,30 +4,24 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.Lift;
-import frc.robot.subsystems.LimitSwitch;
+import frc.robot.subsystems.Screw;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
-public class El_up extends CommandBase {
+public class ScrewUp extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+  private final Screw archScrew;
 
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  Lift lift;
-  double setpoint;
-  public El_up(Lift lift, double setpoint, LimitSwitch limitSwitch) {
-    this.lift = lift;
-    this.setpoint = setpoint;
-
-
-    
+  
+  public ScrewUp(Screw archScrew) {
+    this.archScrew = archScrew;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(lift, limitSwitch);
+    addRequirements(archScrew);
   }
 
   // Called when the command is initially scheduled.
@@ -37,19 +31,18 @@ public class El_up extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    lift.motor_up(setpoint);
-    
+    archScrew.On();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    lift.stop();
+    archScrew.Off();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return LimitSwitch.get_top();
+    return false;
   }
 }

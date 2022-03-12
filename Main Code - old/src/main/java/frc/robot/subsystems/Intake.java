@@ -19,7 +19,7 @@ public class Intake extends SubsystemBase {
   }
 
   public void on() {
-    intake_motor.set(1);
+    intake_motor.set(-0.5);
   }
 
   public void stop() {
@@ -29,6 +29,7 @@ public class Intake extends SubsystemBase {
   public void on_inverted() {
     intake_motor.set(-1);
   }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

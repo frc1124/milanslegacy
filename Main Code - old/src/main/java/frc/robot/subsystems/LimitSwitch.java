@@ -4,17 +4,23 @@
 
 package frc.robot.subsystems;
 import java.lang.invoke.ConstantBootstraps;
+
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import frc.robot.Constants;
 
 
 public class LimitSwitch extends SubsystemBase {
-  static DigitalInput top_Switch;
+  // static DigitalInput top_Switch;
+  // static AnalogInput top_Switch;
   /** Creates a new ExampleSubsystem. */
   public LimitSwitch() {
 
-    top_Switch = new DigitalInput(Constants.TOP_SWITCH);
+    // top_Switch = new DigitalInput(Constants.TOP_SWITCH);
+    // top_Switch = new AnalogInput(0);
+      
 
 
 
@@ -22,7 +28,10 @@ public class LimitSwitch extends SubsystemBase {
 
   }
   public static boolean get_top() {
-    return top_Switch.get();
+    // System.out.println(top_Switch.get());
+    // System.out.println(top_Switch.getValue());
+    // return (top_Switch.getValue() != 0);
+    return false;
   }
 
 

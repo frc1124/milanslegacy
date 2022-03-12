@@ -4,6 +4,9 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -11,14 +14,21 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Screw extends SubsystemBase {
-  private static MotorController screwMotor;
+  private static CANSparkMax screwMotor;
 
   public Screw() {
+<<<<<<< HEAD
     screwMotor = new CANSparkMax(Constants.SCREW_ID, MotorType.kBrushless);
+=======
+    screwMotor = new CANSparkMax(Constants.SCREW_PORT, MotorType.kBrushless);
+>>>>>>> a96c71ae0a36daeb5a01f031eb12db98ef631c32
   }
 
   public void On() {
-    screwMotor.set(1);
+    screwMotor.set(.2);
+  }
+  public void back() {
+    screwMotor.set(-.2);
   }
 
   public void Off() {

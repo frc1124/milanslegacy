@@ -47,21 +47,23 @@ public class PIDDrive extends PIDSubsystem{
     this.motors = motors;
     this.encoder = encoder;
     this.isLeft = isLeft;
-    navx.reset();
+    // navx.reset();
 
     // We need to invert one side of the drivetrain so that positive voltages
     // result in both sides moving forward. Depending on how your robot's
     // gearbox is constructed, you might have to invert the left side instead.
+    int mod = -1;
     if(isLeft) {
+      mod = 1;
       motors.setInverted(true);
     }
 
     // Set the distance per pulse for the drive encoders. We can simply use the
     // distance traveled for one rotation of the wheel divided by the encoder
     // resolution.
-    encoder.setDistancePerPulse(2 * Math.PI * Constants.WHEELRADIUS / Constants.ENCODERRESOLUTION);
+    encoder.setDistancePerPulse(mod * 2 * Math.PI * Constants.WHEELRADIUS / Constants.ENCODERRESOLUTION);
 
-    encoder.reset();
+    // encoder.reset();
   }
 
 
