@@ -34,7 +34,7 @@ public class Tank extends PIDCommand {
     
     // Tolerance; 1 in/s ; 0 in/s^2
     getController().setTolerance(0, 0);
-    System.out.println("Tank:" + velocity);
+    // System.out.println("Tank:" + velocity);
     addRequirements(side);
   }
   // @Override
@@ -45,7 +45,7 @@ public class Tank extends PIDCommand {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    System.out.println("enc" + side.getMeasurementV());
+    // System.out.println("enc" + side.getMeasurement());
     return getController().atSetpoint();
   }
 }

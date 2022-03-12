@@ -20,14 +20,14 @@ public class El_up extends CommandBase {
    */
   Lift lift;
   double setpoint;
-  public El_up(Lift lift, double setpoint, LimitSwitch limitSwitch) {
+  public El_up(Lift lift, double setpoint) {
     this.lift = lift;
     this.setpoint = setpoint;
 
 
     
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(lift, limitSwitch);
+    addRequirements(lift);
   }
 
   // Called when the command is initially scheduled.
@@ -50,6 +50,7 @@ public class El_up extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return LimitSwitch.get_top();
+    // System.out.println("Limitswtich:" + LimitSwitch.get_top());
+    return false;
   }
 }

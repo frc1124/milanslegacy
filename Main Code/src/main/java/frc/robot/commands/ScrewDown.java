@@ -8,7 +8,7 @@ import frc.robot.subsystems.Screw;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
-public class ScrewUp extends CommandBase {
+public class ScrewDown extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Screw archScrew;
 
@@ -18,7 +18,7 @@ public class ScrewUp extends CommandBase {
    * @param subsystem The subsystem used by this command.
    */
   
-  public ScrewUp(Screw archScrew) {
+  public ScrewDown(Screw archScrew) {
     this.archScrew = archScrew;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(archScrew);
@@ -31,7 +31,7 @@ public class ScrewUp extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    archScrew.On();
+    archScrew.back();
   }
 
   // Called once the command ends or is interrupted.

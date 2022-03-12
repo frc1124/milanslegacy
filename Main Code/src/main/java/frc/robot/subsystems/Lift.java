@@ -24,8 +24,8 @@ public class Lift extends SubsystemBase {
     double el_top = 17;
     double el_bottom = 0;
 
-  public Lift() {
-    en_coder = new Encoder(Constants.EL_A, Constants.EL_B);
+  public Lift(Encoder en_coder) {
+    this.en_coder = en_coder;
     el_vader = new WPI_TalonSRX(Constants.EL_LEADER);
     el_trooper = new WPI_TalonSRX(Constants.El_FOLLOWER);
     motors = new MotorControllerGroup(el_vader, el_trooper);
@@ -34,6 +34,8 @@ public class Lift extends SubsystemBase {
 
     el_vader.setNeutralMode(NeutralMode.Brake);
     el_trooper.follow(el_vader);
+  }
+  public void reset() {
     en_coder.reset();
   }
   public double getDistance() {
@@ -42,31 +44,33 @@ public class Lift extends SubsystemBase {
 
   public void motor_up(double setpoint) {
 
-    distance_traveled = en_coder.getDistance();
-    distance_from_top = Math.abs(el_top - distance_traveled);
-    distance_from_bottom = Math.abs(el_bottom - distance_traveled);
+    motors.set(.4);
+    // distance_traveled = en_coder.getDistance();
+    // distance_from_top = Math.abs(el_top - distance_traveled);
+    // distance_from_bottom = Math.abs(el_bottom - distance_traveled);
     
-    while (distance_traveled != setpoint) {
-      if (distance_from_top < 8) {
-        motors.set(.1);
-      }
-      else{
-        motors.set(.5);
-      }
-    }
-    motors.set(0);
+    // while (distance_traveled != setpoint) {
+    //   if (distance_from_top < 8) {
+    //     motors.set(.1);
+    //   }
+    //   else{
+    //     motors.set(.5);
+    //   }
+    // }
+    // motors.set(0);
   }
   
   public void motor_down(double setpoint) {
-    while (distance_traveled != setpoint) {
-      if (distance_from_bottom < 8) {
-        motors.set(-.1);
-      }
-      else{
-        motors.set(-.5);
-      }
-    }
-    motors.set(0);
+    motors.set(-.4);
+    // while (distance_traveled != setpoint) {
+    //   if (distance_from_bottom < 8) {
+    //     motors.set(-.1);
+    //   }
+    //   else{
+    //     motors.set(-.5);
+    //   }
+    // }
+    // motors.set(0);
     
   }
   public void stop() {

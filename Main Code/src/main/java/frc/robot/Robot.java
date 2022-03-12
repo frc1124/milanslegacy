@@ -24,6 +24,7 @@ import frc.robot.commands.Move;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.SpinTest;
 import frc.robot.commands.Tank;
+import frc.robot.commands.TankCommandGroup;
 //import frc.robot.commands.TankCommandGroup;
 //import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Shooter;
@@ -37,10 +38,7 @@ import frc.robot.subsystems.Shooter;
 public class Robot extends TimedRobot {
   private Command autoCMD;
   private RobotContainer rc;
-  CANSparkMax shooterMotor = new CANSparkMax(Constants.SHOOTER , MotorType.kBrushless);
-  RelativeEncoder encoder = shooterMotor.getEncoder();
-  PIDController controller = new PIDController(Constants.SHOOT_P,Constants.SHOOT_I,Constants.SHOOT_D);
-  Shooter shooter = new Shooter(shooterMotor, encoder, controller);
+  // Shooter shooter = rc.shooter;
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -80,11 +78,11 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     // autoCMD = rc.getAutonomousCommand();
     // schedule the autonomous command (example)
-    if (autoCMD != null) {
-      autoCMD.schedule();
-    }
-    shooter.on();
-    
+    // if (autoCMD != null) {
+    //   autoCMD.schedule();
+    // }
+    // shooter.on();
+    // CommandScheduler.getInstance().schedule(TankCommandGroup);
 
     
   }
@@ -95,6 +93,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    rc.lift.reset();
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -108,13 +107,14 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    double rightV = Constants.MAXSPEED * rc.j.getRightY();
-    double leftV = Constants.MAXSPEED * rc.j.getLeftY();
+    double rightV = Math.pow(Constants.MAXSPEED * rc.j.getRightY(),3 );
+    double leftV =  Math.pow(Constants.MAXSPEED * rc.j.getLeftY(), 3 );
     // System.out.println("" +rightV + "," +leftV);
-    // CommandScheduler.getInstance().schedule(new TankCommandGroup(leftV, rightV, rc));
+    CommandScheduler.getInstance().schedule(new TankCommandGroup(leftV, rightV, rc));
     // CommandScheduler.getInstance().schedule(new TankCommandGroup(12, 12, rc));
     CommandScheduler.getInstance().run();
-    SmartDashboard.putData(CommandScheduler.getInstance());
+
+    System.out.println("lift:" + rc.lift.getDistance());
 
 
     debug();

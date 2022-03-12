@@ -19,6 +19,7 @@ import frc.robot.commands.El_down;
 import frc.robot.commands.El_up;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.ReleaseBallz;
+import frc.robot.commands.ScrewDown;
 import frc.robot.commands.ScrewUp;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.SuckBallz;
@@ -78,18 +79,18 @@ public class RobotContainer {
    public final WPI_TalonSRX liftFollower = new WPI_TalonSRX(Constants.LIFTFOLLOWER);
    public final MotorControllerGroup lifts = new MotorControllerGroup(liftLeader, liftFollower);
   
-   public final Spark shooterSpark = new Spark(Constants.SHOOTER);
    public final PIDController shootController = new PIDController(
      Constants.SHOOT_P, Constants.SHOOT_I, Constants.SHOOT_D);
 
-  CANSparkMax motor = new CANSparkMax(1 , MotorType.kBrushless);
+  CANSparkMax motor = new CANSparkMax(Constants.SHOOTER , MotorType.kBrushless);
   RelativeEncoder encoder = motor.getEncoder();
   PIDController controller = new PIDController(Constants.SHOOT_P,Constants.SHOOT_I,Constants.SHOOT_D);
 
+  Encoder liftEncoder = new Encoder(Constants.EL_A, Constants.EL_B);
   Shooter shooter = new Shooter(motor, encoder, controller);
   Intake intake = new Intake();
   Screw screw = new Screw();
-  Lift lift = new Lift();
+  Lift lift = new Lift(liftEncoder);
   LimitSwitch limitswitch = new LimitSwitch();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -128,12 +129,12 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     
-    getKey("RB").whileHeld(new Shoot(Constants.SHOOT_POINT, controller, shooter));
-    getKey("A").whenPressed(new ScrewUp(screw));
-    getKey("B").whenPressed(new SuckBallz(intake));
-    getKey("X").whenPressed(new ReleaseBallz(intake));
-    getKey("Y").whenPressed(new El_up(lift, Constants.Lift_POINT, limitswitch));
-    getKey("LB").whenPressed(new El_down(lift, Constants.Lift_POINT));
+    getKey("Y").toggleWhenPressed(new Shoot(Constants.SHOOT_POINT, controller, shooter));
+    getKey("A").whileHeld(new ScrewUp(screw));
+    getKey("X").whileHeld(new ScrewDown(screw));
+    getKey("B").toggleWhenPressed(new SuckBallz(intake));
+    getKey("RB").whileHeld(new El_up(lift, Constants.Lift_POINT));
+    getKey("LB").whileHeld(new El_down(lift, Constants.Lift_POINT));
   }
 
   /**

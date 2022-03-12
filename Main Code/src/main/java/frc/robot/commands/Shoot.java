@@ -30,6 +30,10 @@ public class Shoot extends PIDCommand {
     addRequirements(shooter);
 
   }
+  @Override 
+  public void execute() {
+    shooter.on();
+  }
 
 
   @Override
