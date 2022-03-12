@@ -82,20 +82,12 @@ public class RobotContainer {
    public final PIDController shootController = new PIDController(
      Constants.SHOOT_P, Constants.SHOOT_I, Constants.SHOOT_D);
 
-<<<<<<< HEAD
-  CANSparkMax shooter_motor = new CANSparkMax(Constants.SHOOTER_ID,  MotorType.kBrushless);
-  RelativeEncoder shooter_encoder = shooter_motor.getEncoder();
-  PIDController controller = new PIDController(Constants.SHOOT_P,Constants.SHOOT_I,Constants.SHOOT_D);
-
-  Shooter shooter = new Shooter(shooter_motor, shooter_encoder, controller);
-=======
   CANSparkMax motor = new CANSparkMax(Constants.SHOOTER , MotorType.kBrushless);
   RelativeEncoder encoder = motor.getEncoder();
   PIDController controller = new PIDController(Constants.SHOOT_P,Constants.SHOOT_I,Constants.SHOOT_D);
 
   Encoder liftEncoder = new Encoder(Constants.EL_A, Constants.EL_B);
   Shooter shooter = new Shooter(motor, encoder, controller);
->>>>>>> a96c71ae0a36daeb5a01f031eb12db98ef631c32
   Intake intake = new Intake();
   Screw screw = new Screw();
   Lift lift = new Lift(liftEncoder);

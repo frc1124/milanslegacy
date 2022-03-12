@@ -21,24 +21,10 @@ public final class Constants {
     public static final int RIGHTFRONT = 3;
     public static final int RIGHTBACK =  0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 80fc5a7ede0ac0d128e116536bfd8a3eaf366a4e
-=======
->>>>>>> 80fc5a7ede0ac0d128e116536bfd8a3eaf366a4e
     public static final int SHOOTER =  13;
 
-<<<<<<< HEAD
->>>>>>> ecae8981a6ff07369e4910d444bd2a4057db81fa
-    public static final int LIFTLEADER =  5;
-    public static final int LIFTFOLLOWER =  6;
-=======
     public static final int LIFTLEADER =  2;
     public static final int LIFTFOLLOWER =  1;
->>>>>>> a96c71ae0a36daeb5a01f031eb12db98ef631c32
 
     public static final int LEFTCHANNEL_A = 4;
     public static final int LEFTCHANNEL_B = 5;
@@ -88,48 +74,32 @@ public final class Constants {
     public static final double WHEELRADIUS = 3; // in
     public static final int ENCODERRESOLUTION = 4096;
 
-<<<<<<< HEAD
+
     public static final int EL_CHANNEL_A = 1;
     public static final int EL_CHANNEL_B = 1;
-=======
+
     // public static final int EL_A = 2;
     // public static final int EL_B = 3;
     public static final int EL_A = 8;
     public static final int EL_B = 9;
->>>>>>> a96c71ae0a36daeb5a01f031eb12db98ef631c32
+
 
     public static final int EL_LEADER = 1;
     public static final int El_FOLLOWER = 2;
 
     public static final int TOP_SWITCH = 9;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
     public static final double Lift_POINT = 10;
 
 
     // SparkMax IDS
-    public static final int INTAKE_ID = 12;
     public static final int SCREW_ID = 11;
     public static final int SHOOTER_ID = 13;
 
-=======
-    public static final int Lift_POINT = 0;
 
-=======
-    public static final int Lift_POINT = 0;
-
->>>>>>> 80fc5a7ede0ac0d128e116536bfd8a3eaf366a4e
-=======
-    public static final int Lift_POINT = 0;
-
->>>>>>> 80fc5a7ede0ac0d128e116536bfd8a3eaf366a4e
     public static final int INTAKE_ID = 12;
     public static final int SCREW_PORT = 11;
     
     public static final String COLOR_PORT = null;
  
->>>>>>> ecae8981a6ff07369e4910d444bd2a4057db81fa
-
 }

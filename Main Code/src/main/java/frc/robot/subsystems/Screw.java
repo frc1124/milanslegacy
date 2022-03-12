@@ -17,11 +17,7 @@ public class Screw extends SubsystemBase {
   private static CANSparkMax screwMotor;
 
   public Screw() {
-<<<<<<< HEAD
-    screwMotor = new CANSparkMax(Constants.SCREW_ID, MotorType.kBrushless);
-=======
     screwMotor = new CANSparkMax(Constants.SCREW_PORT, MotorType.kBrushless);
->>>>>>> a96c71ae0a36daeb5a01f031eb12db98ef631c32
   }
 
   public void On() {
