@@ -19,12 +19,16 @@ public final class Constants {
     public static final int RIGHTFRONT = 3;
     public static final int RIGHTBACK = 4;
 
+    public static final int FIRSTROLLER = 5;
+    // public static final int SECONDROLLER = 6;
+
     public static final int LEFTCHANNEL_A = 2;
     public static final int LEFTCHANNEL_B = 3;
     public static final int RIGHTCHANNEL_A = 0;
     public static final int RIGHTCHANNEL_B = 1;
 
-    public static final int ARCADE_STICK = 0;
+    public static final int JY = 0;
+    public static final int JX = 0;
     public static final int PID_TIMEOUT = 0;
     public static final int PID_TOLLERANCE = 0;
 
@@ -32,5 +36,9 @@ public final class Constants {
     public static final double DRIVE_P = 0;
     public static final double DRIVE_I = 0;
     public static final double DRIVE_D = 0;
+
+    public static final int SCREW = 0;
+    public static final int FIRSTFLYWHEEL = 0;
+    public static final int SECONDFLYWHEEL = 0;
 
 }

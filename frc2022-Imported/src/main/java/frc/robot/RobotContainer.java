@@ -23,15 +23,22 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 public class RobotContainer {
 
   // The robot's subsystems and commands are defined here...
-  private final Drive drive = new Drive();
+  public Drive drive;
 
-  public static final Joystick j = new Joystick(Constants.ARCADE_STICK);
-  private final ArcadeDrive arcadeDrive = new ArcadeDrive(drive, j);
+  public final Joystick j;
+  private final ArcadeDrive arcadeDrive;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    drive = new Drive();
+    j = new Joystick(Constants.ARCADE_STICK);
+    arcadeDrive = new ArcadeDrive(drive, j);
     // Configure the button bindings
     configureButtonBindings();
+  }
+
+  public Joystick getJoystickInstance() {
+    return j;
   }
 
   /**
@@ -43,6 +50,7 @@ public class RobotContainer {
   public Command getTeleopDrive() {
       return arcadeDrive;
   }
+
   private void configureButtonBindings() {
 
   }

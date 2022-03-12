@@ -8,19 +8,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.ArcadeDrive;
-<<<<<<< Updated upstream
 import frc.robot.subsystems.Drive;
-=======
-import frc.robot.commands.Move;
-import frc.robot.commands.MoveCommandGroup;
-import frc.robot.commands.Shoot;
-import frc.robot.commands.Tank;
-import frc.robot.commands.TankCommandGroup;
-import frc.robot.subsystems.Drive;
-import frc.robot.subsystems.PIDDrive;
-import frc.robot.subsystems.Shooter;
->>>>>>> Stashed changes
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -29,10 +17,12 @@ import frc.robot.subsystems.Shooter;
  * project.
  */
 public class Robot extends TimedRobot {
-  private Command autoCMD;
-  private Drive drive;
+  private Command m_autonomousCommand;
+
   private RobotContainer robotContainer;
-  private Joystick j;
+  private Drive drive;
+  private Joystick jy;
+  private Joystick jx;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -44,7 +34,8 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     robotContainer = new RobotContainer();
     this.drive = robotContainer.drive;
-    this.j = robotContainer.getJoystickInstance();
+    this.jy = robotContainer.joystick1;
+    this.jx = robotContainer.joystick2;
   }
 
   /**
@@ -60,7 +51,7 @@ public class Robot extends TimedRobot {
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
-    CommandScheduler.getInstance().run();
+    // CommandScheduler.getInstance().run();
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -73,12 +64,12 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    autoCMD = robotContainer.getAutonomousCommand();
+    // m_autonomousCommand = robotContainer.getAutonomousCommand();
 
-    // schedule the autonomous command (example)
-    if (autoCMD != null) {
-      autoCMD.schedule();
-    }
+    // // schedule the autonomous command (example)
+    // if (m_autonomousCommand != null) {
+    //   m_autonomousCommand.schedule();
+    // }
   }
 
   /** This function is called periodically during autonomous. */
@@ -91,24 +82,16 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    if (autoCMD != null) {
-      autoCMD.cancel();
-    }
+    // if (m_autonomousCommand != null) {
+    //   m_autonomousCommand.cancel();
+    // }
   }
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-<<<<<<< Updated upstream
-    CommandScheduler.getInstance().schedule( (Command) new ArcadeDrive(drive, j));
-=======
-    double rightV = Constants.MAXSPEED * rc.j.getRightY();
-    double leftV = Constants.MAXSPEED * rc.j.getLeftY();
-    CommandScheduler.getInstance().schedule(new TankCommandGroup(leftV, rightV, rc));
+    CommandScheduler.getInstance().schedule(robotContainer.arcade());
     CommandScheduler.getInstance().run();
-    debug();
-    
->>>>>>> Stashed changes
   }
 
   @Override
@@ -119,6 +102,7 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during test mode. */
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+    drive.arcadeDrive(jy.getY(), -1*jx.getX());
+  }
 }
-

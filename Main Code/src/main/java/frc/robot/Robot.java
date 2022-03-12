@@ -4,23 +4,30 @@
 
 package frc.robot;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxRelativeEncoder;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.ArcadeDrive;
-<<<<<<< Updated upstream
-import frc.robot.subsystems.Drive;
-=======
+import edu.wpi.first.wpilibj2.command.ScheduleCommand;
+//import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Move;
-import frc.robot.commands.MoveCommandGroup;
+//import frc.robot.commands.MoveCommandGroup;
 import frc.robot.commands.Shoot;
+import frc.robot.commands.SpinTest;
 import frc.robot.commands.Tank;
 import frc.robot.commands.TankCommandGroup;
-import frc.robot.subsystems.Drive;
-import frc.robot.subsystems.PIDDrive;
+//import frc.robot.commands.TankCommandGroup;
+//import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Shooter;
->>>>>>> Stashed changes
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -30,10 +37,8 @@ import frc.robot.subsystems.Shooter;
  */
 public class Robot extends TimedRobot {
   private Command autoCMD;
-  private Drive drive;
-  private RobotContainer robotContainer;
-  private Joystick j;
-
+  private RobotContainer rc;
+  // Shooter shooter = rc.shooter;
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -42,9 +47,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    robotContainer = new RobotContainer();
-    this.drive = robotContainer.drive;
-    this.j = robotContainer.getJoystickInstance();
+    rc = new RobotContainer();
   }
 
   /**
@@ -69,16 +72,19 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {}
-
+  
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    autoCMD = robotContainer.getAutonomousCommand();
-
+    // autoCMD = rc.getAutonomousCommand();
     // schedule the autonomous command (example)
-    if (autoCMD != null) {
-      autoCMD.schedule();
-    }
+    // if (autoCMD != null) {
+    //   autoCMD.schedule();
+    // }
+    // shooter.on();
+    // CommandScheduler.getInstance().schedule(TankCommandGroup);
+
+    
   }
 
   /** This function is called periodically during autonomous. */
@@ -87,6 +93,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    rc.lift.reset();
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -97,28 +104,54 @@ public class Robot extends TimedRobot {
   }
 
   /** This function is called periodically during operator control. */
+
   @Override
   public void teleopPeriodic() {
-<<<<<<< Updated upstream
-    CommandScheduler.getInstance().schedule( (Command) new ArcadeDrive(drive, j));
-=======
-    double rightV = Constants.MAXSPEED * rc.j.getRightY();
-    double leftV = Constants.MAXSPEED * rc.j.getLeftY();
+    double rightV = Math.pow(Constants.MAXSPEED * rc.j.getRightY(),3 );
+    double leftV =  Math.pow(Constants.MAXSPEED * rc.j.getLeftY(), 3 );
+    // System.out.println("" +rightV + "," +leftV);
     CommandScheduler.getInstance().schedule(new TankCommandGroup(leftV, rightV, rc));
+    // CommandScheduler.getInstance().schedule(new TankCommandGroup(12, 12, rc));
     CommandScheduler.getInstance().run();
+
+    System.out.println("lift:" + rc.lift.getDistance());
+
+
     debug();
-    
->>>>>>> Stashed changes
   }
+
 
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
+    //CommandScheduler.getInstance().schedule(new MoveCommandGroup(24.0, rc));
+
   }
 
   /** This function is called periodically during test mode. */
+
+  public void debug() {
+
+    // System.out.println("Right Target V:" + Constants.MAXSPEED * rc.j.getLeftX());
+    // System.out.println("Left Target V:" + Constants.MAXSPEED * rc.j.getLeftY());
+
+    // System.out.println("Right Joystick:" + rc.j.getRightY());
+    // System.out.println("Left Joystick:" + rc.j.getLeftY());
+
+    // System.out.println("Right Encoder:" + rc.right.getMeasurement());
+    // System.out.println("Left Encoder:" + rc.left.getMeasurement());
+
+    // System.out.println("Right Velocity:" + rc.right.getMeasurementV());
+    // System.out.println("Left Velocity:" + rc.left.getMeasurementV());
+
+    // System.out.println("Angle:" + rc.right.getNavxInstance().getAngle());
+  }
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+    CommandScheduler.getInstance().run();
+    debug();
+  }
+
 }
 
