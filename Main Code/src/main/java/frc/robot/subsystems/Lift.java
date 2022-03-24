@@ -59,7 +59,7 @@ public class Lift extends SubsystemBase {
   }
   
   public void motor_down(double setpoint) {
-    motors.set(-.4);
+    motors.set(-.6);
     // while (distance_traveled != setpoint) {
     //   if (distance_from_bottom < 8) {
     //     motors.set(-.1);
