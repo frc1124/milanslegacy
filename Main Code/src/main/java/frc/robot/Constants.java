@@ -46,13 +46,15 @@ public final class Constants {
     // public static final double VEL_R_I = 0.065;
     public static final double VEL_R_D = 0;
 
-    public static final double DIST_L_P = 0.2;
-    public static final double DIST_L_I = 0;
-    public static final double DIST_L_D = 0;
+    public static final double DIST_L_P = 0.2; // correct PID 
+    public static final double DIST_L_I = 0; // correct PID 
+    //public static final double DIST_L_I = 0.02; //test
+    public static final double DIST_L_D = 0; // correct PID sus
 
-    public static final double DIST_R_P = 0.1;
-    public static final double DIST_R_I = 1;
-    public static final double DIST_R_D = .5;
+    public static final double DIST_R_P = 0.1; // correct PID 
+    public static final double DIST_R_I = 1; // correct PID  
+    //public static final double DIST_R_I = 1.02;
+    public static final double DIST_R_D = .5; // correct PID 
 
     public static final double SHOOT_POINT = 1629;
     public static final double SHOOT_P = 0.0001;
@@ -67,7 +69,7 @@ public final class Constants {
     public static final double DRIVE_KS = 0;
     public static final double DRIVE_KV = 0;
 
-    public static final double MAXSPEED = 10.0 * 6; // in per second
+    public static final double MAXSPEED = 15.0 * 6; // in per second
     public static final double MAXANGULARSPEED = 2 * Math.PI; // one rotation per second
 
     public static final double TRACKWIDTH = 11; // in
@@ -101,5 +103,6 @@ public final class Constants {
     public static final int SCREW_PORT = 11;
     
     public static final String COLOR_PORT = null;
+    public static final int FATHER_CHANNEL = 6;
  
 }

@@ -13,10 +13,10 @@ import frc.robot.Constants;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-public class Screw extends SubsystemBase {
+public class ScrewYou extends SubsystemBase {
   private static CANSparkMax screwMotor;
 
-  public Screw() {
+  public ScrewYou() {
     screwMotor = new CANSparkMax(Constants.SCREW_PORT, MotorType.kBrushless);
   }
 

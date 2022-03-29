@@ -41,8 +41,7 @@ public class Lift extends SubsystemBase {
   }
 
   public void motor_up(double setpoint) {
-
-    motors.set(.4);
+    motors.set(1);
     // distance_traveled = en_coder.getDistance();
     // distance_from_top = Math.abs(el_top - distance_traveled);
     // distance_from_bottom = Math.abs(el_bottom - distance_traveled);
@@ -59,7 +58,7 @@ public class Lift extends SubsystemBase {
   }
   
   public void motor_down(double setpoint) {
-    motors.set(-.6);
+    motors.set(-1);
     // while (distance_traveled != setpoint) {
     //   if (distance_from_bottom < 8) {
     //     motors.set(-.1);

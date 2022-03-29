@@ -28,7 +28,7 @@ import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.LimitSwitch;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.PIDDrive;
-import frc.robot.subsystems.Screw;
+import frc.robot.subsystems.ScrewYou;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
 //import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -84,12 +84,12 @@ public class RobotContainer {
 
   CANSparkMax motor = new CANSparkMax(Constants.SHOOTER , MotorType.kBrushless);
   RelativeEncoder encoder = motor.getEncoder();
-  PIDController controller = new PIDController(Constants.SHOOT_P,Constants.SHOOT_I,Constants.SHOOT_D);
+  public PIDController controller = new PIDController(Constants.SHOOT_P,Constants.SHOOT_I,Constants.SHOOT_D);
 
   Encoder liftEncoder = new Encoder(Constants.EL_A, Constants.EL_B);
-  Shooter shooter = new Shooter(motor, encoder, controller);
+  public Shooter shooter = new Shooter(motor, encoder, controller);
   Intake intake = new Intake();
-  Screw screw = new Screw();
+  ScrewYou screw = new ScrewYou();
   Lift lift = new Lift(liftEncoder);
   LimitSwitch limitswitch = new LimitSwitch();
 
@@ -129,9 +129,9 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     
-    getKey("Y").toggleWhenPressed(new Shoot(Constants.SHOOT_POINT, controller, shooter));
+    getKey("B").toggleWhenPressed(new Shoot(Constants.SHOOT_POINT, controller, shooter));
     getKey("A").whileHeld(new ScrewUp(screw));
-    getKey("X").whileHeld(new ScrewDown(screw));
+    //getKey("X").whileHeld(new ScrewDown(screw));
     getKey("B").toggleWhenPressed(new SuckBallz(intake));
     getKey("RB").whileHeld(new El_up(lift, Constants.Lift_POINT));
     getKey("LB").whileHeld(new El_down(lift, Constants.Lift_POINT));
