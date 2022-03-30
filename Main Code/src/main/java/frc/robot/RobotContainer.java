@@ -133,8 +133,8 @@ public class RobotContainer {
     getKey("A").whileHeld(new ScrewUp(screw));
     //getKey("X").whileHeld(new ScrewDown(screw));
     getKey("B").toggleWhenPressed(new SuckBallz(intake));
-    getKey("RB").whileHeld(new El_up(lift, Constants.Lift_POINT));
-    getKey("LB").whileHeld(new El_down(lift, Constants.Lift_POINT));
+    getKey("RB").whileHeld(new El_up(lift, Constants.Lift_TOP_POINT));
+    getKey("LB").whileHeld(new El_down(lift, Constants.Lift_BOTTOM_POINT));
   }
 
   /**

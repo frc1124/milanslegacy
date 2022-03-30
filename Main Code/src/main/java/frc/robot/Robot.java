@@ -5,10 +5,13 @@
 package frc.robot;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxRelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotController;
@@ -36,6 +39,7 @@ import frc.robot.subsystems.Shooter;
  * project.
  */
 public class Robot extends TimedRobot {
+  private UsbCamera cam;
   private Command autoCMD;
   private RobotContainer rc;
   // Shooter shooter = rc.shooter;
@@ -93,6 +97,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+
     rc.lift.reset();
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
@@ -104,7 +109,7 @@ public class Robot extends TimedRobot {
   }
 
   /** This function is called periodically during operator control. */
-
+  
   @Override
   public void teleopPeriodic() {
     double rightV = Math.pow(Constants.MAXSPEED * rc.j.getRightY(),3 );

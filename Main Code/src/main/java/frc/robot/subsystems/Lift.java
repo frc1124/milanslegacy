@@ -20,7 +20,7 @@ public class Lift extends SubsystemBase {
     double distance_from_bottom;
     Encoder en_coder;
     MotorControllerGroup motors;
-    double el_top = 10;
+    double el_top = 5085;
     double el_bottom = 0;
 
   public Lift(Encoder en_coder) {
@@ -41,44 +41,41 @@ public class Lift extends SubsystemBase {
   }
 
   public void motor_up(double setpoint) {
+    System.out.println(en_coder.getDistance());
     motors.set(1);
-    // distance_traveled = en_coder.getDistance();
-    // distance_from_top = Math.abs(el_top - distance_traveled);
-    // distance_from_bottom = Math.abs(el_bottom - distance_traveled);
+    distance_traveled = en_coder.getDistance();
+    distance_from_top = Math.abs(el_top - distance_traveled);
+    distance_from_bottom = Math.abs(el_bottom - distance_traveled);
     
-    // while (distance_traveled != setpoint) {
-    //   if (distance_from_top < 8) {
-    //     motors.set(.1);
-    //   }
-    //   else{
-    //     motors.set(.5);
-    //   }
-    // }
-    // motors.set(0);
+     while (distance_traveled != setpoint) {
+       if (distance_from_top < 50) {
+         motors.set(.8);
+       }
+       else{
+         motors.set(1);
+       }
+     }
+     motors.set(0);
   }
   
   public void motor_down(double setpoint) {
+    System.out.println(en_coder.getDistance());
     motors.set(-1);
-    // while (distance_traveled != setpoint) {
-    //   if (distance_from_bottom < 8) {
-    //     motors.set(-.1);
-    //   }
-    //   else{
-    //     motors.set(-.5);
-    //   }
-    // }
-    // motors.set(0);
+     while (distance_traveled != setpoint) {
+       if (distance_from_bottom < 50) {
+         motors.set(-.6);
+       }
+       else{
+         motors.set(-1);
+       }
+     }
+     motors.set(0);
     
   }
   public void stop() {
     el_vader.set(0);
   }
     
-
-
- 
-
-
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

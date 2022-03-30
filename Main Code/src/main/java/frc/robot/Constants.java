@@ -80,18 +80,19 @@ public final class Constants {
     public static final int EL_CHANNEL_A = 1;
     public static final int EL_CHANNEL_B = 1;
 
-    // public static final int EL_A = 2;
-    // public static final int EL_B = 3;
-    public static final int EL_A = 8;
-    public static final int EL_B = 9;
-
+     public static final int EL_A = 2;
+     public static final int EL_B = 3;
+    //public static final int EL_A = 8;
+    //public static final int EL_B = 9;
+// sus
 
     public static final int EL_LEADER = 1;
     public static final int El_FOLLOWER = 2;
 
     public static final int TOP_SWITCH = 9;
 
-    public static final double Lift_POINT = 10;
+    public static final double Lift_TOP_POINT = 5085 ;
+    public static final double Lift_BOTTOM_POINT = 0 ;
 
 
     // SparkMax IDS
