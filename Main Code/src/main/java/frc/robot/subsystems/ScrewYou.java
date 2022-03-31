@@ -17,7 +17,7 @@ public class ScrewYou extends SubsystemBase {
   private static CANSparkMax screwMotor;
 
   public ScrewYou() {
-    screwMotor = new CANSparkMax(Constants.SCREW_PORT, MotorType.kBrushless);
+    screwMotor = new CANSparkMax(Constants.SCREW_ID, MotorType.kBrushless);
   }
 
   public void On() {

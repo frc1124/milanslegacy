@@ -98,10 +98,10 @@ public final class Constants {
     // SparkMax IDS
     public static final int SCREW_ID = 11;
     public static final int SHOOTER_ID = 13;
+    public static final int TRAVERSAL_ID = 14;
 
 
     public static final int INTAKE_ID = 12;
-    public static final int SCREW_PORT = 11;
     
     public static final String COLOR_PORT = null;
     public static final int FATHER_CHANNEL = 6;

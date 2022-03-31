@@ -20,7 +20,7 @@ public class Lift extends SubsystemBase {
     double distance_from_bottom;
     Encoder en_coder;
     MotorControllerGroup motors;
-    double el_top = 5085;
+    double el_top = 3000;
     double el_bottom = 0;
 
   public Lift(Encoder en_coder) {
@@ -32,6 +32,10 @@ public class Lift extends SubsystemBase {
     el_trooper.follow(el_vader);
 
     motors = new MotorControllerGroup(el_vader, el_trooper);
+
+    distance_traveled = en_coder.getDistance();
+    distance_from_top = Math.abs(el_top - distance_traveled);
+    distance_from_bottom = Math.abs(el_bottom - distance_traveled);
   }
   public void reset() {
     en_coder.reset();
@@ -43,33 +47,35 @@ public class Lift extends SubsystemBase {
   public void motor_up(double setpoint) {
     System.out.println(en_coder.getDistance());
     motors.set(1);
-    distance_traveled = en_coder.getDistance();
-    distance_from_top = Math.abs(el_top - distance_traveled);
-    distance_from_bottom = Math.abs(el_bottom - distance_traveled);
-    
-     while (distance_traveled != setpoint) {
+  
+     /*if (distance_traveled <= setpoint) {
        if (distance_from_top < 50) {
-         motors.set(.8);
+         motors.set(.3);
        }
        else{
-         motors.set(1);
+         motors.set(.3);
        }
      }
-     motors.set(0);
+     else {
+      motors.set(0);
+     }*/
   }
   
   public void motor_down(double setpoint) {
     System.out.println(en_coder.getDistance());
     motors.set(-1);
-     while (distance_traveled != setpoint) {
+    /* if (distance_traveled >= setpoint) {
        if (distance_from_bottom < 50) {
-         motors.set(-.6);
+         motors.set(-.3);
        }
        else{
-         motors.set(-1);
+         motors.set(-.3);
        }
      }
-     motors.set(0);
+     else {
+      motors.set(0);
+     }*/
+  
     
   }
   public void stop() {
