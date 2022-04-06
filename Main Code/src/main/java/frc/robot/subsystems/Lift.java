@@ -1,6 +1,12 @@
 
 package frc.robot.subsystems;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -13,20 +19,25 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Lift extends SubsystemBase {
-    double prev_encoder_val;
+    File file;
+    FileInputStream input;
+    Properties prop;
+    String encoder_value;
     WPI_TalonSRX el_vader;
     WPI_TalonSRX el_trooper;
-    double distance_traveled;
-    double distance_from_top;
-    double distance_from_bottom;
-    Encoder en_coder;
+    public double distance_traveled;
+    public Encoder en_coder;
     MotorControllerGroup motors;
-    double el_top = 4550; // Top
+    double el_top = 4700; // Top
     //double el_top = 3000; //Mid Safe
-
+    FileOutputStream in;
     double el_bottom = 100;
 
-  public Lift(Encoder en_coder) {
+  public Lift(Encoder en_coder){
+    //prop = new Properties();
+    //file = new File("encoder_val.property");
+    //input = new FileInputStream(file);
+
     this.en_coder = en_coder;
     el_vader = new WPI_TalonSRX(Constants.EL_LEADER);
     el_trooper = new WPI_TalonSRX(Constants.El_FOLLOWER);
@@ -35,10 +46,8 @@ public class Lift extends SubsystemBase {
     el_trooper.follow(el_vader);
 
     motors = new MotorControllerGroup(el_vader, el_trooper);
-
     distance_traveled = en_coder.getDistance();
-    //distance_from_top = Math.abs(el_top - distance_traveled);
-    //distance_from_bottom = Math.abs(el_bottom - distance_traveled);
+
   }
   public void reset() {
     //en_coder.reset();
@@ -48,6 +57,8 @@ public class Lift extends SubsystemBase {
   }
 
   public void motor_up(double setpoint) {
+    //distance_traveled = prop.load(input);
+    //input.close();
     distance_traveled = en_coder.getDistance();
     System.out.println(en_coder.getDistance());  
      if (distance_traveled <= el_top) {
@@ -59,12 +70,13 @@ public class Lift extends SubsystemBase {
   }
   
   public void motor_down(double setpoint) {
+    distance_traveled = en_coder.getDistance();
     System.out.println(en_coder.getDistance());
      if (distance_traveled >= el_bottom) {
          motors.set(-.3);
        }
        else{
-         motors.set(-.3);
+         motors.set(0);
        }
      }
   
@@ -77,7 +89,12 @@ public class Lift extends SubsystemBase {
     en_coder.reset();
   }
 
-  public void store_val() {
+  public void store_val() throws FileNotFoundException, IOException {
+    //prop.put("encoder_val", distance_traveled);
+    //in = new FileOutputStream(file);
+    //prop.store(in, "Last encoder value saved");
+    //in.close();
+
     
   }
     

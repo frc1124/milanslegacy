@@ -41,7 +41,7 @@ import frc.robot.subsystems.Shooter;
 public class Robot extends TimedRobot {
   private UsbCamera cam;
   private Command autoCMD;
-  private RobotContainer rc;
+  public static RobotContainer rc;
   // Shooter shooter = rc.shooter;
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -80,14 +80,12 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    // autoCMD = rc.getAutonomousCommand();
+     autoCMD = rc.getAutonomousCommand();
     // schedule the autonomous command (example)
-    // if (autoCMD != null) {
-    //   autoCMD.schedule();
-    // }
-    // shooter.on();
-    // CommandScheduler.getInstance().schedule(TankCommandGroup);
-
+     if (autoCMD != null) {
+       autoCMD.schedule();
+     }
+     rc.shooter.on();
     
   }
 
@@ -112,8 +110,10 @@ public class Robot extends TimedRobot {
   
   @Override
   public void teleopPeriodic() {
-    double rightV = Math.pow(Constants.MAXSPEED * rc.j.getRightY(),3 );
-    double leftV =  Math.pow(Constants.MAXSPEED * rc.j.getLeftY(), 3 );
+    SmartDashboard.putNumber("Shooter RPM", Math.round(Math.abs(rc.shooter.encoder.getVelocity())));
+    SmartDashboard.putNumber("Elevator encoder", Math.round(rc.lift.distance_traveled));
+    double rightV = Math.pow(Constants.MAXSPEED * rc.j.getRightY(),6);
+    double leftV =  Math.pow(Constants.MAXSPEED * rc.j.getLeftY(),6);
     // System.out.println("" +rightV + "," +leftV);
     CommandScheduler.getInstance().schedule(new TankCommandGroup(leftV, rightV, rc));
     // CommandScheduler.getInstance().schedule(new TankCommandGroup(12, 12, rc));
@@ -128,6 +128,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testInit() {
+    RobotContainer robotContainer = new RobotContainer();
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
     //CommandScheduler.getInstance().schedule(new MoveCommandGroup(24.0, rc));

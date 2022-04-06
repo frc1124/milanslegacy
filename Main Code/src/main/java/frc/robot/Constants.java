@@ -50,13 +50,14 @@ public final class Constants {
     public static final double DIST_L_I = 0; // correct PID 
     //public static final double DIST_L_I = 0.02; //test
     public static final double DIST_L_D = 0; // correct PID sus
+    //public static final double DIST_L_D = .05; // test PID sus
 
     public static final double DIST_R_P = 0.1; // correct PID 
     public static final double DIST_R_I = 1; // correct PID  
-    //public static final double DIST_R_I = 1.02;
     public static final double DIST_R_D = .5; // correct PID 
+    //public static final double DIST_R_D = .65; // test PID 
 
-    public static final double SHOOT_POINT = 3000;
+    public static final double SHOOT_POINT = 3500;
     public static final double LOWER_SHOOT_POINT = 1800;
     public static final double SHOOT_P = 0.0001;
     public static final double SHOOT_I = 0;

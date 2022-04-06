@@ -23,6 +23,7 @@ import frc.robot.commands.ScrewDown;
 import frc.robot.commands.ScrewUp;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.SuckBallz;
+import frc.robot.commands.TankCommandGroup;
 import frc.robot.commands.manual_reset;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Lift;
@@ -33,6 +34,7 @@ import frc.robot.subsystems.ScrewYou;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
 //import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import java.util.HashMap;
 
@@ -134,8 +136,8 @@ public class RobotContainer {
     getKey("A").whileHeld(new ScrewUp(screw));
     //getKey("X").whileHeld(new ScrewDown(screw));
     getKey("B").toggleWhenPressed(new SuckBallz(intake));
-    //getKey("RB").whileHeld(new El_up(lift, Constants.Lift_TOP_POINT));
-    //getKey("LB").whileHeld(new El_down(lift, Constants.Lift_BOTTOM_POINT));
+    getKey("RB").whileHeld(new El_up(lift, Constants.Lift_TOP_POINT));
+    getKey("LB").whileHeld(new El_down(lift, Constants.Lift_BOTTOM_POINT));
     getKey("Back").whileHeld(new manual_reset(lift, Constants.Lift_BOTTOM_POINT));
   }
 
@@ -144,8 +146,9 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public void getAutonomousCommand() {
+  public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    //return arcadeDrive;
+    return (new TankCommandGroup(-.5, -.5, Robot.rc));
+
   }
 }
