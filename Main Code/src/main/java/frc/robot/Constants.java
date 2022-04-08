@@ -52,6 +52,14 @@ public final class Constants {
     public static final double DIST_L_D = 0; // correct PID sus
     //public static final double DIST_L_D = .05; // test PID sus
 
+    // public static final double DIST_L_P = 0.2; // not correct PID 
+    // public static final double DIST_L_I = 0.1; // not correct PID 
+    // public static final double DIST_L_D = 0.1;
+
+    // public static final double DIST_R_P = 0.2; // not correct PID 
+    // public static final double DIST_R_I = 0.85; // not correct PID  
+    // public static final double DIST_R_D = 0.65; // not correct PID 
+
     public static final double DIST_R_P = 0.1; // correct PID 
     public static final double DIST_R_I = 1; // correct PID  
     public static final double DIST_R_D = .5; // correct PID 
@@ -72,7 +80,7 @@ public final class Constants {
     public static final double DRIVE_KV = 0;
 
     //public static final double MAXSPEED = 10.0 * 6; // in per second *ORIGINAL*
-    public static final double MAXSPEED = 15.0 * 6;
+    public static final double MAXSPEED = 12.0 * 6;
     public static final double MAXANGULARSPEED = 2 * Math.PI; // one rotation per second
 
     public static final double TRACKWIDTH = 11; // in

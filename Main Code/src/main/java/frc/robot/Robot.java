@@ -20,7 +20,9 @@ import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ScheduleCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 //import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Move;
 //import frc.robot.commands.MoveCommandGroup;
@@ -28,9 +30,11 @@ import frc.robot.commands.Shoot;
 import frc.robot.commands.SpinTest;
 import frc.robot.commands.Tank;
 import frc.robot.commands.TankCommandGroup;
+import frc.robot.subsystems.ScrewYou;
 //import frc.robot.commands.TankCommandGroup;
 //import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.SpeedRamping;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -80,15 +84,31 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-     autoCMD = rc.getAutonomousCommand();
-    // schedule the autonomous command (example)
-     if (autoCMD != null) {
-       autoCMD.schedule();
-     }
-     rc.shooter.on();
-    
-  }
+    // autoCMD = rc.getAutonomousCommand();
 
+    // schedule the autonomous command (example)
+    // if (autoCMD != null) {
+    //   autoCMD.schedule();
+    // } 
+    SequentialCommandGroup shoot = new SequentialCommandGroup(
+      (Command) new Shoot(3500, rc.shootController, rc.shooter),
+      (Command) new ScrewYou());
+    
+    SequentialCommandGroup move = new SequentialCommandGroup(
+      (Command) new TankCommandGroup(-.5, -.5, rc));
+
+    //ParallelCommandGroup reverse = new ParallelCommandGroup(
+      //change to move
+
+    CommandScheduler.getInstance().schedule(shoot);
+    try {
+      wait((long) 1);
+    } catch (InterruptedException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    CommandScheduler.getInstance().schedule(move);
+  }
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {}
@@ -107,15 +127,21 @@ public class Robot extends TimedRobot {
   }
 
   /** This function is called periodically during operator control. */
-  
+  SpeedRamping speedramping = new SpeedRamping();
   @Override
   public void teleopPeriodic() {
     SmartDashboard.putNumber("Shooter RPM", Math.round(Math.abs(rc.shooter.encoder.getVelocity())));
     SmartDashboard.putNumber("Elevator encoder", Math.round(rc.lift.distance_traveled));
-    double rightV = Math.pow(Constants.MAXSPEED * rc.j.getRightY(),6);
-    double leftV =  Math.pow(Constants.MAXSPEED * rc.j.getLeftY(),6);
-    // System.out.println("" +rightV + "," +leftV);
+
+    double rightV = Math.pow(Constants.MAXSPEED * rc.j.getRightY(),3);
+    double leftV =  Math.pow(Constants.MAXSPEED * rc.j.getLeftY(),3);
+    
+    speedramping.increment_speed(leftV, rc.leftEncoder);
+
+    
+
     CommandScheduler.getInstance().schedule(new TankCommandGroup(leftV, rightV, rc));
+
     // CommandScheduler.getInstance().schedule(new TankCommandGroup(12, 12, rc));
     CommandScheduler.getInstance().run();
 

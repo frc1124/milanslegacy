@@ -12,9 +12,12 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import org.opencv.core.Mat;
+
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.Talon;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -26,17 +29,19 @@ public class Lift extends SubsystemBase {
     WPI_TalonSRX el_vader;
     WPI_TalonSRX el_trooper;
     public double distance_traveled;
+    double distance_from_top;
+    double distance_from_bottom;
+
     public Encoder en_coder;
     MotorControllerGroup motors;
-    double el_top = 4700; // Top
-    //double el_top = 3000; //Mid Safe
+    //double el_top = 4700; // Real Top
+    double el_top = 4169; // safe top
     FileOutputStream in;
     double el_bottom = 100;
 
   public Lift(Encoder en_coder){
-    //prop = new Properties();
-    //file = new File("encoder_val.property");
-    //input = new FileInputStream(file);
+    prop = new Properties();
+    file = new File("C:\\Users\\sijav\\Documents\\GitHub\\milanslegacy\\Main Code\\src\\main\\encoder_value.property");
 
     this.en_coder = en_coder;
     el_vader = new WPI_TalonSRX(Constants.EL_LEADER);
@@ -46,7 +51,10 @@ public class Lift extends SubsystemBase {
     el_trooper.follow(el_vader);
 
     motors = new MotorControllerGroup(el_vader, el_trooper);
+
     distance_traveled = en_coder.getDistance();
+    distance_from_bottom = distance_traveled;
+
 
   }
   public void reset() {
@@ -55,25 +63,36 @@ public class Lift extends SubsystemBase {
   public double getDistance() {
     return en_coder.getDistance();
   }
-
+  
   public void motor_up(double setpoint) {
+    //input = new FileInputStream(file);
     //distance_traveled = prop.load(input);
     //input.close();
+    distance_from_top = Math.abs(distance_traveled - el_top);
     distance_traveled = en_coder.getDistance();
     System.out.println(en_coder.getDistance());  
      if (distance_traveled <= el_top) {
-      motors.set(.3);
+       if (distance_from_top <= 500) {
+         motors.set(.5);
+       } else {
+        motors.set(1);
        }
+      }
        else{
         motors.set(0);
      }
   }
   
   public void motor_down(double setpoint) {
+    SmartDashboard.putNumber("Elevator Speed", en_coder.getRate());
     distance_traveled = en_coder.getDistance();
     System.out.println(en_coder.getDistance());
      if (distance_traveled >= el_bottom) {
-         motors.set(-.3);
+       if (distance_from_bottom <= 1000) {
+         motors.set(-.5);
+       } else {
+        motors.set(-1);
+       }
        }
        else{
          motors.set(0);
@@ -90,12 +109,10 @@ public class Lift extends SubsystemBase {
   }
 
   public void store_val() throws FileNotFoundException, IOException {
-    //prop.put("encoder_val", distance_traveled);
-    //in = new FileOutputStream(file);
-    //prop.store(in, "Last encoder value saved");
-    //in.close();
-
-    
+    prop.put("encoder_val", distance_traveled);
+    in = new FileOutputStream(file);
+    prop.store(in, "Last encoder value saved");
+    in.close();
   }
     
   @Override
