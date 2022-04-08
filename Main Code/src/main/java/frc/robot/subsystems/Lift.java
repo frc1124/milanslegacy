@@ -35,9 +35,9 @@ public class Lift extends SubsystemBase {
     public Encoder en_coder;
     MotorControllerGroup motors;
     //double el_top = 4700; // Real Top
-    double el_top = 4169; // safe top
+    double el_top = 4940; // safe top
     FileOutputStream in;
-    double el_bottom = 100;
+    double el_bottom = 250;
 
   public Lift(Encoder en_coder){
     prop = new Properties();

@@ -19,30 +19,25 @@ public class SpeedRamping extends SubsystemBase {
   double currentEncoderVal;
   double lastEncoderVal;
   double DPMS;
-  public SpeedRamping() {
-    speed_increment = 0.2/980;
+  double current_value;
+  public SpeedRamping(double current_value) {
+    current_speed = current_value;
+    speed_increment = 6500;
+    //speed_increment = 7000;
   }
 
-  public double increment_speed(double joystick_speed, Encoder encoder) {
-    lastEncoderVal = rc.leftEncoder.getDistance();
-    try {
-      wait(20);
-    } catch (InterruptedException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    currentEncoderVal = rc.leftEncoder.getDistance();
-    DPMS = (Math.abs(lastEncoderVal - currentEncoderVal)/20);
-    lastEncoderVal = currentEncoderVal;
+  public double increment_speed(double joystick_speed) {
 
     if (current_speed < joystick_speed) {
       current_speed += speed_increment;
+      return current_speed;
     } else if (current_speed > joystick_speed) {
       current_speed -= speed_increment;
+      return current_speed;
+
     } else {
       return current_speed;
     }
-    return current_speed;
   }
   
 

@@ -92,7 +92,7 @@ public class RobotContainer {
   Encoder liftEncoder = new Encoder(Constants.EL_A, Constants.EL_B);
   public Shooter shooter = new Shooter(motor, encoder, controller);
   Intake intake = new Intake();
-  ScrewYou screw = new ScrewYou();
+  public ScrewYou screw = new ScrewYou();
   Lift lift = new Lift(liftEncoder);
   LimitSwitch limitswitch = new LimitSwitch();
 
