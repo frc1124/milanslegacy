@@ -112,9 +112,11 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {}
-
+  double current_speed;
   @Override
   public void teleopInit() {
+    double current_speed = 0;
+
 
     //rc.lift.reset();
     // This makes sure that the autonomous stops running when
@@ -127,7 +129,7 @@ public class Robot extends TimedRobot {
   }
 
   /** This function is called periodically during operator control. */
-  SpeedRamping speedramping = new SpeedRamping();
+  SpeedRamping speedramping = new SpeedRamping(current_speed);
   @Override
   public void teleopPeriodic() {
     SmartDashboard.putNumber("Shooter RPM", Math.round(Math.abs(rc.shooter.encoder.getVelocity())));
@@ -136,11 +138,11 @@ public class Robot extends TimedRobot {
     double rightV = Math.pow(Constants.MAXSPEED * rc.j.getRightY(),3);
     double leftV =  Math.pow(Constants.MAXSPEED * rc.j.getLeftY(),3);
     
-    speedramping.increment_speed(leftV, rc.leftEncoder);
-
     
-
-    CommandScheduler.getInstance().schedule(new TankCommandGroup(leftV, rightV, rc));
+    CommandScheduler.getInstance().schedule(new TankCommandGroup(
+    speedramping.increment_speed(leftV), 
+    speedramping.increment_speed(rightV), rc));
+   //CommandScheduler.getInstance().schedule(new TankCommandGroup(leftV, rightV, rc));
 
     // CommandScheduler.getInstance().schedule(new TankCommandGroup(12, 12, rc));
     CommandScheduler.getInstance().run();

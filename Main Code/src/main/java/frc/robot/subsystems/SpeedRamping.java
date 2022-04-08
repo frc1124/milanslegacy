@@ -19,11 +19,12 @@ public class SpeedRamping extends SubsystemBase {
   double currentEncoderVal;
   double lastEncoderVal;
   double DPMS;
-  public SpeedRamping() {
+  public SpeedRamping(double current_speed) {
+    this.current_speed = current_speed;
     speed_increment = 0.2/980;
   }
 
-  public double increment_speed(double joystick_speed, Encoder encoder) {
+  public double increment_speed(double joystick_speed) {
     lastEncoderVal = rc.leftEncoder.getDistance();
     try {
       wait(20);
