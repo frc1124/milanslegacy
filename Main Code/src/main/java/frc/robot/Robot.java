@@ -140,6 +140,10 @@ public class Robot extends TimedRobot {
     double rightV =  Math.pow(Constants.MAXSPEED *rc.j.getRightY(),3);
     double leftV =   Math.pow(Constants.MAXSPEED *rc.j.getLeftY(),3);
 
+    SmartDashboard.putNumber("left joystick", Math.pow(rc.j.getLeftY(),3));
+    SmartDashboard.putNumber("riight joystick", Math.pow(rc.j.getRightY(),3));
+
+
     double left_ramp = speedrampingleft.increment_speed(leftV);
     double right_ramp = speedrampingright.increment_speed(rightV);
 
@@ -150,6 +154,11 @@ public class Robot extends TimedRobot {
     right_ramp,
     rc));
 
+    // CommandScheduler.getInstance().schedule(new TankCommandGroup(
+    //   leftV,     
+    //   rightV,
+    //   rc));
+  
     //CommandScheduler.getInstance().schedule(new TankCommandGroup(leftV, rightV, rc));
     SmartDashboard.putNumber("Ramped Left", left_ramp);
     SmartDashboard.putNumber("Ramped Right", right_ramp);

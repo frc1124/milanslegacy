@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 public class AutoCMD  extends CommandBase{
@@ -24,7 +25,7 @@ public class AutoCMD  extends CommandBase{
    @Override
    public void execute() {
        super.execute();
-       rc.shooter.on();
+       rc.shooter.useOutput(0, Constants.SHOOT_POINT);;
        if(t + 5 < Timer.getFPGATimestamp()) {
             rc.screw.On();
        }

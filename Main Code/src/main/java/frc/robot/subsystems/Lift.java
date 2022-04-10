@@ -68,8 +68,8 @@ public class Lift extends SubsystemBase {
     //input = new FileInputStream(file);
     //distance_traveled = prop.load(input);
     //input.close();
-    distance_from_top = Math.abs(distance_traveled - el_top);
     distance_traveled = en_coder.getDistance();
+    distance_from_top = Math.abs(distance_traveled - el_top);
     System.out.println(en_coder.getDistance());  
      if (distance_traveled <= el_top) {
        if (distance_from_top <= 500) {
@@ -103,8 +103,13 @@ public class Lift extends SubsystemBase {
     el_vader.set(0);
   }
   
-  public void reset_elevetor() {
+  public void manual_down() {
     motors.set(-1);
+    en_coder.reset();
+  }
+
+  public void manual_up() {
+    motors.set(1);
     en_coder.reset();
   }
 

@@ -10,7 +10,7 @@ import frc.robot.subsystems.LimitSwitch;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
-public class manual_reset extends CommandBase {
+public class manual_down extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
   /**
@@ -20,7 +20,7 @@ public class manual_reset extends CommandBase {
    */
   Lift lift;
   double setpoint;
-  public manual_reset(Lift lift, double setpoint) {
+  public manual_down(Lift lift, double setpoint) {
     this.lift = lift;
     this.setpoint = setpoint;
 
@@ -37,7 +37,7 @@ public class manual_reset extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    lift.reset_elevetor();
+    lift.manual_down();
     
   }
 

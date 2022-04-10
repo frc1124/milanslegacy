@@ -65,7 +65,7 @@ public final class Constants {
     public static final double DIST_R_D = .5; // correct PID 
     //public static final double DIST_R_D = .65; // test PID 
 
-    public static final double SHOOT_POINT = 3500;
+    public static final double SHOOT_POINT = 3750;
     public static final double LOWER_SHOOT_POINT = 1800;
     public static final double SHOOT_P = 0.0001;
     public static final double SHOOT_I = 0;
@@ -80,7 +80,7 @@ public final class Constants {
     public static final double DRIVE_KV = 0;
 
     //public static final double MAXSPEED = 10.0 * 6; // in per second *ORIGINAL*
-    public static final double MAXSPEED = 12.0 * 6;
+    public static final double MAXSPEED = 12.0 * 5;
     public static final double MAXANGULARSPEED = 2 * Math.PI; // one rotation per second
 
     public static final double TRACKWIDTH = 11; // in

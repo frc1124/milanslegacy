@@ -21,11 +21,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.El_down;
 import frc.robot.commands.El_up;
+import frc.robot.commands.ScrewDown;
 import frc.robot.commands.ScrewUp;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.SuckBallz;
 import frc.robot.commands.TankCommandGroup;
-import frc.robot.commands.manual_reset;
+import frc.robot.commands.manual_down;
+import frc.robot.commands.manual_up;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.LimitSwitch;
@@ -109,6 +111,9 @@ public class RobotContainer {
     logitechMap.put("RB", new JoystickButton(j, 6));
     logitechMap.put("Back", new JoystickButton(j, 7));
     logitechMap.put("Start", new JoystickButton(j, 8));
+    logitechMap.put("RT", new JoystickButton(j, 9));
+    logitechMap.put("LT", new JoystickButton(j, 10));
+
     //JoystickButton exampleButton = new JoystickButton(exampleStick, 1);
     return logitechMap.get(key);
 }
@@ -124,10 +129,12 @@ public class RobotContainer {
     
     getKey("B").toggleWhenPressed(new Shoot(Constants.SHOOT_POINT, controller, shooter));
     getKey("A").whileHeld(new ScrewUp(screw));
-    getKey("B").toggleWhenPressed(new SuckBallz(intake));
+    getKey("Y").whileHeld(new ScrewDown(screw));
+    getKey("X").toggleWhenPressed(new SuckBallz(intake));
     getKey("RB").whileHeld(new El_up(lift, Constants.Lift_TOP_POINT));
     getKey("LB").whileHeld(new El_down(lift, Constants.Lift_BOTTOM_POINT));
-    getKey("Back").whileHeld(new manual_reset(lift, Constants.Lift_BOTTOM_POINT));
+    getKey("Back").whileHeld(new manual_down(lift, Constants.Lift_BOTTOM_POINT));
+    getKey("Start").whileHeld(new manual_up(lift, Constants.Lift_TOP_POINT));
   }
 
   /**
