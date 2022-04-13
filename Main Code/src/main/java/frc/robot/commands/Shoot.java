@@ -5,6 +5,7 @@
 
 package frc.robot.commands;
 
+import frc.robot.Constants;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Shooter;
 
@@ -32,7 +33,7 @@ public class Shoot extends PIDCommand {
   }
   @Override 
   public void execute() {
-    shooter.on();
+    shooter.useOutput(0, Constants.SHOOT_POINT);;
   }
 
 

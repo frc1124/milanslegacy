@@ -4,34 +4,35 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.Lift;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
+import frc.robot.Constants;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.FatherFinder;
+import frc.robot.subsystems.Shooter;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
 
 /** An example command that uses an example subsystem. */
-public class El_down extends CommandBase {
+public class TravelToFather extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-
+  private RobotContainer rc;
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  Lift lift;
-  double setpoint;
-  public El_down(Lift lift, double setpoint) {
-    this.lift = lift;
-    this.setpoint = setpoint;
-    
+  FatherFinder fatherWhy;
+  Shooter shooter;
+  TankCommandGroup tankCommandGroup;
+  Shoot shoot;
 
-
-
+  public TravelToFather(FatherFinder fatherWhy, Shooter shooter) {
+    this.fatherWhy = fatherWhy;
+    this.shooter =  shooter;
+ 
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(lift);
-  
+    addRequirements(fatherWhy);
   }
 
   // Called when the command is initially scheduled.
@@ -41,30 +42,24 @@ public class El_down extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    lift.motor_down(setpoint);
-  
+    double distance = fatherWhy.DistanceFromFather();
+    if (!(distance < 420.69 && distance > 69.420 )) {
+        SmartDashboard.putBoolean("In Range: ", false);
+    } else {
+        new Shoot(Constants.SHOOTER, rc.controller, rc.shooter);
+        SmartDashboard.putBoolean("In Range: ", true);
+        
+    }
+    
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    lift.stop();
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    try {
-      lift.store_val();
-    } catch (FileNotFoundException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    } catch (IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-
-    // return lift.getDistance() < 1;
     return false;
   }
 }

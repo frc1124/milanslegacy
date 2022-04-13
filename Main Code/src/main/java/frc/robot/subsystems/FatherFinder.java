@@ -3,35 +3,17 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.revrobotics.*;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import frc.robot.Constants;
+import edu.wpi.first.hal.AnalogJNI;
+import edu.wpi.first.wpilibj.AnalogInput;
 
-public class Intake extends SubsystemBase {
- CANSparkMax intake_motor;
-
+public class FatherFinder extends SubsystemBase {
+    AnalogInput input;
   /** Creates a new ExampleSubsystem. */
-  
-  public Intake() {
-    intake_motor = new CANSparkMax(Constants.INTAKE_ID,MotorType.kBrushless);
-  }
+  public FatherFinder() {
+      input = new AnalogInput(Constants.FATHER_CHANNEL);
 
-  public void on() {
-    intake_motor.set(-0.5);
-  }
-
-  public void reverse() {
-    intake_motor.set(0.5);
-  }
-
-  public void stop() {
-    intake_motor.set(0);
-  }
-  
-  public void on_inverted() {
-    intake_motor.set(-1);
   }
 
   @Override
@@ -43,5 +25,11 @@ public class Intake extends SubsystemBase {
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
   }
-}
 
+  public double DistanceFromFather() {
+    double distance = input.getVoltage()/9.8;
+    return distance;
+ }
+
+
+}

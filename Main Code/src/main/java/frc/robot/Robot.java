@@ -4,11 +4,17 @@
 
 package frc.robot;
 
+import static edu.wpi.first.cameraserver.CameraServer.getInstance;
+
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxRelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.MjpegServer;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotController;
@@ -17,7 +23,10 @@ import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ScheduleCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.AutoCMD;
 //import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Move;
 //import frc.robot.commands.MoveCommandGroup;
@@ -25,9 +34,11 @@ import frc.robot.commands.Shoot;
 import frc.robot.commands.SpinTest;
 import frc.robot.commands.Tank;
 import frc.robot.commands.TankCommandGroup;
+import frc.robot.subsystems.ScrewYou;
 //import frc.robot.commands.TankCommandGroup;
 //import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.SpeedRamping;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -36,8 +47,13 @@ import frc.robot.subsystems.Shooter;
  * project.
  */
 public class Robot extends TimedRobot {
+  MjpegServer s;
+  SpeedRamping speedrampingright;
+  SpeedRamping speedrampingleft;
+  double current_value;
+  private UsbCamera cam;
   private Command autoCMD;
-  private RobotContainer rc;
+  public static RobotContainer rc;
   // Shooter shooter = rc.shooter;
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -45,6 +61,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    try {
+      CameraServer.startAutomaticCapture();
+    }catch (Exception e) {
+      //TODO: handle exception
+    }
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     rc = new RobotContainer();
@@ -76,24 +97,31 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+    CommandScheduler.getInstance().schedule(new AutoCMD(rc));
     // autoCMD = rc.getAutonomousCommand();
+
     // schedule the autonomous command (example)
     // if (autoCMD != null) {
     //   autoCMD.schedule();
-    // }
-    // shooter.on();
-    // CommandScheduler.getInstance().schedule(TankCommandGroup);
+    // } 
 
-    
-  }
+    //ParallelCommandGroup reverse = new ParallelCommandGroup(
+      //change to move
 
+    }
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {}
 
   @Override
   public void teleopInit() {
-    rc.lift.reset();
+    current_value = 0;
+    speedrampingright = new SpeedRamping(current_value);
+    speedrampingleft = new SpeedRamping(current_value);
+
+
+    
+    //rc.lift.reset();
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -104,13 +132,38 @@ public class Robot extends TimedRobot {
   }
 
   /** This function is called periodically during operator control. */
-
   @Override
   public void teleopPeriodic() {
-    double rightV = Math.pow(Constants.MAXSPEED * rc.j.getRightY(),3 );
-    double leftV =  Math.pow(Constants.MAXSPEED * rc.j.getLeftY(), 3 );
-    // System.out.println("" +rightV + "," +leftV);
-    CommandScheduler.getInstance().schedule(new TankCommandGroup(leftV, rightV, rc));
+    SmartDashboard.putNumber("Shooter RPM", Math.round(Math.abs(rc.shooter.encoder.getVelocity())));
+    SmartDashboard.putNumber("Elevator encoder", Math.round(rc.lift.distance_traveled));
+
+    double rightV =  Math.pow(Constants.MAXSPEED *rc.j.getRightY(),3);
+    double leftV =   Math.pow(Constants.MAXSPEED *rc.j.getLeftY(),3);
+
+    SmartDashboard.putNumber("left joystick", Math.pow(rc.j.getLeftY(),3));
+    SmartDashboard.putNumber("riight joystick", Math.pow(rc.j.getRightY(),3));
+
+
+    double left_ramp = speedrampingleft.increment_speed(leftV);
+    double right_ramp = speedrampingright.increment_speed(rightV);
+
+    SmartDashboard.putNumber("left speed", leftV);
+    SmartDashboard.putNumber("right speed", rightV);
+    CommandScheduler.getInstance().schedule(new TankCommandGroup(
+    left_ramp,     
+    right_ramp,
+    rc));
+
+    // CommandScheduler.getInstance().schedule(new TankCommandGroup(
+    //   leftV,     
+    //   rightV,
+    //   rc));
+  
+    //CommandScheduler.getInstance().schedule(new TankCommandGroup(leftV, rightV, rc));
+    SmartDashboard.putNumber("Ramped Left", left_ramp);
+    SmartDashboard.putNumber("Ramped Right", right_ramp);
+
+
     // CommandScheduler.getInstance().schedule(new TankCommandGroup(12, 12, rc));
     CommandScheduler.getInstance().run();
 
@@ -123,6 +176,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testInit() {
+    RobotContainer robotContainer = new RobotContainer();
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
     //CommandScheduler.getInstance().schedule(new MoveCommandGroup(24.0, rc));

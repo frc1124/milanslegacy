@@ -22,7 +22,7 @@ import frc.robot.Constants;
 
 public class PIDDrive extends PIDSubsystem{
 
-  private final Encoder encoder;
+  public final Encoder encoder;
 
   private final MotorControllerGroup motors;
   

@@ -4,13 +4,13 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.Screw;
+import frc.robot.subsystems.ScrewYou;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
 public class ScrewUp extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final Screw archScrew;
+  private final ScrewYou archScrew;
 
   /**
    * Creates a new ExampleCommand.
@@ -18,7 +18,7 @@ public class ScrewUp extends CommandBase {
    * @param subsystem The subsystem used by this command.
    */
   
-  public ScrewUp(Screw archScrew) {
+  public ScrewUp(ScrewYou archScrew) {
     this.archScrew = archScrew;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(archScrew);

@@ -4,37 +4,30 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.Robot;
-import frc.robot.RobotContainer;
-import com.revrobotics.ColorSensorV3;
-
-import edu.wpi.first.wpilibj.util.Color;
-// import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Lift;
+import frc.robot.subsystems.LimitSwitch;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.commands.MoveCommandGroup;
 
 /** An example command that uses an example subsystem. */
-
-public class BackToBlack extends CommandBase {
+public class manual_up extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  MoveCommandGroup move;
-  ColorSensor colorsensor;
-  BackToBlack backToBlack;
-  RobotContainer rc;
+
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
+  Lift lift;
+  double setpoint;
+  public manual_up(Lift lift, double setpoint) {
+    this.lift = lift;
+    this.setpoint = setpoint;
 
 
-  public BackToBlack(ColorSensor colorsensor) {
-    this.colorsensor = colorsensor;
-    move = new MoveCommandGroup(-1, rc);
-    //Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(colorsensor);
+    
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(lift);
   }
 
   // Called when the command is initially scheduled.
@@ -44,21 +37,20 @@ public class BackToBlack extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    while(!colorsensor.detect()) {
-      move.addCommands(backToBlack);
-      
-    }
+    lift.manual_up();
+    
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    //intake.stop();
+    lift.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    // System.out.println("Limitswtich:" + LimitSwitch.get_top());
     return false;
   }
 }

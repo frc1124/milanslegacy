@@ -7,6 +7,10 @@ package frc.robot.commands;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.LimitSwitch;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
@@ -50,6 +54,15 @@ public class El_up extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    try {
+      lift.store_val();
+    } catch (FileNotFoundException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
     // System.out.println("Limitswtich:" + LimitSwitch.get_top());
     return false;
   }
