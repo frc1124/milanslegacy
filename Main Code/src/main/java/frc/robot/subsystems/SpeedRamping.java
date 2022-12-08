@@ -26,16 +26,15 @@ public class SpeedRamping extends SubsystemBase {
   //
     public SpeedRamping(double current_value) {
     current_speed = current_value;
-    speed_increment = 6500;
-    decrease_increment = 20000;
-    increase_increment = 22000;
+    decrease_increment = 20000; //22k
+    increase_increment = 20000; //22k
     speed_constant = 6500;
   }
 
   public double increment_speed(double joystick_speed) {
 
     if (current_speed < joystick_speed) {
-      current_speed += speed_increment;
+      current_speed += increase_increment;
       return current_speed;
     } else if (current_speed > joystick_speed) {
       current_speed -= decrease_increment;
