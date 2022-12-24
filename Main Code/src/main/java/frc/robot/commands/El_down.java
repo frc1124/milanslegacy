@@ -5,6 +5,10 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.Lift;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
@@ -50,6 +54,16 @@ public class El_down extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    try {
+      lift.store_val();
+    } catch (FileNotFoundException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
     // return lift.getDistance() < 1;
     return false;
   }

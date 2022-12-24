@@ -4,27 +4,35 @@
 
 package frc.robot.commands;
 
+import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.FatherFinder;
+import frc.robot.subsystems.Shooter;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
 
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxPIDController;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 /** An example command that uses an example subsystem. */
-public class Shooter extends CommandBase {
+public class TravelToFather extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final ExampleSubsystem m_subsystem;
-
+  private RobotContainer rc;
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public ExampleCommand(ExampleSubsystem subsystem) {
-    m_subsystem = subsystem;
+  FatherFinder fatherWhy;
+  Shooter shooter;
+  TankCommandGroup tankCommandGroup;
+  Shoot shoot;
+
+  public TravelToFather(FatherFinder fatherWhy, Shooter shooter) {
+    this.fatherWhy = fatherWhy;
+    this.shooter =  shooter;
+ 
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+    addRequirements(fatherWhy);
   }
 
   // Called when the command is initially scheduled.
@@ -33,7 +41,17 @@ public class Shooter extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    double distance = fatherWhy.DistanceFromFather();
+    if (!(distance < 420.69 && distance > 69.420 )) {
+        SmartDashboard.putBoolean("In Range: ", false);
+    } else {
+        new Shoot(Constants.SHOOTER, rc.controller, rc.shooter);
+        SmartDashboard.putBoolean("In Range: ", true);
+        
+    }
+    
+  }
 
   // Called once the command ends or is interrupted.
   @Override

@@ -33,10 +33,11 @@ public class Shooter extends PIDSubsystem{
   public void useOutput(double output, double setpoint) {
 
     double feedfrwrd = ff.calculate(setpoint);
-
+    System.out.print(encoder.getVelocity());
 
     final double out = getController().calculate(encoder.getVelocity(), setpoint);
     motors.setVoltage(-MathUtil.clamp(out + feedfrwrd, -12, 12));
+    
   }
 
   public void on(){

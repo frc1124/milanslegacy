@@ -4,41 +4,36 @@
 
 package frc.robot;
 
+import java.util.HashMap;
+
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.RelativeEncoder;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PS4Controller;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.ArcadeDrive;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.El_down;
 import frc.robot.commands.El_up;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.ReleaseBallz;
 import frc.robot.commands.ScrewDown;
 import frc.robot.commands.ScrewUp;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.SuckBallz;
+import frc.robot.commands.TankCommandGroup;
+import frc.robot.commands.manual_down;
+import frc.robot.commands.manual_up;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.LimitSwitch;
-import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.PIDDrive;
-import frc.robot.subsystems.Screw;
+import frc.robot.subsystems.ScrewYou;
 import frc.robot.subsystems.Shooter;
-import edu.wpi.first.wpilibj2.command.Command;
-//import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
-import java.util.HashMap;
-
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.revrobotics.*;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import edu.wpi.first.wpilibj.Joystick;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -84,12 +79,12 @@ public class RobotContainer {
 
   CANSparkMax motor = new CANSparkMax(Constants.SHOOTER , MotorType.kBrushless);
   RelativeEncoder encoder = motor.getEncoder();
-  PIDController controller = new PIDController(Constants.SHOOT_P,Constants.SHOOT_I,Constants.SHOOT_D);
+  public PIDController controller = new PIDController(Constants.SHOOT_P,Constants.SHOOT_I,Constants.SHOOT_D);
 
   Encoder liftEncoder = new Encoder(Constants.EL_A, Constants.EL_B);
-  Shooter shooter = new Shooter(motor, encoder, controller);
+  public Shooter shooter = new Shooter(motor, encoder, controller);
   Intake intake = new Intake();
-  Screw screw = new Screw();
+  public ScrewYou screw = new ScrewYou();
   Lift lift = new Lift(liftEncoder);
   LimitSwitch limitswitch = new LimitSwitch();
 
@@ -116,6 +111,9 @@ public class RobotContainer {
     logitechMap.put("RB", new JoystickButton(j, 6));
     logitechMap.put("Back", new JoystickButton(j, 7));
     logitechMap.put("Start", new JoystickButton(j, 8));
+    logitechMap.put("RT", new JoystickButton(j, 9));
+    logitechMap.put("LT", new JoystickButton(j, 10));
+
     //JoystickButton exampleButton = new JoystickButton(exampleStick, 1);
     return logitechMap.get(key);
 }
@@ -129,12 +127,14 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     
-    getKey("Y").toggleWhenPressed(new Shoot(Constants.SHOOT_POINT, controller, shooter));
+    getKey("B").toggleWhenPressed(new Shoot(Constants.SHOOT_POINT, controller, shooter));
     getKey("A").whileHeld(new ScrewUp(screw));
-    getKey("X").whileHeld(new ScrewDown(screw));
-    getKey("B").toggleWhenPressed(new SuckBallz(intake));
-    getKey("RB").whileHeld(new El_up(lift, Constants.Lift_POINT));
-    getKey("LB").whileHeld(new El_down(lift, Constants.Lift_POINT));
+    getKey("Y").whileHeld(new ScrewDown(screw));
+    getKey("X").toggleWhenPressed(new SuckBallz(intake));
+    getKey("RB").whileHeld(new El_up(lift, Constants.Lift_TOP_POINT));
+    getKey("LB").whileHeld(new El_down(lift, Constants.Lift_BOTTOM_POINT));
+    getKey("Back").whileHeld(new manual_down(lift, Constants.Lift_BOTTOM_POINT));
+    getKey("Start").whileHeld(new manual_up(lift, Constants.Lift_TOP_POINT));
   }
 
   /**
@@ -142,8 +142,9 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public void getAutonomousCommand() {
+  public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    //return arcadeDrive;
+    return (new TankCommandGroup(-.5, -.5, Robot.rc));
+
   }
 }

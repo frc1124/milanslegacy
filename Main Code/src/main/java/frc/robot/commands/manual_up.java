@@ -4,54 +4,53 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.Drive;
-import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Lift;
+import frc.robot.subsystems.LimitSwitch;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import com.kauailabs.navx.frc.AHRS;
 
 /** An example command that uses an example subsystem. */
-public class ArcadeDrive extends CommandBase {
+public class manual_up extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final Drive drive;
-  private final AHRS navx;
-  private final Joystick j;
 
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public ArcadeDrive(Drive drive, Joystick j) {
-    this.drive = drive;
-    this.j = j;
-    navx = drive.getNavxInstance(); 
-    addRequirements(drive);
+  Lift lift;
+  double setpoint;
+  public manual_up(Lift lift, double setpoint) {
+    this.lift = lift;
+    this.setpoint = setpoint;
 
+
+    
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(lift);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    navx.zeroYaw();
-    drive.resetEncoders();
-
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    drive.arcadeDrive(j.getY(), -1*j.getX());
+    lift.manual_up();
+    
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    drive.stop();
+    lift.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    // System.out.println("Limitswtich:" + LimitSwitch.get_top());
     return false;
   }
 }
